@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from typing import List
 from typing_extensions import Required, TypedDict
+
+from ...._types import SequenceNotStr
 
 __all__ = ["PeerRemoveParams"]
 
@@ -12,5 +13,5 @@ class PeerRemoveParams(TypedDict, total=False):
     workspace_id: Required[str]
     """ID of the workspace"""
 
-    body: Required[List[str]]
+    body: Required[SequenceNotStr[str]]
     """List of peer IDs to remove from the session"""
