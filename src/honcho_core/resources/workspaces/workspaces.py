@@ -13,7 +13,7 @@ from ...types import (
     workspace_get_or_create_params,
     workspace_deriver_status_params,
 )
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from .webhooks import (
     WebhooksResource,
@@ -92,14 +92,14 @@ class WorkspacesResource(SyncAPIResource):
         self,
         workspace_id: str,
         *,
-        configuration: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        configuration: Optional[Dict[str, object]] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Workspace:
         """
         Update a Workspace
@@ -135,15 +135,15 @@ class WorkspacesResource(SyncAPIResource):
     def list(
         self,
         *,
-        page: int | NotGiven = NOT_GIVEN,
-        size: int | NotGiven = NOT_GIVEN,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        page: int | Omit = omit,
+        size: int | Omit = omit,
+        filters: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPage[Workspace]:
         """
         Get all Workspaces
@@ -186,15 +186,15 @@ class WorkspacesResource(SyncAPIResource):
         self,
         workspace_id: str,
         *,
-        observer_id: Optional[str] | NotGiven = NOT_GIVEN,
-        sender_id: Optional[str] | NotGiven = NOT_GIVEN,
-        session_id: Optional[str] | NotGiven = NOT_GIVEN,
+        observer_id: Optional[str] | Omit = omit,
+        sender_id: Optional[str] | Omit = omit,
+        session_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeriverStatus:
         """
         Get the deriver processing status, optionally scoped to an observer, sender,
@@ -242,14 +242,14 @@ class WorkspacesResource(SyncAPIResource):
         self,
         *,
         id: str,
-        configuration: Dict[str, object] | NotGiven = NOT_GIVEN,
-        metadata: Dict[str, object] | NotGiven = NOT_GIVEN,
+        configuration: Dict[str, object] | Omit = omit,
+        metadata: Dict[str, object] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Workspace:
         """
         Get a Workspace by ID.
@@ -287,14 +287,14 @@ class WorkspacesResource(SyncAPIResource):
         workspace_id: str,
         *,
         query: str,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
+        filters: Optional[Dict[str, object]] | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WorkspaceSearchResponse:
         """
         Search a Workspace
@@ -371,14 +371,14 @@ class AsyncWorkspacesResource(AsyncAPIResource):
         self,
         workspace_id: str,
         *,
-        configuration: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        configuration: Optional[Dict[str, object]] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Workspace:
         """
         Update a Workspace
@@ -414,15 +414,15 @@ class AsyncWorkspacesResource(AsyncAPIResource):
     def list(
         self,
         *,
-        page: int | NotGiven = NOT_GIVEN,
-        size: int | NotGiven = NOT_GIVEN,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        page: int | Omit = omit,
+        size: int | Omit = omit,
+        filters: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Workspace, AsyncPage[Workspace]]:
         """
         Get all Workspaces
@@ -465,15 +465,15 @@ class AsyncWorkspacesResource(AsyncAPIResource):
         self,
         workspace_id: str,
         *,
-        observer_id: Optional[str] | NotGiven = NOT_GIVEN,
-        sender_id: Optional[str] | NotGiven = NOT_GIVEN,
-        session_id: Optional[str] | NotGiven = NOT_GIVEN,
+        observer_id: Optional[str] | Omit = omit,
+        sender_id: Optional[str] | Omit = omit,
+        session_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeriverStatus:
         """
         Get the deriver processing status, optionally scoped to an observer, sender,
@@ -521,14 +521,14 @@ class AsyncWorkspacesResource(AsyncAPIResource):
         self,
         *,
         id: str,
-        configuration: Dict[str, object] | NotGiven = NOT_GIVEN,
-        metadata: Dict[str, object] | NotGiven = NOT_GIVEN,
+        configuration: Dict[str, object] | Omit = omit,
+        metadata: Dict[str, object] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Workspace:
         """
         Get a Workspace by ID.
@@ -566,14 +566,14 @@ class AsyncWorkspacesResource(AsyncAPIResource):
         workspace_id: str,
         *,
         query: str,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
+        filters: Optional[Dict[str, object]] | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WorkspaceSearchResponse:
         """
         Search a Workspace
