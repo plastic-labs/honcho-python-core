@@ -6,7 +6,7 @@ from typing import Dict, Mapping, Iterable, Optional, cast
 
 import httpx
 
-from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
+from ...._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
 from ...._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -63,7 +63,7 @@ class MessagesResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MessageCreateResponse:
         """
         Create messages for a session with JSON data (original functionality).
@@ -101,7 +101,7 @@ class MessagesResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Message:
         """
         Get a Message by ID
@@ -141,13 +141,13 @@ class MessagesResource(SyncAPIResource):
         *,
         workspace_id: str,
         session_id: str,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Message:
         """
         Update the metadata of a Message
@@ -187,16 +187,16 @@ class MessagesResource(SyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        page: int | NotGiven = NOT_GIVEN,
-        reverse: Optional[bool] | NotGiven = NOT_GIVEN,
-        size: int | NotGiven = NOT_GIVEN,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        page: int | Omit = omit,
+        reverse: Optional[bool] | Omit = omit,
+        size: int | Omit = omit,
+        filters: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPage[Message]:
         """
         Get all messages for a session
@@ -258,7 +258,7 @@ class MessagesResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MessageUploadResponse:
         """Create messages from uploaded files.
 
@@ -331,7 +331,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MessageCreateResponse:
         """
         Create messages for a session with JSON data (original functionality).
@@ -369,7 +369,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Message:
         """
         Get a Message by ID
@@ -409,13 +409,13 @@ class AsyncMessagesResource(AsyncAPIResource):
         *,
         workspace_id: str,
         session_id: str,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Message:
         """
         Update the metadata of a Message
@@ -455,16 +455,16 @@ class AsyncMessagesResource(AsyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        page: int | NotGiven = NOT_GIVEN,
-        reverse: Optional[bool] | NotGiven = NOT_GIVEN,
-        size: int | NotGiven = NOT_GIVEN,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        page: int | Omit = omit,
+        reverse: Optional[bool] | Omit = omit,
+        size: int | Omit = omit,
+        filters: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Message, AsyncPage[Message]]:
         """
         Get all messages for a session
@@ -526,7 +526,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MessageUploadResponse:
         """Create messages from uploaded files.
 

@@ -14,7 +14,7 @@ from .sessions import (
     SessionsResourceWithStreamingResponse,
     AsyncSessionsResourceWithStreamingResponse,
 )
-from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ...._utils import maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -71,14 +71,14 @@ class PeersResource(SyncAPIResource):
         peer_id: str,
         *,
         workspace_id: str,
-        configuration: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        configuration: Optional[Dict[str, object]] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Peer:
         """
         Update a Peer's name and/or metadata
@@ -119,15 +119,15 @@ class PeersResource(SyncAPIResource):
         self,
         workspace_id: str,
         *,
-        page: int | NotGiven = NOT_GIVEN,
-        size: int | NotGiven = NOT_GIVEN,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        page: int | Omit = omit,
+        size: int | Omit = omit,
+        filters: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPage[Peer]:
         """
         Get All Peers for a Workspace
@@ -176,15 +176,15 @@ class PeersResource(SyncAPIResource):
         *,
         workspace_id: str,
         query: str,
-        session_id: Optional[str] | NotGiven = NOT_GIVEN,
-        stream: bool | NotGiven = NOT_GIVEN,
-        target: Optional[str] | NotGiven = NOT_GIVEN,
+        session_id: Optional[str] | Omit = omit,
+        stream: bool | Omit = omit,
+        target: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PeerChatResponse:
         """
         Chat
@@ -234,14 +234,14 @@ class PeersResource(SyncAPIResource):
         workspace_id: str,
         *,
         id: str,
-        configuration: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        configuration: Optional[Dict[str, object]] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Peer:
         """
         Get a Peer by ID
@@ -284,14 +284,14 @@ class PeersResource(SyncAPIResource):
         *,
         workspace_id: str,
         query: str,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
+        filters: Optional[Dict[str, object]] | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PeerSearchResponse:
         """
         Search a Peer
@@ -341,13 +341,13 @@ class PeersResource(SyncAPIResource):
         *,
         workspace_id: str,
         session_id: str,
-        target: Optional[str] | NotGiven = NOT_GIVEN,
+        target: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PeerWorkingRepresentationResponse:
         """
         Get a peer's working representation for a session.
@@ -424,14 +424,14 @@ class AsyncPeersResource(AsyncAPIResource):
         peer_id: str,
         *,
         workspace_id: str,
-        configuration: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        configuration: Optional[Dict[str, object]] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Peer:
         """
         Update a Peer's name and/or metadata
@@ -472,15 +472,15 @@ class AsyncPeersResource(AsyncAPIResource):
         self,
         workspace_id: str,
         *,
-        page: int | NotGiven = NOT_GIVEN,
-        size: int | NotGiven = NOT_GIVEN,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        page: int | Omit = omit,
+        size: int | Omit = omit,
+        filters: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Peer, AsyncPage[Peer]]:
         """
         Get All Peers for a Workspace
@@ -529,15 +529,15 @@ class AsyncPeersResource(AsyncAPIResource):
         *,
         workspace_id: str,
         query: str,
-        session_id: Optional[str] | NotGiven = NOT_GIVEN,
-        stream: bool | NotGiven = NOT_GIVEN,
-        target: Optional[str] | NotGiven = NOT_GIVEN,
+        session_id: Optional[str] | Omit = omit,
+        stream: bool | Omit = omit,
+        target: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PeerChatResponse:
         """
         Chat
@@ -587,14 +587,14 @@ class AsyncPeersResource(AsyncAPIResource):
         workspace_id: str,
         *,
         id: str,
-        configuration: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        configuration: Optional[Dict[str, object]] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Peer:
         """
         Get a Peer by ID
@@ -637,14 +637,14 @@ class AsyncPeersResource(AsyncAPIResource):
         *,
         workspace_id: str,
         query: str,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
+        filters: Optional[Dict[str, object]] | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PeerSearchResponse:
         """
         Search a Peer
@@ -694,13 +694,13 @@ class AsyncPeersResource(AsyncAPIResource):
         *,
         workspace_id: str,
         session_id: str,
-        target: Optional[str] | NotGiven = NOT_GIVEN,
+        target: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PeerWorkingRepresentationResponse:
         """
         Get a peer's working representation for a session.

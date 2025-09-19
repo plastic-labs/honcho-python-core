@@ -6,7 +6,7 @@ from typing import Dict, Optional
 
 import httpx
 
-from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
+from ...._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ...._utils import maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -57,14 +57,14 @@ class PeersResource(SyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        page: int | NotGiven = NOT_GIVEN,
-        size: int | NotGiven = NOT_GIVEN,
+        page: int | Omit = omit,
+        size: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPage[Peer]:
         """
         Get peers from a session
@@ -120,7 +120,7 @@ class PeersResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
         Add peers to a session
@@ -164,7 +164,7 @@ class PeersResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionPeerConfig:
         """
         Get the configuration for a peer in a session
@@ -209,7 +209,7 @@ class PeersResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
         Remove peers from a session
@@ -253,7 +253,7 @@ class PeersResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
         Set the peers in a session
@@ -292,14 +292,14 @@ class PeersResource(SyncAPIResource):
         *,
         workspace_id: str,
         session_id: str,
-        observe_me: Optional[bool] | NotGiven = NOT_GIVEN,
-        observe_others: bool | NotGiven = NOT_GIVEN,
+        observe_me: Optional[bool] | Omit = omit,
+        observe_others: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Set the configuration for a peer in a session
@@ -372,14 +372,14 @@ class AsyncPeersResource(AsyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        page: int | NotGiven = NOT_GIVEN,
-        size: int | NotGiven = NOT_GIVEN,
+        page: int | Omit = omit,
+        size: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Peer, AsyncPage[Peer]]:
         """
         Get peers from a session
@@ -435,7 +435,7 @@ class AsyncPeersResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
         Add peers to a session
@@ -479,7 +479,7 @@ class AsyncPeersResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionPeerConfig:
         """
         Get the configuration for a peer in a session
@@ -524,7 +524,7 @@ class AsyncPeersResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
         Remove peers from a session
@@ -568,7 +568,7 @@ class AsyncPeersResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
         Set the peers in a session
@@ -607,14 +607,14 @@ class AsyncPeersResource(AsyncAPIResource):
         *,
         workspace_id: str,
         session_id: str,
-        observe_me: Optional[bool] | NotGiven = NOT_GIVEN,
-        observe_others: bool | NotGiven = NOT_GIVEN,
+        observe_me: Optional[bool] | Omit = omit,
+        observe_others: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Set the configuration for a peer in a session
