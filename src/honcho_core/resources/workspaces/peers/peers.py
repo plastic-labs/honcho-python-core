@@ -27,6 +27,7 @@ from ...._response import (
 from ....pagination import SyncPage, AsyncPage
 from ...._base_client import AsyncPaginator, make_request_options
 from ....types.workspaces import (
+    peer_card_params,
     peer_chat_params,
     peer_list_params,
     peer_search_params,
@@ -35,6 +36,7 @@ from ....types.workspaces import (
     peer_working_representation_params,
 )
 from ....types.workspaces.peer import Peer
+from ....types.workspaces.peer_card_response import PeerCardResponse
 from ....types.workspaces.peer_chat_response import PeerChatResponse
 from ....types.workspaces.peer_search_response import PeerSearchResponse
 from ....types.workspaces.peer_working_representation_response import PeerWorkingRepresentationResponse
@@ -168,6 +170,57 @@ class PeersResource(SyncAPIResource):
             ),
             model=Peer,
             method="post",
+        )
+
+    def card(
+        self,
+        peer_id: str,
+        *,
+        workspace_id: str,
+        target: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PeerCardResponse:
+        """
+        Get a peer card for a specific peer relationship.
+
+        Returns the peer card that the observer peer has for the target peer if it
+        exists. If no target is specified, returns the observer's own peer card.
+
+        Args:
+          workspace_id: ID of the workspace
+
+          peer_id: ID of the observer peer
+
+          target: The peer whose card to retrieve. If not provided, returns the observer's own
+              card
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        if not peer_id:
+            raise ValueError(f"Expected a non-empty value for `peer_id` but received {peer_id!r}")
+        return self._get(
+            f"/v2/workspaces/{workspace_id}/peers/{peer_id}/card",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"target": target}, peer_card_params.PeerCardParams),
+            ),
+            cast_to=PeerCardResponse,
         )
 
     def chat(
@@ -523,6 +576,57 @@ class AsyncPeersResource(AsyncAPIResource):
             method="post",
         )
 
+    async def card(
+        self,
+        peer_id: str,
+        *,
+        workspace_id: str,
+        target: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PeerCardResponse:
+        """
+        Get a peer card for a specific peer relationship.
+
+        Returns the peer card that the observer peer has for the target peer if it
+        exists. If no target is specified, returns the observer's own peer card.
+
+        Args:
+          workspace_id: ID of the workspace
+
+          peer_id: ID of the observer peer
+
+          target: The peer whose card to retrieve. If not provided, returns the observer's own
+              card
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        if not peer_id:
+            raise ValueError(f"Expected a non-empty value for `peer_id` but received {peer_id!r}")
+        return await self._get(
+            f"/v2/workspaces/{workspace_id}/peers/{peer_id}/card",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"target": target}, peer_card_params.PeerCardParams),
+            ),
+            cast_to=PeerCardResponse,
+        )
+
     async def chat(
         self,
         peer_id: str,
@@ -758,6 +862,9 @@ class PeersResourceWithRawResponse:
         self.list = to_raw_response_wrapper(
             peers.list,
         )
+        self.card = to_raw_response_wrapper(
+            peers.card,
+        )
         self.chat = to_raw_response_wrapper(
             peers.chat,
         )
@@ -785,6 +892,9 @@ class AsyncPeersResourceWithRawResponse:
         )
         self.list = async_to_raw_response_wrapper(
             peers.list,
+        )
+        self.card = async_to_raw_response_wrapper(
+            peers.card,
         )
         self.chat = async_to_raw_response_wrapper(
             peers.chat,
@@ -814,6 +924,9 @@ class PeersResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             peers.list,
         )
+        self.card = to_streamed_response_wrapper(
+            peers.card,
+        )
         self.chat = to_streamed_response_wrapper(
             peers.chat,
         )
@@ -841,6 +954,9 @@ class AsyncPeersResourceWithStreamingResponse:
         )
         self.list = async_to_streamed_response_wrapper(
             peers.list,
+        )
+        self.card = async_to_streamed_response_wrapper(
+            peers.card,
         )
         self.chat = async_to_streamed_response_wrapper(
             peers.chat,
