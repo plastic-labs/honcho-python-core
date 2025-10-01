@@ -1,5 +1,33 @@
 # Changelog
 
+## 1.4.1-alpha.0 (2025-10-01)
+
+Full Changelog: [v1.4.0...v1.4.1-alpha.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.4.0...v1.4.1-alpha.0)
+
+### Features
+
+* **api:** Peer Card ([23165e4](https://github.com/plastic-labs/honcho-python-core/commit/23165e4e8563d7709a9acf5aec6d64b49ce2a882))
+* improve future compat with pydantic v3 ([1242869](https://github.com/plastic-labs/honcho-python-core/commit/1242869e64af91f4c7869d054bfbe27bc4225afb))
+* **types:** replace List[str] with SequenceNotStr in params ([00506c5](https://github.com/plastic-labs/honcho-python-core/commit/00506c5dbc93a07cfeeaa6ccc140ee6706c165e6))
+
+
+### Bug Fixes
+
+* avoid newer type syntax ([06235d3](https://github.com/plastic-labs/honcho-python-core/commit/06235d3f0d00f2a52de7f5c7924c9dd6d21f78b7))
+
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([81c7134](https://github.com/plastic-labs/honcho-python-core/commit/81c7134ce09a10882a738426ebf169932031ee59))
+* **internal:** add Sequence related utils ([2bd5ae1](https://github.com/plastic-labs/honcho-python-core/commit/2bd5ae146695d895b54ef0162714259bd44494b5))
+* **internal:** change ci workflow machines ([47cb48f](https://github.com/plastic-labs/honcho-python-core/commit/47cb48f5a988977e086df6473ccdb165a258abe3))
+* **internal:** move mypy configurations to `pyproject.toml` file ([08dfab1](https://github.com/plastic-labs/honcho-python-core/commit/08dfab1db0787ae287ad20e7209cc293783e8a1d))
+* **internal:** update pydantic dependency ([53e807b](https://github.com/plastic-labs/honcho-python-core/commit/53e807b7d1532fcb451e0c98c0c5b8bbef7c8e71))
+* **internal:** update pyright exclude list ([fbd6db0](https://github.com/plastic-labs/honcho-python-core/commit/fbd6db01b757d1b76b2b39c1e38d0d377051ac4b))
+* **tests:** simplify `get_platform` test ([9e86700](https://github.com/plastic-labs/honcho-python-core/commit/9e8670024fe4c2c3534ef5a93d67b1c5d6ebb901))
+* **types:** change optional parameter type from NotGiven to Omit ([f65c26a](https://github.com/plastic-labs/honcho-python-core/commit/f65c26a4710885df21166ede7d9d4590dd00af76))
+* update github action ([11362ac](https://github.com/plastic-labs/honcho-python-core/commit/11362acaa7df7b01c1c7bf618f48a8ae0ae8a1cf))
+
 ## 1.4.0 (2025-08-12)
 
 Full Changelog: [v1.3.0...v1.4.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.3.0...v1.4.0)
