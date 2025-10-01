@@ -22,7 +22,7 @@ from .messages import (
     MessagesResourceWithStreamingResponse,
     AsyncMessagesResourceWithStreamingResponse,
 )
-from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from ...._utils import maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -84,14 +84,14 @@ class SessionsResource(SyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        configuration: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        configuration: Optional[Dict[str, object]] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
         Update the metadata of a Session
@@ -132,15 +132,15 @@ class SessionsResource(SyncAPIResource):
         self,
         workspace_id: str,
         *,
-        page: int | NotGiven = NOT_GIVEN,
-        size: int | NotGiven = NOT_GIVEN,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        page: int | Omit = omit,
+        size: int | Omit = omit,
+        filters: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPage[Session]:
         """
         Get All Sessions in a Workspace
@@ -193,7 +193,7 @@ class SessionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Delete a session by marking it as inactive
@@ -228,13 +228,13 @@ class SessionsResource(SyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        message_id: Optional[str] | NotGiven = NOT_GIVEN,
+        message_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
         Clone a session, optionally up to a specific message
@@ -275,14 +275,14 @@ class SessionsResource(SyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        summary: bool | NotGiven = NOT_GIVEN,
-        tokens: Optional[int] | NotGiven = NOT_GIVEN,
+        summary: bool | Omit = omit,
+        tokens: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionGetContextResponse:
         """Produce a context object from the session.
 
@@ -338,15 +338,15 @@ class SessionsResource(SyncAPIResource):
         workspace_id: str,
         *,
         id: str,
-        configuration: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        peers: Optional[Dict[str, SessionPeerConfigParam]] | NotGiven = NOT_GIVEN,
+        configuration: Optional[Dict[str, object]] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
+        peers: Optional[Dict[str, SessionPeerConfigParam]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
         Get a specific session in a workspace.
@@ -390,14 +390,14 @@ class SessionsResource(SyncAPIResource):
         *,
         workspace_id: str,
         query: str,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
+        filters: Optional[Dict[str, object]] | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionSearchResponse:
         """
         Search a Session
@@ -451,7 +451,7 @@ class SessionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionSummariesResponse:
         """
         Get available summaries for a session.
@@ -518,14 +518,14 @@ class AsyncSessionsResource(AsyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        configuration: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        configuration: Optional[Dict[str, object]] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
         Update the metadata of a Session
@@ -566,15 +566,15 @@ class AsyncSessionsResource(AsyncAPIResource):
         self,
         workspace_id: str,
         *,
-        page: int | NotGiven = NOT_GIVEN,
-        size: int | NotGiven = NOT_GIVEN,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
+        page: int | Omit = omit,
+        size: int | Omit = omit,
+        filters: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Session, AsyncPage[Session]]:
         """
         Get All Sessions in a Workspace
@@ -627,7 +627,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Delete a session by marking it as inactive
@@ -662,13 +662,13 @@ class AsyncSessionsResource(AsyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        message_id: Optional[str] | NotGiven = NOT_GIVEN,
+        message_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
         Clone a session, optionally up to a specific message
@@ -709,14 +709,14 @@ class AsyncSessionsResource(AsyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        summary: bool | NotGiven = NOT_GIVEN,
-        tokens: Optional[int] | NotGiven = NOT_GIVEN,
+        summary: bool | Omit = omit,
+        tokens: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionGetContextResponse:
         """Produce a context object from the session.
 
@@ -772,15 +772,15 @@ class AsyncSessionsResource(AsyncAPIResource):
         workspace_id: str,
         *,
         id: str,
-        configuration: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        metadata: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        peers: Optional[Dict[str, SessionPeerConfigParam]] | NotGiven = NOT_GIVEN,
+        configuration: Optional[Dict[str, object]] | Omit = omit,
+        metadata: Optional[Dict[str, object]] | Omit = omit,
+        peers: Optional[Dict[str, SessionPeerConfigParam]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
         Get a specific session in a workspace.
@@ -824,14 +824,14 @@ class AsyncSessionsResource(AsyncAPIResource):
         *,
         workspace_id: str,
         query: str,
-        filters: Optional[Dict[str, object]] | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
+        filters: Optional[Dict[str, object]] | Omit = omit,
+        limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionSearchResponse:
         """
         Search a Session
@@ -885,7 +885,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionSummariesResponse:
         """
         Get available summaries for a session.

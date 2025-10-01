@@ -2,16 +2,18 @@
 
 from __future__ import annotations
 
+from typing import Optional
 from typing_extensions import Required, TypedDict
 
-from ...._types import SequenceNotStr
-
-__all__ = ["PeerRemoveParams"]
+__all__ = ["PeerCardParams"]
 
 
-class PeerRemoveParams(TypedDict, total=False):
+class PeerCardParams(TypedDict, total=False):
     workspace_id: Required[str]
     """ID of the workspace"""
 
-    body: Required[SequenceNotStr[str]]
-    """List of peer IDs to remove from the session"""
+    target: Optional[str]
+    """The peer whose card to retrieve.
+
+    If not provided, returns the observer's own card
+    """

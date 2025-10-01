@@ -6,9 +6,11 @@ from .peer import Peer as Peer
 from .session import Session as Session
 from .page_peer import PagePeer as PagePeer
 from .page_session import PageSession as PageSession
+from .peer_card_params import PeerCardParams as PeerCardParams
 from .peer_chat_params import PeerChatParams as PeerChatParams
 from .peer_list_params import PeerListParams as PeerListParams
 from .webhook_endpoint import WebhookEndpoint as WebhookEndpoint
+from .peer_card_response import PeerCardResponse as PeerCardResponse
 from .peer_chat_response import PeerChatResponse as PeerChatResponse
 from .peer_search_params import PeerSearchParams as PeerSearchParams
 from .peer_update_params import PeerUpdateParams as PeerUpdateParams
