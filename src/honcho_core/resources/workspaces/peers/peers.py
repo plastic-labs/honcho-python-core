@@ -393,7 +393,7 @@ class PeersResource(SyncAPIResource):
         peer_id: str,
         *,
         workspace_id: str,
-        session_id: str,
+        session_id: Optional[str] | Omit = omit,
         target: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -408,7 +408,7 @@ class PeersResource(SyncAPIResource):
         If a session_id is provided in the body, we get the working representation of
         the peer in that session. If a target is provided, we get the representation of
         the target from the perspective of the peer. If no target is provided, we get
-        the global representation of the peer.
+        the omniscient Honcho representation of the peer.
 
         Args:
           workspace_id: ID of the workspace
@@ -797,7 +797,7 @@ class AsyncPeersResource(AsyncAPIResource):
         peer_id: str,
         *,
         workspace_id: str,
-        session_id: str,
+        session_id: Optional[str] | Omit = omit,
         target: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -812,7 +812,7 @@ class AsyncPeersResource(AsyncAPIResource):
         If a session_id is provided in the body, we get the working representation of
         the peer in that session. If a target is provided, we get the representation of
         the target from the perspective of the peer. If no target is provided, we get
-        the global representation of the peer.
+        the omniscient Honcho representation of the peer.
 
         Args:
           workspace_id: ID of the workspace

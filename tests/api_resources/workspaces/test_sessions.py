@@ -247,6 +247,9 @@ class TestSessions:
         session = client.workspaces.sessions.get_context(
             session_id="session_id",
             workspace_id="workspace_id",
+            last_message="last_message",
+            peer_perspective="peer_perspective",
+            peer_target="peer_target",
             summary=True,
             tokens=100000,
         )
@@ -692,6 +695,9 @@ class TestAsyncSessions:
         session = await async_client.workspaces.sessions.get_context(
             session_id="session_id",
             workspace_id="workspace_id",
+            last_message="last_message",
+            peer_perspective="peer_perspective",
+            peer_target="peer_target",
             summary=True,
             tokens=100000,
         )
