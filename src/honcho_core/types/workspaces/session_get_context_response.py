@@ -3,6 +3,7 @@
 from typing import List, Optional
 from datetime import datetime
 
+from .summary import Summary
 from ..._models import BaseModel
 from .sessions.message import Message
 
@@ -11,7 +12,6 @@ __all__ = [
     "PeerRepresentation",
     "PeerRepresentationDeductive",
     "PeerRepresentationExplicit",
-    "Summary",
 ]
 
 
@@ -53,23 +53,6 @@ class PeerRepresentation(BaseModel):
     interpretation or inference. Example: ['The user is 25 years old', 'The user has
     a dog']
     """
-
-
-class Summary(BaseModel):
-    content: str
-    """The summary text"""
-
-    created_at: str
-    """The timestamp of when the summary was created (ISO format)"""
-
-    message_id: str
-    """The public ID of the message that this summary covers up to"""
-
-    summary_type: str
-    """The type of summary (short or long)"""
-
-    token_count: int
-    """The number of tokens in the summary text"""
 
 
 class SessionGetContextResponse(BaseModel):

@@ -59,6 +59,7 @@ Types:
 ```python
 from honcho_core.types.workspaces import (
     Session,
+    Summary,
     SessionGetContextResponse,
     SessionSearchResponse,
     SessionSummariesResponse,
