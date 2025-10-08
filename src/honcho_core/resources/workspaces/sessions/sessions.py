@@ -275,6 +275,9 @@ class SessionsResource(SyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
+        last_message: Optional[str] | Omit = omit,
+        peer_perspective: Optional[str] | Omit = omit,
+        peer_target: Optional[str] | Omit = omit,
         summary: bool | Omit = omit,
         tokens: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -298,10 +301,22 @@ class SessionsResource(SyncAPIResource):
 
           session_id: ID of the session
 
+          last_message: The most recent message, used to fetch semantically relevant observations
+
+          peer_perspective: A peer to get context for. If given, response will attempt to include
+              representation and card from the perspective of that peer. Must be provided with
+              `peer_target`.
+
+          peer_target: The target of the perspective. If given without `peer_perspective`, will get the
+              Honcho-level representation and peer card for this peer. If given with
+              `peer_perspective`, will get the representation and card for this peer _from the
+              perspective of that peer_.
+
           summary: Whether or not to include a summary _if_ one is available for the session
 
-          tokens: Number of tokens to use for the context. Includes summary if set to true. If not
-              provided, the context will be exhaustive (within 100000 tokens)
+          tokens: Number of tokens to use for the context. Includes summary if set to true.
+              Includes representation and peer card if they are included in the response. If
+              not provided, the context will be exhaustive (within 100000 tokens)
 
           extra_headers: Send extra headers
 
@@ -324,6 +339,9 @@ class SessionsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "last_message": last_message,
+                        "peer_perspective": peer_perspective,
+                        "peer_target": peer_target,
                         "summary": summary,
                         "tokens": tokens,
                     },
@@ -709,6 +727,9 @@ class AsyncSessionsResource(AsyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
+        last_message: Optional[str] | Omit = omit,
+        peer_perspective: Optional[str] | Omit = omit,
+        peer_target: Optional[str] | Omit = omit,
         summary: bool | Omit = omit,
         tokens: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -732,10 +753,22 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           session_id: ID of the session
 
+          last_message: The most recent message, used to fetch semantically relevant observations
+
+          peer_perspective: A peer to get context for. If given, response will attempt to include
+              representation and card from the perspective of that peer. Must be provided with
+              `peer_target`.
+
+          peer_target: The target of the perspective. If given without `peer_perspective`, will get the
+              Honcho-level representation and peer card for this peer. If given with
+              `peer_perspective`, will get the representation and card for this peer _from the
+              perspective of that peer_.
+
           summary: Whether or not to include a summary _if_ one is available for the session
 
-          tokens: Number of tokens to use for the context. Includes summary if set to true. If not
-              provided, the context will be exhaustive (within 100000 tokens)
+          tokens: Number of tokens to use for the context. Includes summary if set to true.
+              Includes representation and peer card if they are included in the response. If
+              not provided, the context will be exhaustive (within 100000 tokens)
 
           extra_headers: Send extra headers
 
@@ -758,6 +791,9 @@ class AsyncSessionsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "last_message": last_message,
+                        "peer_perspective": peer_perspective,
+                        "peer_target": peer_target,
                         "summary": summary,
                         "tokens": tokens,
                     },
