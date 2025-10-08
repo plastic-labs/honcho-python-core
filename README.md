@@ -17,7 +17,7 @@ The REST API documentation can be found on [docs.honcho.dev](https://docs.honcho
 
 ```sh
 # install from PyPI
-pip install --pre honcho-core
+pip install honcho-core
 ```
 
 ## Usage
@@ -81,7 +81,7 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install --pre honcho-core[aiohttp]
+pip install honcho-core[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
