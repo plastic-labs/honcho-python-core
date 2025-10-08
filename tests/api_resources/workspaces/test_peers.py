@@ -373,7 +373,6 @@ class TestPeers:
         peer = client.workspaces.peers.working_representation(
             peer_id="peer_id",
             workspace_id="workspace_id",
-            session_id="session_id",
         )
         assert_matches_type(PeerWorkingRepresentationResponse, peer, path=["response"])
 
@@ -392,7 +391,6 @@ class TestPeers:
         response = client.workspaces.peers.with_raw_response.working_representation(
             peer_id="peer_id",
             workspace_id="workspace_id",
-            session_id="session_id",
         )
 
         assert response.is_closed is True
@@ -405,7 +403,6 @@ class TestPeers:
         with client.workspaces.peers.with_streaming_response.working_representation(
             peer_id="peer_id",
             workspace_id="workspace_id",
-            session_id="session_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -421,14 +418,12 @@ class TestPeers:
             client.workspaces.peers.with_raw_response.working_representation(
                 peer_id="peer_id",
                 workspace_id="",
-                session_id="session_id",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `peer_id` but received ''"):
             client.workspaces.peers.with_raw_response.working_representation(
                 peer_id="",
                 workspace_id="workspace_id",
-                session_id="session_id",
             )
 
 
@@ -786,7 +781,6 @@ class TestAsyncPeers:
         peer = await async_client.workspaces.peers.working_representation(
             peer_id="peer_id",
             workspace_id="workspace_id",
-            session_id="session_id",
         )
         assert_matches_type(PeerWorkingRepresentationResponse, peer, path=["response"])
 
@@ -805,7 +799,6 @@ class TestAsyncPeers:
         response = await async_client.workspaces.peers.with_raw_response.working_representation(
             peer_id="peer_id",
             workspace_id="workspace_id",
-            session_id="session_id",
         )
 
         assert response.is_closed is True
@@ -818,7 +811,6 @@ class TestAsyncPeers:
         async with async_client.workspaces.peers.with_streaming_response.working_representation(
             peer_id="peer_id",
             workspace_id="workspace_id",
-            session_id="session_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -834,12 +826,10 @@ class TestAsyncPeers:
             await async_client.workspaces.peers.with_raw_response.working_representation(
                 peer_id="peer_id",
                 workspace_id="",
-                session_id="session_id",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `peer_id` but received ''"):
             await async_client.workspaces.peers.with_raw_response.working_representation(
                 peer_id="",
                 workspace_id="workspace_id",
-                session_id="session_id",
             )

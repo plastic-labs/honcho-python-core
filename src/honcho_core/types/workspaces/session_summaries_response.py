@@ -14,8 +14,8 @@ class LongSummary(BaseModel):
     created_at: str
     """The timestamp of when the summary was created (ISO format)"""
 
-    message_id: int
-    """The ID of the message that this summary covers up to"""
+    message_id: str
+    """The public ID of the message that this summary covers up to"""
 
     summary_type: str
     """The type of summary (short or long)"""
@@ -31,8 +31,8 @@ class ShortSummary(BaseModel):
     created_at: str
     """The timestamp of when the summary was created (ISO format)"""
 
-    message_id: int
-    """The ID of the message that this summary covers up to"""
+    message_id: str
+    """The public ID of the message that this summary covers up to"""
 
     summary_type: str
     """The type of summary (short or long)"""

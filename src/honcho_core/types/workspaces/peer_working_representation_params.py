@@ -12,7 +12,7 @@ class PeerWorkingRepresentationParams(TypedDict, total=False):
     workspace_id: Required[str]
     """ID of the workspace"""
 
-    session_id: Required[str]
+    session_id: Optional[str]
     """Get the working representation within this session"""
 
     target: Optional[str]
