@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.5.0 (2025-10-08)
+
+Full Changelog: [v1.4.1-alpha.0...v1.5.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.4.1-alpha.0...v1.5.0)
+
+### Features
+
+* **api:** api update ([641c510](https://github.com/plastic-labs/honcho-python-core/commit/641c510efe158915b04e3a1eac14a427c94f3fe4))
+* **api:** manual updates ([7314f79](https://github.com/plastic-labs/honcho-python-core/commit/7314f79200b2532afd77c830d0709c9ea75f6cff))
+
 ## 1.4.1-alpha.0 (2025-10-01)
 
 Full Changelog: [v1.4.0...v1.4.1-alpha.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.4.0...v1.4.1-alpha.0)
