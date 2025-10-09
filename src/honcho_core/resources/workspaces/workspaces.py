@@ -182,6 +182,41 @@ class WorkspacesResource(SyncAPIResource):
             method="post",
         )
 
+    def delete(
+        self,
+        workspace_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Workspace:
+        """
+        Delete a Workspace
+
+        Args:
+          workspace_id: ID of the workspace to delete
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        return self._delete(
+            f"/v2/workspaces/{workspace_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Workspace,
+        )
+
     def deriver_status(
         self,
         workspace_id: str,
@@ -461,6 +496,41 @@ class AsyncWorkspacesResource(AsyncAPIResource):
             method="post",
         )
 
+    async def delete(
+        self,
+        workspace_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Workspace:
+        """
+        Delete a Workspace
+
+        Args:
+          workspace_id: ID of the workspace to delete
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        return await self._delete(
+            f"/v2/workspaces/{workspace_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Workspace,
+        )
+
     async def deriver_status(
         self,
         workspace_id: str,
@@ -624,6 +694,9 @@ class WorkspacesResourceWithRawResponse:
         self.list = to_raw_response_wrapper(
             workspaces.list,
         )
+        self.delete = to_raw_response_wrapper(
+            workspaces.delete,
+        )
         self.deriver_status = to_raw_response_wrapper(
             workspaces.deriver_status,
         )
@@ -656,6 +729,9 @@ class AsyncWorkspacesResourceWithRawResponse:
         )
         self.list = async_to_raw_response_wrapper(
             workspaces.list,
+        )
+        self.delete = async_to_raw_response_wrapper(
+            workspaces.delete,
         )
         self.deriver_status = async_to_raw_response_wrapper(
             workspaces.deriver_status,
@@ -690,6 +766,9 @@ class WorkspacesResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             workspaces.list,
         )
+        self.delete = to_streamed_response_wrapper(
+            workspaces.delete,
+        )
         self.deriver_status = to_streamed_response_wrapper(
             workspaces.deriver_status,
         )
@@ -722,6 +801,9 @@ class AsyncWorkspacesResourceWithStreamingResponse:
         )
         self.list = async_to_streamed_response_wrapper(
             workspaces.list,
+        )
+        self.delete = async_to_streamed_response_wrapper(
+            workspaces.delete,
         )
         self.deriver_status = async_to_streamed_response_wrapper(
             workspaces.deriver_status,
