@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from .message import Message as Message
+from .observation import Observation as Observation
 from .peer_add_params import PeerAddParams as PeerAddParams
 from .peer_set_params import PeerSetParams as PeerSetParams
 from .peer_list_params import PeerListParams as PeerListParams
@@ -16,4 +17,7 @@ from .message_upload_params import MessageUploadParams as MessageUploadParams
 from .peer_set_config_params import PeerSetConfigParams as PeerSetConfigParams
 from .message_create_response import MessageCreateResponse as MessageCreateResponse
 from .message_upload_response import MessageUploadResponse as MessageUploadResponse
+from .observation_list_params import ObservationListParams as ObservationListParams
+from .observation_query_params import ObservationQueryParams as ObservationQueryParams
 from .session_peer_config_param import SessionPeerConfigParam as SessionPeerConfigParam
+from .observation_query_response import ObservationQueryResponse as ObservationQueryResponse
