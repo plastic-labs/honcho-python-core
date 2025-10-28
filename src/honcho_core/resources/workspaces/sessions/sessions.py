@@ -32,6 +32,14 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from .observations import (
+    ObservationsResource,
+    AsyncObservationsResource,
+    ObservationsResourceWithRawResponse,
+    AsyncObservationsResourceWithRawResponse,
+    ObservationsResourceWithStreamingResponse,
+    AsyncObservationsResourceWithStreamingResponse,
+)
 from ....pagination import SyncPage, AsyncPage
 from ...._base_client import AsyncPaginator, make_request_options
 from ....types.workspaces import (
@@ -59,6 +67,10 @@ class SessionsResource(SyncAPIResource):
     @cached_property
     def peers(self) -> PeersResource:
         return PeersResource(self._client)
+
+    @cached_property
+    def observations(self) -> ObservationsResource:
+        return ObservationsResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> SessionsResourceWithRawResponse:
@@ -196,7 +208,17 @@ class SessionsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
-        Delete a session by marking it as inactive
+        Delete a session and all associated data.
+
+        This permanently deletes the session and all related data including:
+
+        - Messages
+        - Message embeddings
+        - Documents (theory-of-mind data)
+        - Session peer associations
+        - Background processing queue items
+
+        This action cannot be undone.
 
         Args:
           workspace_id: ID of the workspace
@@ -538,6 +560,10 @@ class AsyncSessionsResource(AsyncAPIResource):
         return AsyncPeersResource(self._client)
 
     @cached_property
+    def observations(self) -> AsyncObservationsResource:
+        return AsyncObservationsResource(self._client)
+
+    @cached_property
     def with_raw_response(self) -> AsyncSessionsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
@@ -673,7 +699,17 @@ class AsyncSessionsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
-        Delete a session by marking it as inactive
+        Delete a session and all associated data.
+
+        This permanently deletes the session and all related data including:
+
+        - Messages
+        - Message embeddings
+        - Documents (theory-of-mind data)
+        - Session peer associations
+        - Background processing queue items
+
+        This action cannot be undone.
 
         Args:
           workspace_id: ID of the workspace
@@ -1042,6 +1078,10 @@ class SessionsResourceWithRawResponse:
     def peers(self) -> PeersResourceWithRawResponse:
         return PeersResourceWithRawResponse(self._sessions.peers)
 
+    @cached_property
+    def observations(self) -> ObservationsResourceWithRawResponse:
+        return ObservationsResourceWithRawResponse(self._sessions.observations)
+
 
 class AsyncSessionsResourceWithRawResponse:
     def __init__(self, sessions: AsyncSessionsResource) -> None:
@@ -1079,6 +1119,10 @@ class AsyncSessionsResourceWithRawResponse:
     @cached_property
     def peers(self) -> AsyncPeersResourceWithRawResponse:
         return AsyncPeersResourceWithRawResponse(self._sessions.peers)
+
+    @cached_property
+    def observations(self) -> AsyncObservationsResourceWithRawResponse:
+        return AsyncObservationsResourceWithRawResponse(self._sessions.observations)
 
 
 class SessionsResourceWithStreamingResponse:
@@ -1118,6 +1162,10 @@ class SessionsResourceWithStreamingResponse:
     def peers(self) -> PeersResourceWithStreamingResponse:
         return PeersResourceWithStreamingResponse(self._sessions.peers)
 
+    @cached_property
+    def observations(self) -> ObservationsResourceWithStreamingResponse:
+        return ObservationsResourceWithStreamingResponse(self._sessions.observations)
+
 
 class AsyncSessionsResourceWithStreamingResponse:
     def __init__(self, sessions: AsyncSessionsResource) -> None:
@@ -1155,3 +1203,7 @@ class AsyncSessionsResourceWithStreamingResponse:
     @cached_property
     def peers(self) -> AsyncPeersResourceWithStreamingResponse:
         return AsyncPeersResourceWithStreamingResponse(self._sessions.peers)
+
+    @cached_property
+    def observations(self) -> AsyncObservationsResourceWithStreamingResponse:
+        return AsyncObservationsResourceWithStreamingResponse(self._sessions.observations)
