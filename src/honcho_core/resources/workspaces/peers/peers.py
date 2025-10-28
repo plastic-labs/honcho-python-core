@@ -393,6 +393,11 @@ class PeersResource(SyncAPIResource):
         peer_id: str,
         *,
         workspace_id: str,
+        include_most_derived: Optional[bool] | Omit = omit,
+        max_observations: Optional[int] | Omit = omit,
+        search_max_distance: Optional[float] | Omit = omit,
+        search_query: Optional[str] | Omit = omit,
+        search_top_k: Optional[int] | Omit = omit,
         session_id: Optional[str] | Omit = omit,
         target: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -415,6 +420,20 @@ class PeersResource(SyncAPIResource):
 
           peer_id: ID of the peer
 
+          include_most_derived: Only used if `search_query` is provided. Whether to include the most derived
+              observations in the representation
+
+          max_observations: Only used if `search_query` is provided. Maximum number of observations to
+              include in the representation
+
+          search_max_distance: Only used if `search_query` is provided. Maximum distance to search for
+              semantically relevant observations
+
+          search_query: Optional input to curate the representation around semantic search results
+
+          search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
+              observations to include in the representation
+
           session_id: Get the working representation within this session
 
           target: Optional peer ID to get the representation for, from the perspective of this
@@ -436,6 +455,11 @@ class PeersResource(SyncAPIResource):
             f"/v2/workspaces/{workspace_id}/peers/{peer_id}/representation",
             body=maybe_transform(
                 {
+                    "include_most_derived": include_most_derived,
+                    "max_observations": max_observations,
+                    "search_max_distance": search_max_distance,
+                    "search_query": search_query,
+                    "search_top_k": search_top_k,
                     "session_id": session_id,
                     "target": target,
                 },
@@ -797,6 +821,11 @@ class AsyncPeersResource(AsyncAPIResource):
         peer_id: str,
         *,
         workspace_id: str,
+        include_most_derived: Optional[bool] | Omit = omit,
+        max_observations: Optional[int] | Omit = omit,
+        search_max_distance: Optional[float] | Omit = omit,
+        search_query: Optional[str] | Omit = omit,
+        search_top_k: Optional[int] | Omit = omit,
         session_id: Optional[str] | Omit = omit,
         target: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -819,6 +848,20 @@ class AsyncPeersResource(AsyncAPIResource):
 
           peer_id: ID of the peer
 
+          include_most_derived: Only used if `search_query` is provided. Whether to include the most derived
+              observations in the representation
+
+          max_observations: Only used if `search_query` is provided. Maximum number of observations to
+              include in the representation
+
+          search_max_distance: Only used if `search_query` is provided. Maximum distance to search for
+              semantically relevant observations
+
+          search_query: Optional input to curate the representation around semantic search results
+
+          search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
+              observations to include in the representation
+
           session_id: Get the working representation within this session
 
           target: Optional peer ID to get the representation for, from the perspective of this
@@ -840,6 +883,11 @@ class AsyncPeersResource(AsyncAPIResource):
             f"/v2/workspaces/{workspace_id}/peers/{peer_id}/representation",
             body=await async_maybe_transform(
                 {
+                    "include_most_derived": include_most_derived,
+                    "max_observations": max_observations,
+                    "search_max_distance": search_max_distance,
+                    "search_query": search_query,
+                    "search_top_k": search_top_k,
                     "session_id": session_id,
                     "target": target,
                 },

@@ -275,9 +275,14 @@ class SessionsResource(SyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
+        include_most_derived: bool | Omit = omit,
         last_message: Optional[str] | Omit = omit,
+        limit_to_session: bool | Omit = omit,
+        max_observations: Optional[int] | Omit = omit,
         peer_perspective: Optional[str] | Omit = omit,
         peer_target: Optional[str] | Omit = omit,
+        search_max_distance: Optional[float] | Omit = omit,
+        search_top_k: Optional[int] | Omit = omit,
         summary: bool | Omit = omit,
         tokens: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -301,7 +306,16 @@ class SessionsResource(SyncAPIResource):
 
           session_id: ID of the session
 
+          include_most_derived: Only used if `last_message` is provided. Whether to include the most derived
+              observations in the representation
+
           last_message: The most recent message, used to fetch semantically relevant observations
+
+          limit_to_session: Only used if `last_message` is provided. Whether to limit the representation to
+              the session (as opposed to everything known about the target peer)
+
+          max_observations: Only used if `last_message` is provided. The maximum number of observations to
+              include in the representation
 
           peer_perspective: A peer to get context for. If given, response will attempt to include
               representation and card from the perspective of that peer. Must be provided with
@@ -311,6 +325,12 @@ class SessionsResource(SyncAPIResource):
               Honcho-level representation and peer card for this peer. If given with
               `peer_perspective`, will get the representation and card for this peer _from the
               perspective of that peer_.
+
+          search_max_distance: Only used if `last_message` is provided. The maximum distance to search for
+              semantically relevant observations
+
+          search_top_k: Only used if `last_message` is provided. The number of semantic-search-retrieved
+              observations to include in the representation
 
           summary: Whether or not to include a summary _if_ one is available for the session
 
@@ -339,9 +359,14 @@ class SessionsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "include_most_derived": include_most_derived,
                         "last_message": last_message,
+                        "limit_to_session": limit_to_session,
+                        "max_observations": max_observations,
                         "peer_perspective": peer_perspective,
                         "peer_target": peer_target,
+                        "search_max_distance": search_max_distance,
+                        "search_top_k": search_top_k,
                         "summary": summary,
                         "tokens": tokens,
                     },
@@ -727,9 +752,14 @@ class AsyncSessionsResource(AsyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
+        include_most_derived: bool | Omit = omit,
         last_message: Optional[str] | Omit = omit,
+        limit_to_session: bool | Omit = omit,
+        max_observations: Optional[int] | Omit = omit,
         peer_perspective: Optional[str] | Omit = omit,
         peer_target: Optional[str] | Omit = omit,
+        search_max_distance: Optional[float] | Omit = omit,
+        search_top_k: Optional[int] | Omit = omit,
         summary: bool | Omit = omit,
         tokens: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -753,7 +783,16 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           session_id: ID of the session
 
+          include_most_derived: Only used if `last_message` is provided. Whether to include the most derived
+              observations in the representation
+
           last_message: The most recent message, used to fetch semantically relevant observations
+
+          limit_to_session: Only used if `last_message` is provided. Whether to limit the representation to
+              the session (as opposed to everything known about the target peer)
+
+          max_observations: Only used if `last_message` is provided. The maximum number of observations to
+              include in the representation
 
           peer_perspective: A peer to get context for. If given, response will attempt to include
               representation and card from the perspective of that peer. Must be provided with
@@ -763,6 +802,12 @@ class AsyncSessionsResource(AsyncAPIResource):
               Honcho-level representation and peer card for this peer. If given with
               `peer_perspective`, will get the representation and card for this peer _from the
               perspective of that peer_.
+
+          search_max_distance: Only used if `last_message` is provided. The maximum distance to search for
+              semantically relevant observations
+
+          search_top_k: Only used if `last_message` is provided. The number of semantic-search-retrieved
+              observations to include in the representation
 
           summary: Whether or not to include a summary _if_ one is available for the session
 
@@ -791,9 +836,14 @@ class AsyncSessionsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
+                        "include_most_derived": include_most_derived,
                         "last_message": last_message,
+                        "limit_to_session": limit_to_session,
+                        "max_observations": max_observations,
                         "peer_perspective": peer_perspective,
                         "peer_target": peer_target,
+                        "search_max_distance": search_max_distance,
+                        "search_top_k": search_top_k,
                         "summary": summary,
                         "tokens": tokens,
                     },
