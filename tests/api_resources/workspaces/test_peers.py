@@ -381,6 +381,11 @@ class TestPeers:
         peer = client.workspaces.peers.working_representation(
             peer_id="peer_id",
             workspace_id="workspace_id",
+            include_most_derived=True,
+            max_observations=1,
+            search_max_distance=0,
+            search_query="search_query",
+            search_top_k=1,
             session_id="session_id",
             target="target",
         )
@@ -789,6 +794,11 @@ class TestAsyncPeers:
         peer = await async_client.workspaces.peers.working_representation(
             peer_id="peer_id",
             workspace_id="workspace_id",
+            include_most_derived=True,
+            max_observations=1,
+            search_max_distance=0,
+            search_query="search_query",
+            search_top_k=1,
             session_id="session_id",
             target="target",
         )
