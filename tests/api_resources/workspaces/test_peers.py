@@ -369,6 +369,69 @@ class TestPeers:
             )
 
     @parametrize
+    def test_method_set_card(self, client: Honcho) -> None:
+        peer = client.workspaces.peers.set_card(
+            peer_id="peer_id",
+            workspace_id="workspace_id",
+            peer_card=["string"],
+        )
+        assert_matches_type(PeerCardResponse, peer, path=["response"])
+
+    @parametrize
+    def test_method_set_card_with_all_params(self, client: Honcho) -> None:
+        peer = client.workspaces.peers.set_card(
+            peer_id="peer_id",
+            workspace_id="workspace_id",
+            peer_card=["string"],
+            target="target",
+        )
+        assert_matches_type(PeerCardResponse, peer, path=["response"])
+
+    @parametrize
+    def test_raw_response_set_card(self, client: Honcho) -> None:
+        response = client.workspaces.peers.with_raw_response.set_card(
+            peer_id="peer_id",
+            workspace_id="workspace_id",
+            peer_card=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        peer = response.parse()
+        assert_matches_type(PeerCardResponse, peer, path=["response"])
+
+    @parametrize
+    def test_streaming_response_set_card(self, client: Honcho) -> None:
+        with client.workspaces.peers.with_streaming_response.set_card(
+            peer_id="peer_id",
+            workspace_id="workspace_id",
+            peer_card=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            peer = response.parse()
+            assert_matches_type(PeerCardResponse, peer, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_set_card(self, client: Honcho) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
+            client.workspaces.peers.with_raw_response.set_card(
+                peer_id="peer_id",
+                workspace_id="",
+                peer_card=["string"],
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `peer_id` but received ''"):
+            client.workspaces.peers.with_raw_response.set_card(
+                peer_id="",
+                workspace_id="workspace_id",
+                peer_card=["string"],
+            )
+
+    @parametrize
     def test_method_working_representation(self, client: Honcho) -> None:
         peer = client.workspaces.peers.working_representation(
             peer_id="peer_id",
@@ -779,6 +842,69 @@ class TestAsyncPeers:
                 peer_id="",
                 workspace_id="workspace_id",
                 query="query",
+            )
+
+    @parametrize
+    async def test_method_set_card(self, async_client: AsyncHoncho) -> None:
+        peer = await async_client.workspaces.peers.set_card(
+            peer_id="peer_id",
+            workspace_id="workspace_id",
+            peer_card=["string"],
+        )
+        assert_matches_type(PeerCardResponse, peer, path=["response"])
+
+    @parametrize
+    async def test_method_set_card_with_all_params(self, async_client: AsyncHoncho) -> None:
+        peer = await async_client.workspaces.peers.set_card(
+            peer_id="peer_id",
+            workspace_id="workspace_id",
+            peer_card=["string"],
+            target="target",
+        )
+        assert_matches_type(PeerCardResponse, peer, path=["response"])
+
+    @parametrize
+    async def test_raw_response_set_card(self, async_client: AsyncHoncho) -> None:
+        response = await async_client.workspaces.peers.with_raw_response.set_card(
+            peer_id="peer_id",
+            workspace_id="workspace_id",
+            peer_card=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        peer = await response.parse()
+        assert_matches_type(PeerCardResponse, peer, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_set_card(self, async_client: AsyncHoncho) -> None:
+        async with async_client.workspaces.peers.with_streaming_response.set_card(
+            peer_id="peer_id",
+            workspace_id="workspace_id",
+            peer_card=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            peer = await response.parse()
+            assert_matches_type(PeerCardResponse, peer, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_set_card(self, async_client: AsyncHoncho) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
+            await async_client.workspaces.peers.with_raw_response.set_card(
+                peer_id="peer_id",
+                workspace_id="",
+                peer_card=["string"],
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `peer_id` but received ''"):
+            await async_client.workspaces.peers.with_raw_response.set_card(
+                peer_id="",
+                workspace_id="workspace_id",
+                peer_card=["string"],
             )
 
     @parametrize

@@ -4,9 +4,14 @@ Types:
 
 ```python
 from honcho_core.types import (
+    DeriverConfiguration,
     DeriverStatus,
+    DreamConfiguration,
     MessageSearchOptions,
+    PeerCardConfiguration,
+    SummaryConfiguration,
     Workspace,
+    WorkspaceConfiguration,
     WorkspaceSearchResponse,
 )
 ```
@@ -19,6 +24,7 @@ Methods:
 - <code title="get /v2/workspaces/{workspace_id}/deriver/status">client.workspaces.<a href="./src/honcho_core/resources/workspaces/workspaces.py">deriver_status</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspace_deriver_status_params.py">params</a>) -> <a href="./src/honcho_core/types/deriver_status.py">DeriverStatus</a></code>
 - <code title="post /v2/workspaces">client.workspaces.<a href="./src/honcho_core/resources/workspaces/workspaces.py">get_or_create</a>(\*\*<a href="src/honcho_core/types/workspace_get_or_create_params.py">params</a>) -> <a href="./src/honcho_core/types/workspace.py">Workspace</a></code>
 - <code title="post /v2/workspaces/{workspace_id}/search">client.workspaces.<a href="./src/honcho_core/resources/workspaces/workspaces.py">search</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspace_search_params.py">params</a>) -> <a href="./src/honcho_core/types/workspace_search_response.py">WorkspaceSearchResponse</a></code>
+- <code title="post /v2/workspaces/{workspace_id}/trigger_dream">client.workspaces.<a href="./src/honcho_core/resources/workspaces/workspaces.py">trigger_dream</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspace_trigger_dream_params.py">params</a>) -> None</code>
 
 ## Peers
 
@@ -29,8 +35,8 @@ from honcho_core.types.workspaces import (
     PagePeer,
     PageSession,
     Peer,
-    SessionGet,
     PeerCardResponse,
+    SessionGet,
     PeerChatResponse,
     PeerSearchResponse,
     PeerWorkingRepresentationResponse,
@@ -45,6 +51,7 @@ Methods:
 - <code title="post /v2/workspaces/{workspace_id}/peers/{peer_id}/chat">client.workspaces.peers.<a href="./src/honcho_core/resources/workspaces/peers/peers.py">chat</a>(peer_id, \*, workspace_id, \*\*<a href="src/honcho_core/types/workspaces/peer_chat_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/peer_chat_response.py">PeerChatResponse</a></code>
 - <code title="post /v2/workspaces/{workspace_id}/peers">client.workspaces.peers.<a href="./src/honcho_core/resources/workspaces/peers/peers.py">get_or_create</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspaces/peer_get_or_create_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/peer.py">Peer</a></code>
 - <code title="post /v2/workspaces/{workspace_id}/peers/{peer_id}/search">client.workspaces.peers.<a href="./src/honcho_core/resources/workspaces/peers/peers.py">search</a>(peer_id, \*, workspace_id, \*\*<a href="src/honcho_core/types/workspaces/peer_search_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/peer_search_response.py">PeerSearchResponse</a></code>
+- <code title="put /v2/workspaces/{workspace_id}/peers/{peer_id}/card">client.workspaces.peers.<a href="./src/honcho_core/resources/workspaces/peers/peers.py">set_card</a>(peer_id, \*, workspace_id, \*\*<a href="src/honcho_core/types/workspaces/peer_set_card_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/peer_card_response.py">PeerCardResponse</a></code>
 - <code title="post /v2/workspaces/{workspace_id}/peers/{peer_id}/representation">client.workspaces.peers.<a href="./src/honcho_core/resources/workspaces/peers/peers.py">working_representation</a>(peer_id, \*, workspace_id, \*\*<a href="src/honcho_core/types/workspaces/peer_working_representation_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/peer_working_representation_response.py">PeerWorkingRepresentationResponse</a></code>
 
 ### Sessions
@@ -60,6 +67,7 @@ Types:
 ```python
 from honcho_core.types.workspaces import (
     Session,
+    SessionConfiguration,
     Summary,
     SessionGetContextResponse,
     SessionSearchResponse,
@@ -115,20 +123,6 @@ Methods:
 - <code title="delete /v2/workspaces/{workspace_id}/sessions/{session_id}/peers">client.workspaces.sessions.peers.<a href="./src/honcho_core/resources/workspaces/sessions/peers.py">remove</a>(session_id, \*, workspace_id, \*\*<a href="src/honcho_core/types/workspaces/sessions/peer_remove_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/session.py">Session</a></code>
 - <code title="put /v2/workspaces/{workspace_id}/sessions/{session_id}/peers">client.workspaces.sessions.peers.<a href="./src/honcho_core/resources/workspaces/sessions/peers.py">set</a>(session_id, \*, workspace_id, \*\*<a href="src/honcho_core/types/workspaces/sessions/peer_set_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/session.py">Session</a></code>
 - <code title="post /v2/workspaces/{workspace_id}/sessions/{session_id}/peers/{peer_id}/config">client.workspaces.sessions.peers.<a href="./src/honcho_core/resources/workspaces/sessions/peers.py">set_config</a>(peer_id, \*, workspace_id, session_id, \*\*<a href="src/honcho_core/types/workspaces/sessions/peer_set_config_params.py">params</a>) -> object</code>
-
-### Observations
-
-Types:
-
-```python
-from honcho_core.types.workspaces.sessions import Observation, ObservationQueryResponse
-```
-
-Methods:
-
-- <code title="post /v2/workspaces/{workspace_id}/sessions/{session_id}/observations/list">client.workspaces.sessions.observations.<a href="./src/honcho_core/resources/workspaces/sessions/observations.py">list</a>(session_id, \*, workspace_id, \*\*<a href="src/honcho_core/types/workspaces/sessions/observation_list_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/sessions/observation.py">SyncPage[Observation]</a></code>
-- <code title="delete /v2/workspaces/{workspace_id}/sessions/{session_id}/observations/{observation_id}">client.workspaces.sessions.observations.<a href="./src/honcho_core/resources/workspaces/sessions/observations.py">delete</a>(observation_id, \*, workspace_id, session_id) -> object</code>
-- <code title="post /v2/workspaces/{workspace_id}/sessions/{session_id}/observations/query">client.workspaces.sessions.observations.<a href="./src/honcho_core/resources/workspaces/sessions/observations.py">query</a>(session_id, \*, workspace_id, \*\*<a href="src/honcho_core/types/workspaces/sessions/observation_query_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/sessions/observation_query_response.py">ObservationQueryResponse</a></code>
 
 ## Webhooks
 

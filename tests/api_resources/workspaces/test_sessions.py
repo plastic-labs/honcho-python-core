@@ -36,7 +36,22 @@ class TestSessions:
         session = client.workspaces.sessions.update(
             session_id="session_id",
             workspace_id="workspace_id",
-            configuration={"foo": "bar"},
+            configuration={
+                "deriver": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
+                },
+                "dream": {"enabled": True},
+                "peer_card": {
+                    "create": True,
+                    "use": True,
+                },
+                "summary": {
+                    "enabled": True,
+                    "messages_per_long_summary": 20,
+                    "messages_per_short_summary": 10,
+                },
+            },
             metadata={"foo": "bar"},
         )
         assert_matches_type(Session, session, path=["response"])
@@ -313,7 +328,22 @@ class TestSessions:
         session = client.workspaces.sessions.get_or_create(
             workspace_id="workspace_id",
             id="id",
-            configuration={"foo": "bar"},
+            configuration={
+                "deriver": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
+                },
+                "dream": {"enabled": True},
+                "peer_card": {
+                    "create": True,
+                    "use": True,
+                },
+                "summary": {
+                    "enabled": True,
+                    "messages_per_long_summary": 20,
+                    "messages_per_short_summary": 10,
+                },
+            },
             metadata={"foo": "bar"},
             peers={
                 "foo": {
@@ -489,7 +519,22 @@ class TestAsyncSessions:
         session = await async_client.workspaces.sessions.update(
             session_id="session_id",
             workspace_id="workspace_id",
-            configuration={"foo": "bar"},
+            configuration={
+                "deriver": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
+                },
+                "dream": {"enabled": True},
+                "peer_card": {
+                    "create": True,
+                    "use": True,
+                },
+                "summary": {
+                    "enabled": True,
+                    "messages_per_long_summary": 20,
+                    "messages_per_short_summary": 10,
+                },
+            },
             metadata={"foo": "bar"},
         )
         assert_matches_type(Session, session, path=["response"])
@@ -766,7 +811,22 @@ class TestAsyncSessions:
         session = await async_client.workspaces.sessions.get_or_create(
             workspace_id="workspace_id",
             id="id",
-            configuration={"foo": "bar"},
+            configuration={
+                "deriver": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
+                },
+                "dream": {"enabled": True},
+                "peer_card": {
+                    "create": True,
+                    "use": True,
+                },
+                "summary": {
+                    "enabled": True,
+                    "messages_per_long_summary": 20,
+                    "messages_per_short_summary": 10,
+                },
+            },
             metadata={"foo": "bar"},
             peers={
                 "foo": {

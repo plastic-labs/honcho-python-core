@@ -18,6 +18,7 @@ from .peer_update_params import PeerUpdateParams as PeerUpdateParams
 from .session_list_params import SessionListParams as SessionListParams
 from .webhook_list_params import WebhookListParams as WebhookListParams
 from .peer_search_response import PeerSearchResponse as PeerSearchResponse
+from .peer_set_card_params import PeerSetCardParams as PeerSetCardParams
 from .session_clone_params import SessionCloneParams as SessionCloneParams
 from .session_search_params import SessionSearchParams as SessionSearchParams
 from .session_update_params import SessionUpdateParams as SessionUpdateParams
@@ -25,6 +26,7 @@ from .session_search_response import SessionSearchResponse as SessionSearchRespo
 from .peer_get_or_create_params import PeerGetOrCreateParams as PeerGetOrCreateParams
 from .session_get_context_params import SessionGetContextParams as SessionGetContextParams
 from .session_summaries_response import SessionSummariesResponse as SessionSummariesResponse
+from .session_configuration_param import SessionConfigurationParam as SessionConfigurationParam
 from .session_get_context_response import SessionGetContextResponse as SessionGetContextResponse
 from .session_get_or_create_params import SessionGetOrCreateParams as SessionGetOrCreateParams
 from .webhook_get_or_create_params import WebhookGetOrCreateParams as WebhookGetOrCreateParams

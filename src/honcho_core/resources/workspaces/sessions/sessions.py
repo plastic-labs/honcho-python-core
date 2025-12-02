@@ -32,14 +32,6 @@ from ...._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .observations import (
-    ObservationsResource,
-    AsyncObservationsResource,
-    ObservationsResourceWithRawResponse,
-    AsyncObservationsResourceWithRawResponse,
-    ObservationsResourceWithStreamingResponse,
-    AsyncObservationsResourceWithStreamingResponse,
-)
 from ....pagination import SyncPage, AsyncPage
 from ...._base_client import AsyncPaginator, make_request_options
 from ....types.workspaces import (
@@ -53,6 +45,7 @@ from ....types.workspaces import (
 from ....types.workspaces.session import Session
 from ....types.workspaces.session_search_response import SessionSearchResponse
 from ....types.workspaces.session_summaries_response import SessionSummariesResponse
+from ....types.workspaces.session_configuration_param import SessionConfigurationParam
 from ....types.workspaces.session_get_context_response import SessionGetContextResponse
 from ....types.workspaces.sessions.session_peer_config_param import SessionPeerConfigParam
 
@@ -67,10 +60,6 @@ class SessionsResource(SyncAPIResource):
     @cached_property
     def peers(self) -> PeersResource:
         return PeersResource(self._client)
-
-    @cached_property
-    def observations(self) -> ObservationsResource:
-        return ObservationsResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> SessionsResourceWithRawResponse:
@@ -96,7 +85,7 @@ class SessionsResource(SyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        configuration: Optional[Dict[str, object]] | Omit = omit,
+        configuration: Optional[SessionConfigurationParam] | Omit = omit,
         metadata: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -112,6 +101,11 @@ class SessionsResource(SyncAPIResource):
           workspace_id: ID of the workspace
 
           session_id: ID of the session to update
+
+          configuration: The set of options that can be in a session DB-level configuration dictionary.
+
+              All fields are optional. Session-level configuration overrides workspace-level
+              configuration, which overrides global configuration.
 
           extra_headers: Send extra headers
 
@@ -210,13 +204,9 @@ class SessionsResource(SyncAPIResource):
         """
         Delete a session and all associated data.
 
-        This permanently deletes the session and all related data including:
-
-        - Messages
-        - Message embeddings
-        - Documents (theory-of-mind data)
-        - Session peer associations
-        - Background processing queue items
+        The session is marked as inactive immediately and returns 202 Accepted. The
+        actual deletion of all related data (messages, embeddings, documents, etc.)
+        happens asynchronously in the background.
 
         This action cannot be undone.
 
@@ -403,7 +393,7 @@ class SessionsResource(SyncAPIResource):
         workspace_id: str,
         *,
         id: str,
-        configuration: Optional[Dict[str, object]] | Omit = omit,
+        configuration: Optional[SessionConfigurationParam] | Omit = omit,
         metadata: Optional[Dict[str, object]] | Omit = omit,
         peers: Optional[Dict[str, SessionPeerConfigParam]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -421,6 +411,11 @@ class SessionsResource(SyncAPIResource):
 
         Args:
           workspace_id: ID of the workspace
+
+          configuration: The set of options that can be in a session DB-level configuration dictionary.
+
+              All fields are optional. Session-level configuration overrides workspace-level
+              configuration, which overrides global configuration.
 
           extra_headers: Send extra headers
 
@@ -560,10 +555,6 @@ class AsyncSessionsResource(AsyncAPIResource):
         return AsyncPeersResource(self._client)
 
     @cached_property
-    def observations(self) -> AsyncObservationsResource:
-        return AsyncObservationsResource(self._client)
-
-    @cached_property
     def with_raw_response(self) -> AsyncSessionsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
@@ -587,7 +578,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        configuration: Optional[Dict[str, object]] | Omit = omit,
+        configuration: Optional[SessionConfigurationParam] | Omit = omit,
         metadata: Optional[Dict[str, object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -603,6 +594,11 @@ class AsyncSessionsResource(AsyncAPIResource):
           workspace_id: ID of the workspace
 
           session_id: ID of the session to update
+
+          configuration: The set of options that can be in a session DB-level configuration dictionary.
+
+              All fields are optional. Session-level configuration overrides workspace-level
+              configuration, which overrides global configuration.
 
           extra_headers: Send extra headers
 
@@ -701,13 +697,9 @@ class AsyncSessionsResource(AsyncAPIResource):
         """
         Delete a session and all associated data.
 
-        This permanently deletes the session and all related data including:
-
-        - Messages
-        - Message embeddings
-        - Documents (theory-of-mind data)
-        - Session peer associations
-        - Background processing queue items
+        The session is marked as inactive immediately and returns 202 Accepted. The
+        actual deletion of all related data (messages, embeddings, documents, etc.)
+        happens asynchronously in the background.
 
         This action cannot be undone.
 
@@ -894,7 +886,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         workspace_id: str,
         *,
         id: str,
-        configuration: Optional[Dict[str, object]] | Omit = omit,
+        configuration: Optional[SessionConfigurationParam] | Omit = omit,
         metadata: Optional[Dict[str, object]] | Omit = omit,
         peers: Optional[Dict[str, SessionPeerConfigParam]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -912,6 +904,11 @@ class AsyncSessionsResource(AsyncAPIResource):
 
         Args:
           workspace_id: ID of the workspace
+
+          configuration: The set of options that can be in a session DB-level configuration dictionary.
+
+              All fields are optional. Session-level configuration overrides workspace-level
+              configuration, which overrides global configuration.
 
           extra_headers: Send extra headers
 
@@ -1078,10 +1075,6 @@ class SessionsResourceWithRawResponse:
     def peers(self) -> PeersResourceWithRawResponse:
         return PeersResourceWithRawResponse(self._sessions.peers)
 
-    @cached_property
-    def observations(self) -> ObservationsResourceWithRawResponse:
-        return ObservationsResourceWithRawResponse(self._sessions.observations)
-
 
 class AsyncSessionsResourceWithRawResponse:
     def __init__(self, sessions: AsyncSessionsResource) -> None:
@@ -1119,10 +1112,6 @@ class AsyncSessionsResourceWithRawResponse:
     @cached_property
     def peers(self) -> AsyncPeersResourceWithRawResponse:
         return AsyncPeersResourceWithRawResponse(self._sessions.peers)
-
-    @cached_property
-    def observations(self) -> AsyncObservationsResourceWithRawResponse:
-        return AsyncObservationsResourceWithRawResponse(self._sessions.observations)
 
 
 class SessionsResourceWithStreamingResponse:
@@ -1162,10 +1151,6 @@ class SessionsResourceWithStreamingResponse:
     def peers(self) -> PeersResourceWithStreamingResponse:
         return PeersResourceWithStreamingResponse(self._sessions.peers)
 
-    @cached_property
-    def observations(self) -> ObservationsResourceWithStreamingResponse:
-        return ObservationsResourceWithStreamingResponse(self._sessions.observations)
-
 
 class AsyncSessionsResourceWithStreamingResponse:
     def __init__(self, sessions: AsyncSessionsResource) -> None:
@@ -1203,7 +1188,3 @@ class AsyncSessionsResourceWithStreamingResponse:
     @cached_property
     def peers(self) -> AsyncPeersResourceWithStreamingResponse:
         return AsyncPeersResourceWithStreamingResponse(self._sessions.peers)
-
-    @cached_property
-    def observations(self) -> AsyncObservationsResourceWithStreamingResponse:
-        return AsyncObservationsResourceWithStreamingResponse(self._sessions.observations)

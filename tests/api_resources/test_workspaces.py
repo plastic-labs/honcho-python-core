@@ -33,7 +33,22 @@ class TestWorkspaces:
     def test_method_update_with_all_params(self, client: Honcho) -> None:
         workspace = client.workspaces.update(
             workspace_id="workspace_id",
-            configuration={"foo": "bar"},
+            configuration={
+                "deriver": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
+                },
+                "dream": {"enabled": True},
+                "peer_card": {
+                    "create": True,
+                    "use": True,
+                },
+                "summary": {
+                    "enabled": True,
+                    "messages_per_long_summary": 20,
+                    "messages_per_short_summary": 10,
+                },
+            },
             metadata={"foo": "bar"},
         )
         assert_matches_type(Workspace, workspace, path=["response"])
@@ -200,7 +215,22 @@ class TestWorkspaces:
     def test_method_get_or_create_with_all_params(self, client: Honcho) -> None:
         workspace = client.workspaces.get_or_create(
             id="id",
-            configuration={"foo": "bar"},
+            configuration={
+                "deriver": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
+                },
+                "dream": {"enabled": True},
+                "peer_card": {
+                    "create": True,
+                    "use": True,
+                },
+                "summary": {
+                    "enabled": True,
+                    "messages_per_long_summary": 20,
+                    "messages_per_short_summary": 10,
+                },
+            },
             metadata={"foo": "bar"},
         )
         assert_matches_type(Workspace, workspace, path=["response"])
@@ -281,6 +311,62 @@ class TestWorkspaces:
                 query="query",
             )
 
+    @parametrize
+    def test_method_trigger_dream(self, client: Honcho) -> None:
+        workspace = client.workspaces.trigger_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+        )
+        assert workspace is None
+
+    @parametrize
+    def test_method_trigger_dream_with_all_params(self, client: Honcho) -> None:
+        workspace = client.workspaces.trigger_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+            observed="observed",
+        )
+        assert workspace is None
+
+    @parametrize
+    def test_raw_response_trigger_dream(self, client: Honcho) -> None:
+        response = client.workspaces.with_raw_response.trigger_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        workspace = response.parse()
+        assert workspace is None
+
+    @parametrize
+    def test_streaming_response_trigger_dream(self, client: Honcho) -> None:
+        with client.workspaces.with_streaming_response.trigger_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            workspace = response.parse()
+            assert workspace is None
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_trigger_dream(self, client: Honcho) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
+            client.workspaces.with_raw_response.trigger_dream(
+                workspace_id="",
+                dream_type="consolidate",
+                observer="observer",
+            )
+
 
 class TestAsyncWorkspaces:
     parametrize = pytest.mark.parametrize(
@@ -298,7 +384,22 @@ class TestAsyncWorkspaces:
     async def test_method_update_with_all_params(self, async_client: AsyncHoncho) -> None:
         workspace = await async_client.workspaces.update(
             workspace_id="workspace_id",
-            configuration={"foo": "bar"},
+            configuration={
+                "deriver": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
+                },
+                "dream": {"enabled": True},
+                "peer_card": {
+                    "create": True,
+                    "use": True,
+                },
+                "summary": {
+                    "enabled": True,
+                    "messages_per_long_summary": 20,
+                    "messages_per_short_summary": 10,
+                },
+            },
             metadata={"foo": "bar"},
         )
         assert_matches_type(Workspace, workspace, path=["response"])
@@ -465,7 +566,22 @@ class TestAsyncWorkspaces:
     async def test_method_get_or_create_with_all_params(self, async_client: AsyncHoncho) -> None:
         workspace = await async_client.workspaces.get_or_create(
             id="id",
-            configuration={"foo": "bar"},
+            configuration={
+                "deriver": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
+                },
+                "dream": {"enabled": True},
+                "peer_card": {
+                    "create": True,
+                    "use": True,
+                },
+                "summary": {
+                    "enabled": True,
+                    "messages_per_long_summary": 20,
+                    "messages_per_short_summary": 10,
+                },
+            },
             metadata={"foo": "bar"},
         )
         assert_matches_type(Workspace, workspace, path=["response"])
@@ -544,4 +660,60 @@ class TestAsyncWorkspaces:
             await async_client.workspaces.with_raw_response.search(
                 workspace_id="",
                 query="query",
+            )
+
+    @parametrize
+    async def test_method_trigger_dream(self, async_client: AsyncHoncho) -> None:
+        workspace = await async_client.workspaces.trigger_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+        )
+        assert workspace is None
+
+    @parametrize
+    async def test_method_trigger_dream_with_all_params(self, async_client: AsyncHoncho) -> None:
+        workspace = await async_client.workspaces.trigger_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+            observed="observed",
+        )
+        assert workspace is None
+
+    @parametrize
+    async def test_raw_response_trigger_dream(self, async_client: AsyncHoncho) -> None:
+        response = await async_client.workspaces.with_raw_response.trigger_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        workspace = await response.parse()
+        assert workspace is None
+
+    @parametrize
+    async def test_streaming_response_trigger_dream(self, async_client: AsyncHoncho) -> None:
+        async with async_client.workspaces.with_streaming_response.trigger_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            workspace = await response.parse()
+            assert workspace is None
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_trigger_dream(self, async_client: AsyncHoncho) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
+            await async_client.workspaces.with_raw_response.trigger_dream(
+                workspace_id="",
+                dream_type="consolidate",
+                observer="observer",
             )
