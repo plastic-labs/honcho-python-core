@@ -66,7 +66,7 @@ class MessagesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MessageCreateResponse:
         """
-        Create messages for a session with JSON data (original functionality).
+        Add new message(s) to a session.
 
         Args:
           extra_headers: Send extra headers
@@ -334,7 +334,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> MessageCreateResponse:
         """
-        Create messages for a session with JSON data (original functionality).
+        Add new message(s) to a session.
 
         Args:
           extra_headers: Send extra headers

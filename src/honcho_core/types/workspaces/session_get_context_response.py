@@ -21,7 +21,7 @@ class PeerRepresentationDeductive(BaseModel):
 
     created_at: datetime
 
-    message_ids: List[List[object]]
+    message_ids: List[int]
 
     session_name: str
 
@@ -35,7 +35,7 @@ class PeerRepresentationExplicit(BaseModel):
 
     created_at: datetime
 
-    message_ids: List[List[object]]
+    message_ids: List[int]
 
     session_name: str
 
