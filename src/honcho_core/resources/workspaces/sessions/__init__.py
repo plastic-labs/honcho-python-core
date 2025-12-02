@@ -24,14 +24,6 @@ from .sessions import (
     SessionsResourceWithStreamingResponse,
     AsyncSessionsResourceWithStreamingResponse,
 )
-from .observations import (
-    ObservationsResource,
-    AsyncObservationsResource,
-    ObservationsResourceWithRawResponse,
-    AsyncObservationsResourceWithRawResponse,
-    ObservationsResourceWithStreamingResponse,
-    AsyncObservationsResourceWithStreamingResponse,
-)
 
 __all__ = [
     "MessagesResource",
@@ -46,12 +38,6 @@ __all__ = [
     "AsyncPeersResourceWithRawResponse",
     "PeersResourceWithStreamingResponse",
     "AsyncPeersResourceWithStreamingResponse",
-    "ObservationsResource",
-    "AsyncObservationsResource",
-    "ObservationsResourceWithRawResponse",
-    "AsyncObservationsResourceWithRawResponse",
-    "ObservationsResourceWithStreamingResponse",
-    "AsyncObservationsResourceWithStreamingResponse",
     "SessionsResource",
     "AsyncSessionsResource",
     "SessionsResourceWithRawResponse",

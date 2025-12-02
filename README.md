@@ -186,6 +186,22 @@ for peer in first_page.items:
 # Remove `await` for non-async usage.
 ```
 
+## Nested params
+
+Nested parameters are dictionaries, typed using `TypedDict`, for example:
+
+```python
+from honcho_core import Honcho
+
+client = Honcho()
+
+workspace = client.workspaces.get_or_create(
+    id="id",
+    configuration={},
+)
+print(workspace.configuration)
+```
+
 ## File uploads
 
 Request parameters that correspond to file uploads can be passed as `bytes`, or a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance or a tuple of `(filename, contents, media type)`.

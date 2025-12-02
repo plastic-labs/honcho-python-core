@@ -14,7 +14,7 @@ from .sessions import (
     SessionsResourceWithStreamingResponse,
     AsyncSessionsResourceWithStreamingResponse,
 )
-from ...._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ...._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ...._utils import maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -32,6 +32,7 @@ from ....types.workspaces import (
     peer_list_params,
     peer_search_params,
     peer_update_params,
+    peer_set_card_params,
     peer_get_or_create_params,
     peer_working_representation_params,
 )
@@ -386,6 +387,60 @@ class PeersResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PeerSearchResponse,
+        )
+
+    def set_card(
+        self,
+        peer_id: str,
+        *,
+        workspace_id: str,
+        peer_card: SequenceNotStr[str],
+        target: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PeerCardResponse:
+        """
+        Set a peer card for a specific peer relationship.
+
+        Sets the peer card that the observer peer has for the target peer. If no target
+        is specified, sets the observer's own peer card.
+
+        Args:
+          workspace_id: ID of the workspace
+
+          peer_id: ID of the observer peer
+
+          peer_card: The peer card content to set
+
+          target: The peer whose card to set. If not provided, sets the observer's own card
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        if not peer_id:
+            raise ValueError(f"Expected a non-empty value for `peer_id` but received {peer_id!r}")
+        return self._put(
+            f"/v2/workspaces/{workspace_id}/peers/{peer_id}/card",
+            body=maybe_transform({"peer_card": peer_card}, peer_set_card_params.PeerSetCardParams),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"target": target}, peer_set_card_params.PeerSetCardParams),
+            ),
+            cast_to=PeerCardResponse,
         )
 
     def working_representation(
@@ -816,6 +871,60 @@ class AsyncPeersResource(AsyncAPIResource):
             cast_to=PeerSearchResponse,
         )
 
+    async def set_card(
+        self,
+        peer_id: str,
+        *,
+        workspace_id: str,
+        peer_card: SequenceNotStr[str],
+        target: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PeerCardResponse:
+        """
+        Set a peer card for a specific peer relationship.
+
+        Sets the peer card that the observer peer has for the target peer. If no target
+        is specified, sets the observer's own peer card.
+
+        Args:
+          workspace_id: ID of the workspace
+
+          peer_id: ID of the observer peer
+
+          peer_card: The peer card content to set
+
+          target: The peer whose card to set. If not provided, sets the observer's own card
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        if not peer_id:
+            raise ValueError(f"Expected a non-empty value for `peer_id` but received {peer_id!r}")
+        return await self._put(
+            f"/v2/workspaces/{workspace_id}/peers/{peer_id}/card",
+            body=await async_maybe_transform({"peer_card": peer_card}, peer_set_card_params.PeerSetCardParams),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"target": target}, peer_set_card_params.PeerSetCardParams),
+            ),
+            cast_to=PeerCardResponse,
+        )
+
     async def working_representation(
         self,
         peer_id: str,
@@ -922,6 +1031,9 @@ class PeersResourceWithRawResponse:
         self.search = to_raw_response_wrapper(
             peers.search,
         )
+        self.set_card = to_raw_response_wrapper(
+            peers.set_card,
+        )
         self.working_representation = to_raw_response_wrapper(
             peers.working_representation,
         )
@@ -952,6 +1064,9 @@ class AsyncPeersResourceWithRawResponse:
         )
         self.search = async_to_raw_response_wrapper(
             peers.search,
+        )
+        self.set_card = async_to_raw_response_wrapper(
+            peers.set_card,
         )
         self.working_representation = async_to_raw_response_wrapper(
             peers.working_representation,
@@ -984,6 +1099,9 @@ class PeersResourceWithStreamingResponse:
         self.search = to_streamed_response_wrapper(
             peers.search,
         )
+        self.set_card = to_streamed_response_wrapper(
+            peers.set_card,
+        )
         self.working_representation = to_streamed_response_wrapper(
             peers.working_representation,
         )
@@ -1014,6 +1132,9 @@ class AsyncPeersResourceWithStreamingResponse:
         )
         self.search = async_to_streamed_response_wrapper(
             peers.search,
+        )
+        self.set_card = async_to_streamed_response_wrapper(
+            peers.set_card,
         )
         self.working_representation = async_to_streamed_response_wrapper(
             peers.working_representation,
