@@ -42,6 +42,14 @@ from .peers.peers import (
     AsyncPeersResourceWithStreamingResponse,
 )
 from ...pagination import SyncPage, AsyncPage
+from .observations import (
+    ObservationsResource,
+    AsyncObservationsResource,
+    ObservationsResourceWithRawResponse,
+    AsyncObservationsResourceWithRawResponse,
+    ObservationsResourceWithStreamingResponse,
+    AsyncObservationsResourceWithStreamingResponse,
+)
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.workspace import Workspace
 from .sessions.sessions import (
@@ -60,6 +68,10 @@ __all__ = ["WorkspacesResource", "AsyncWorkspacesResource"]
 
 
 class WorkspacesResource(SyncAPIResource):
+    @cached_property
+    def observations(self) -> ObservationsResource:
+        return ObservationsResource(self._client)
+
     @cached_property
     def peers(self) -> PeersResource:
         return PeersResource(self._client)
@@ -441,6 +453,10 @@ class WorkspacesResource(SyncAPIResource):
 
 
 class AsyncWorkspacesResource(AsyncAPIResource):
+    @cached_property
+    def observations(self) -> AsyncObservationsResource:
+        return AsyncObservationsResource(self._client)
+
     @cached_property
     def peers(self) -> AsyncPeersResource:
         return AsyncPeersResource(self._client)
@@ -848,6 +864,10 @@ class WorkspacesResourceWithRawResponse:
         )
 
     @cached_property
+    def observations(self) -> ObservationsResourceWithRawResponse:
+        return ObservationsResourceWithRawResponse(self._workspaces.observations)
+
+    @cached_property
     def peers(self) -> PeersResourceWithRawResponse:
         return PeersResourceWithRawResponse(self._workspaces.peers)
 
@@ -885,6 +905,10 @@ class AsyncWorkspacesResourceWithRawResponse:
         self.trigger_dream = async_to_raw_response_wrapper(
             workspaces.trigger_dream,
         )
+
+    @cached_property
+    def observations(self) -> AsyncObservationsResourceWithRawResponse:
+        return AsyncObservationsResourceWithRawResponse(self._workspaces.observations)
 
     @cached_property
     def peers(self) -> AsyncPeersResourceWithRawResponse:
@@ -926,6 +950,10 @@ class WorkspacesResourceWithStreamingResponse:
         )
 
     @cached_property
+    def observations(self) -> ObservationsResourceWithStreamingResponse:
+        return ObservationsResourceWithStreamingResponse(self._workspaces.observations)
+
+    @cached_property
     def peers(self) -> PeersResourceWithStreamingResponse:
         return PeersResourceWithStreamingResponse(self._workspaces.peers)
 
@@ -963,6 +991,10 @@ class AsyncWorkspacesResourceWithStreamingResponse:
         self.trigger_dream = async_to_streamed_response_wrapper(
             workspaces.trigger_dream,
         )
+
+    @cached_property
+    def observations(self) -> AsyncObservationsResourceWithStreamingResponse:
+        return AsyncObservationsResourceWithStreamingResponse(self._workspaces.observations)
 
     @cached_property
     def peers(self) -> AsyncPeersResourceWithStreamingResponse:

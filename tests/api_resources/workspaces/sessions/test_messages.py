@@ -301,6 +301,19 @@ class TestMessages:
         assert_matches_type(MessageUploadResponse, message, path=["response"])
 
     @parametrize
+    def test_method_upload_with_all_params(self, client: Honcho) -> None:
+        message = client.workspaces.sessions.messages.upload(
+            session_id="session_id",
+            workspace_id="workspace_id",
+            file=b"raw file contents",
+            peer_id="peer_id",
+            configuration="configuration",
+            created_at="created_at",
+            metadata="metadata",
+        )
+        assert_matches_type(MessageUploadResponse, message, path=["response"])
+
+    @parametrize
     def test_raw_response_upload(self, client: Honcho) -> None:
         response = client.workspaces.sessions.messages.with_raw_response.upload(
             session_id="session_id",
@@ -629,6 +642,19 @@ class TestAsyncMessages:
             workspace_id="workspace_id",
             file=b"raw file contents",
             peer_id="peer_id",
+        )
+        assert_matches_type(MessageUploadResponse, message, path=["response"])
+
+    @parametrize
+    async def test_method_upload_with_all_params(self, async_client: AsyncHoncho) -> None:
+        message = await async_client.workspaces.sessions.messages.upload(
+            session_id="session_id",
+            workspace_id="workspace_id",
+            file=b"raw file contents",
+            peer_id="peer_id",
+            configuration="configuration",
+            created_at="created_at",
+            metadata="metadata",
         )
         assert_matches_type(MessageUploadResponse, message, path=["response"])
 
