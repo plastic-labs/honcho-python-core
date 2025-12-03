@@ -33,6 +33,7 @@ from ....types.workspaces import (
     peer_search_params,
     peer_update_params,
     peer_set_card_params,
+    peer_get_context_params,
     peer_get_or_create_params,
     peer_working_representation_params,
 )
@@ -40,6 +41,7 @@ from ....types.workspaces.peer import Peer
 from ....types.workspaces.peer_card_response import PeerCardResponse
 from ....types.workspaces.peer_chat_response import PeerChatResponse
 from ....types.workspaces.peer_search_response import PeerSearchResponse
+from ....types.workspaces.peer_get_context_response import PeerGetContextResponse
 from ....types.workspaces.peer_working_representation_response import PeerWorkingRepresentationResponse
 
 __all__ = ["PeersResource", "AsyncPeersResource"]
@@ -281,6 +283,89 @@ class PeersResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PeerChatResponse,
+        )
+
+    def get_context(
+        self,
+        peer_id: str,
+        *,
+        workspace_id: str,
+        include_most_derived: bool | Omit = omit,
+        max_observations: Optional[int] | Omit = omit,
+        search_max_distance: Optional[float] | Omit = omit,
+        search_query: Optional[str] | Omit = omit,
+        search_top_k: Optional[int] | Omit = omit,
+        target: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PeerGetContextResponse:
+        """
+        Get context for a peer, including their representation and peer card.
+
+        This endpoint returns the working representation and peer card for a peer. If a
+        target is specified, returns the context for the target from the observer peer's
+        perspective. If no target is specified, returns the peer's own context
+        (self-observation).
+
+        This is useful for getting all the context needed about a peer without making
+        multiple API calls.
+
+        Args:
+          workspace_id: ID of the workspace
+
+          peer_id: ID of the peer (observer)
+
+          include_most_derived: Whether to include the most derived observations in the representation
+
+          max_observations: Maximum number of observations to include in the representation
+
+          search_max_distance: Only used if `search_query` is provided. Maximum distance for semantically
+              relevant observations
+
+          search_query: Optional query to curate the representation around semantic search results
+
+          search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
+              observations to include
+
+          target: The target peer to get context for. If not provided, returns the peer's own
+              context (self-observation)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        if not peer_id:
+            raise ValueError(f"Expected a non-empty value for `peer_id` but received {peer_id!r}")
+        return self._get(
+            f"/v2/workspaces/{workspace_id}/peers/{peer_id}/context",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "include_most_derived": include_most_derived,
+                        "max_observations": max_observations,
+                        "search_max_distance": search_max_distance,
+                        "search_query": search_query,
+                        "search_top_k": search_top_k,
+                        "target": target,
+                    },
+                    peer_get_context_params.PeerGetContextParams,
+                ),
+            ),
+            cast_to=PeerGetContextResponse,
         )
 
     def get_or_create(
@@ -765,6 +850,89 @@ class AsyncPeersResource(AsyncAPIResource):
             cast_to=PeerChatResponse,
         )
 
+    async def get_context(
+        self,
+        peer_id: str,
+        *,
+        workspace_id: str,
+        include_most_derived: bool | Omit = omit,
+        max_observations: Optional[int] | Omit = omit,
+        search_max_distance: Optional[float] | Omit = omit,
+        search_query: Optional[str] | Omit = omit,
+        search_top_k: Optional[int] | Omit = omit,
+        target: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PeerGetContextResponse:
+        """
+        Get context for a peer, including their representation and peer card.
+
+        This endpoint returns the working representation and peer card for a peer. If a
+        target is specified, returns the context for the target from the observer peer's
+        perspective. If no target is specified, returns the peer's own context
+        (self-observation).
+
+        This is useful for getting all the context needed about a peer without making
+        multiple API calls.
+
+        Args:
+          workspace_id: ID of the workspace
+
+          peer_id: ID of the peer (observer)
+
+          include_most_derived: Whether to include the most derived observations in the representation
+
+          max_observations: Maximum number of observations to include in the representation
+
+          search_max_distance: Only used if `search_query` is provided. Maximum distance for semantically
+              relevant observations
+
+          search_query: Optional query to curate the representation around semantic search results
+
+          search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
+              observations to include
+
+          target: The target peer to get context for. If not provided, returns the peer's own
+              context (self-observation)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        if not peer_id:
+            raise ValueError(f"Expected a non-empty value for `peer_id` but received {peer_id!r}")
+        return await self._get(
+            f"/v2/workspaces/{workspace_id}/peers/{peer_id}/context",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "include_most_derived": include_most_derived,
+                        "max_observations": max_observations,
+                        "search_max_distance": search_max_distance,
+                        "search_query": search_query,
+                        "search_top_k": search_top_k,
+                        "target": target,
+                    },
+                    peer_get_context_params.PeerGetContextParams,
+                ),
+            ),
+            cast_to=PeerGetContextResponse,
+        )
+
     async def get_or_create(
         self,
         workspace_id: str,
@@ -1025,6 +1193,9 @@ class PeersResourceWithRawResponse:
         self.chat = to_raw_response_wrapper(
             peers.chat,
         )
+        self.get_context = to_raw_response_wrapper(
+            peers.get_context,
+        )
         self.get_or_create = to_raw_response_wrapper(
             peers.get_or_create,
         )
@@ -1058,6 +1229,9 @@ class AsyncPeersResourceWithRawResponse:
         )
         self.chat = async_to_raw_response_wrapper(
             peers.chat,
+        )
+        self.get_context = async_to_raw_response_wrapper(
+            peers.get_context,
         )
         self.get_or_create = async_to_raw_response_wrapper(
             peers.get_or_create,
@@ -1093,6 +1267,9 @@ class PeersResourceWithStreamingResponse:
         self.chat = to_streamed_response_wrapper(
             peers.chat,
         )
+        self.get_context = to_streamed_response_wrapper(
+            peers.get_context,
+        )
         self.get_or_create = to_streamed_response_wrapper(
             peers.get_or_create,
         )
@@ -1126,6 +1303,9 @@ class AsyncPeersResourceWithStreamingResponse:
         )
         self.chat = async_to_streamed_response_wrapper(
             peers.chat,
+        )
+        self.get_context = async_to_streamed_response_wrapper(
+            peers.get_context,
         )
         self.get_or_create = async_to_streamed_response_wrapper(
             peers.get_or_create,

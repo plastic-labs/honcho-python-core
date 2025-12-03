@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Optional
 from typing_extensions import Required, TypedDict
 
 from ...._types import FileTypes
@@ -15,3 +16,9 @@ class MessageUploadParams(TypedDict, total=False):
     file: Required[FileTypes]
 
     peer_id: Required[str]
+
+    configuration: Optional[str]
+
+    created_at: Optional[str]
+
+    metadata: Optional[str]

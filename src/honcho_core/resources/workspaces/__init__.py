@@ -32,8 +32,22 @@ from .workspaces import (
     WorkspacesResourceWithStreamingResponse,
     AsyncWorkspacesResourceWithStreamingResponse,
 )
+from .observations import (
+    ObservationsResource,
+    AsyncObservationsResource,
+    ObservationsResourceWithRawResponse,
+    AsyncObservationsResourceWithRawResponse,
+    ObservationsResourceWithStreamingResponse,
+    AsyncObservationsResourceWithStreamingResponse,
+)
 
 __all__ = [
+    "ObservationsResource",
+    "AsyncObservationsResource",
+    "ObservationsResourceWithRawResponse",
+    "AsyncObservationsResourceWithRawResponse",
+    "ObservationsResourceWithStreamingResponse",
+    "AsyncObservationsResourceWithStreamingResponse",
     "PeersResource",
     "AsyncPeersResource",
     "PeersResourceWithRawResponse",

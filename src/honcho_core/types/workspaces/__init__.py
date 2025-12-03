@@ -6,7 +6,9 @@ from .peer import Peer as Peer
 from .session import Session as Session
 from .summary import Summary as Summary
 from .page_peer import PagePeer as PagePeer
+from .observations import Observations as Observations
 from .page_session import PageSession as PageSession
+from .page_observation import PageObservation as PageObservation
 from .peer_card_params import PeerCardParams as PeerCardParams
 from .peer_chat_params import PeerChatParams as PeerChatParams
 from .peer_list_params import PeerListParams as PeerListParams
@@ -22,8 +24,13 @@ from .peer_set_card_params import PeerSetCardParams as PeerSetCardParams
 from .session_clone_params import SessionCloneParams as SessionCloneParams
 from .session_search_params import SessionSearchParams as SessionSearchParams
 from .session_update_params import SessionUpdateParams as SessionUpdateParams
+from .observation_list_params import ObservationListParams as ObservationListParams
+from .peer_get_context_params import PeerGetContextParams as PeerGetContextParams
 from .session_search_response import SessionSearchResponse as SessionSearchResponse
+from .observation_query_params import ObservationQueryParams as ObservationQueryParams
+from .peer_get_context_response import PeerGetContextResponse as PeerGetContextResponse
 from .peer_get_or_create_params import PeerGetOrCreateParams as PeerGetOrCreateParams
+from .observation_query_response import ObservationQueryResponse as ObservationQueryResponse
 from .session_get_context_params import SessionGetContextParams as SessionGetContextParams
 from .session_summaries_response import SessionSummariesResponse as SessionSummariesResponse
 from .session_configuration_param import SessionConfigurationParam as SessionConfigurationParam
