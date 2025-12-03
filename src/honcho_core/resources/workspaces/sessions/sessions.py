@@ -206,7 +206,7 @@ class SessionsResource(SyncAPIResource):
 
         The session is marked as inactive immediately and returns 202 Accepted. The
         actual deletion of all related data (messages, embeddings, documents, etc.)
-        happens asynchronously in the background.
+        happens asynchronously via the queue with retry support.
 
         This action cannot be undone.
 
@@ -699,7 +699,7 @@ class AsyncSessionsResource(AsyncAPIResource):
 
         The session is marked as inactive immediately and returns 202 Accepted. The
         actual deletion of all related data (messages, embeddings, documents, etc.)
-        happens asynchronously in the background.
+        happens asynchronously via the queue with retry support.
 
         This action cannot be undone.
 

@@ -253,6 +253,9 @@ class MessagesResource(SyncAPIResource):
         workspace_id: str,
         file: FileTypes,
         peer_id: str,
+        configuration: Optional[str] | Omit = omit,
+        created_at: Optional[str] | Omit = omit,
+        metadata: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -282,6 +285,9 @@ class MessagesResource(SyncAPIResource):
             {
                 "file": file,
                 "peer_id": peer_id,
+                "configuration": configuration,
+                "created_at": created_at,
+                "metadata": metadata,
             }
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
@@ -521,6 +527,9 @@ class AsyncMessagesResource(AsyncAPIResource):
         workspace_id: str,
         file: FileTypes,
         peer_id: str,
+        configuration: Optional[str] | Omit = omit,
+        created_at: Optional[str] | Omit = omit,
+        metadata: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -550,6 +559,9 @@ class AsyncMessagesResource(AsyncAPIResource):
             {
                 "file": file,
                 "peer_id": peer_id,
+                "configuration": configuration,
+                "created_at": created_at,
+                "metadata": metadata,
             }
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
