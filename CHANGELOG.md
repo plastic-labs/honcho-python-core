@@ -1,5 +1,37 @@
 # Changelog
 
+## 1.6.0 (2025-12-03)
+
+Full Changelog: [v1.5.1...v1.6.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.5.1...v1.6.0)
+
+### Features
+
+* **api:** manual updates ([1ac4d85](https://github.com/plastic-labs/honcho-python-core/commit/1ac4d85cebbb24f33120a5391fa9b82f19661da5))
+* **api:** manual updates ([ca6ec23](https://github.com/plastic-labs/honcho-python-core/commit/ca6ec234aad22d39f30845c9ed3faec8a24772a2))
+* **api:** manual updates ([503feec](https://github.com/plastic-labs/honcho-python-core/commit/503feec3704c65e8db5fd598e05f4b387799b72b))
+* **api:** manual updates ([122ef35](https://github.com/plastic-labs/honcho-python-core/commit/122ef356fc36f840c470ab27540e9cbff90fe3dd))
+
+
+### Bug Fixes
+
+* **client:** close streams without requiring full consumption ([0378348](https://github.com/plastic-labs/honcho-python-core/commit/037834828e31950f0b96a8d4c76e2b015997160e))
+* compat with Python 3.14 ([aa6dbe0](https://github.com/plastic-labs/honcho-python-core/commit/aa6dbe08df104525578fcb5ac10ad47df84f6738))
+* **compat:** update signatures of `model_dump` and `model_dump_json` for Pydantic v1 ([fb56f39](https://github.com/plastic-labs/honcho-python-core/commit/fb56f3909e50a4e656f447a40b3b0e2f97276cde))
+* ensure streams are always closed ([f8c0aa9](https://github.com/plastic-labs/honcho-python-core/commit/f8c0aa960274bf5ec5cc386e5064c13f51810c69))
+
+
+### Chores
+
+* add Python 3.14 classifier and testing ([7a7918d](https://github.com/plastic-labs/honcho-python-core/commit/7a7918d9dab85f81993fc2e011474eed35c8b5c6))
+* bump `httpx-aiohttp` version to 0.1.9 ([182a809](https://github.com/plastic-labs/honcho-python-core/commit/182a809fb0d7923e80d7afef978dda0e1613d916))
+* **deps:** mypy 1.18.1 has a regression, pin to 1.17 ([af5cfde](https://github.com/plastic-labs/honcho-python-core/commit/af5cfde5c7bdc868ceb2d87361a3ae404102f0d8))
+* **docs:** use environment variables for authentication in code snippets ([1c93bee](https://github.com/plastic-labs/honcho-python-core/commit/1c93bee257054f3c315fee22024c55b1343f47cc))
+* **internal/tests:** avoid race condition with implicit client cleanup ([e32ecd5](https://github.com/plastic-labs/honcho-python-core/commit/e32ecd502a2af56142bf36e86dea82d407b7cfbc))
+* **internal:** detect missing future annotations with ruff ([b485850](https://github.com/plastic-labs/honcho-python-core/commit/b485850d9a0b853d7a1c3d127f387812f9717789))
+* **internal:** grammar fix (it's -&gt; its) ([b9f643b](https://github.com/plastic-labs/honcho-python-core/commit/b9f643ba0e048671c2d091523cb2ebeace4f31a0))
+* **package:** drop Python 3.8 support ([e811bb8](https://github.com/plastic-labs/honcho-python-core/commit/e811bb8a96035f37ffbe0cb70d999bb391760750))
+* update lockfile ([6b47fe8](https://github.com/plastic-labs/honcho-python-core/commit/6b47fe8bc4eb568b2dc841f5b1730151497ccaf0))
+
 ## 1.5.1 (2025-10-09)
 
 Full Changelog: [v1.5.0...v1.5.1](https://github.com/plastic-labs/honcho-python-core/compare/v1.5.0...v1.5.1)
