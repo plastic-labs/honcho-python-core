@@ -32,16 +32,19 @@ Types:
 
 ```python
 from honcho_core.types.workspaces import (
+    ObservationCreate,
     ObservationGet,
     ObservationQuery,
     Observations,
     PageObservation,
+    ObservationCreateResponse,
     ObservationQueryResponse,
 )
 ```
 
 Methods:
 
+- <code title="post /v2/workspaces/{workspace_id}/observations">client.workspaces.observations.<a href="./src/honcho_core/resources/workspaces/observations.py">create</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspaces/observation_create_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/observation_create_response.py">ObservationCreateResponse</a></code>
 - <code title="post /v2/workspaces/{workspace_id}/observations/list">client.workspaces.observations.<a href="./src/honcho_core/resources/workspaces/observations.py">list</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspaces/observation_list_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/observations.py">SyncPage[Observations]</a></code>
 - <code title="delete /v2/workspaces/{workspace_id}/observations/{observation_id}">client.workspaces.observations.<a href="./src/honcho_core/resources/workspaces/observations.py">delete</a>(observation_id, \*, workspace_id) -> object</code>
 - <code title="post /v2/workspaces/{workspace_id}/observations/query">client.workspaces.observations.<a href="./src/honcho_core/resources/workspaces/observations.py">query</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspaces/observation_query_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/observation_query_response.py">ObservationQueryResponse</a></code>
