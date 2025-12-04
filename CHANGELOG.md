@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.6.1 (2025-12-04)
+
+Full Changelog: [v1.6.0...v1.6.1](https://github.com/plastic-labs/honcho-python-core/compare/v1.6.0...v1.6.1)
+
+### Features
+
+* **api:** Add Manual Observation Creation ([7a35024](https://github.com/plastic-labs/honcho-python-core/commit/7a35024f6ef4e33bb632f90e7f0d2649ad03bdfd))
+
 ## 1.6.0 (2025-12-03)
 
 Full Changelog: [v1.5.1...v1.6.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.5.1...v1.6.0)
