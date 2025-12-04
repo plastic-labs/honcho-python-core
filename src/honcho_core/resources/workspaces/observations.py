@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Dict, Iterable, Optional
 
 import httpx
 
@@ -18,9 +18,11 @@ from ..._response import (
 )
 from ...pagination import SyncPage, AsyncPage
 from ..._base_client import AsyncPaginator, make_request_options
-from ...types.workspaces import observation_list_params, observation_query_params
+from ...types.workspaces import observation_list_params, observation_query_params, observation_create_params
 from ...types.workspaces.observations import Observations
+from ...types.workspaces.observation_create_param import ObservationCreateParam
 from ...types.workspaces.observation_query_response import ObservationQueryResponse
+from ...types.workspaces.observation_create_response import ObservationCreateResponse
 
 __all__ = ["ObservationsResource", "AsyncObservationsResource"]
 
@@ -44,6 +46,49 @@ class ObservationsResource(SyncAPIResource):
         For more information, see https://www.github.com/plastic-labs/honcho-python-core#with_streaming_response
         """
         return ObservationsResourceWithStreamingResponse(self)
+
+    def create(
+        self,
+        workspace_id: str,
+        *,
+        observations: Iterable[ObservationCreateParam],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ObservationCreateResponse:
+        """
+        Create one or more observations.
+
+        Creates observations (theory-of-mind facts) for the specified observer/observed
+        peer pairs. Each observation must reference existing peers and a session within
+        the workspace. Embeddings are automatically generated for semantic search.
+
+        Maximum of 100 observations per request.
+
+        Args:
+          workspace_id: ID of the workspace
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        return self._post(
+            f"/v2/workspaces/{workspace_id}/observations",
+            body=maybe_transform({"observations": observations}, observation_create_params.ObservationCreateParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ObservationCreateResponse,
+        )
 
     def list(
         self,
@@ -233,6 +278,51 @@ class AsyncObservationsResource(AsyncAPIResource):
         """
         return AsyncObservationsResourceWithStreamingResponse(self)
 
+    async def create(
+        self,
+        workspace_id: str,
+        *,
+        observations: Iterable[ObservationCreateParam],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> ObservationCreateResponse:
+        """
+        Create one or more observations.
+
+        Creates observations (theory-of-mind facts) for the specified observer/observed
+        peer pairs. Each observation must reference existing peers and a session within
+        the workspace. Embeddings are automatically generated for semantic search.
+
+        Maximum of 100 observations per request.
+
+        Args:
+          workspace_id: ID of the workspace
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        return await self._post(
+            f"/v2/workspaces/{workspace_id}/observations",
+            body=await async_maybe_transform(
+                {"observations": observations}, observation_create_params.ObservationCreateParams
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ObservationCreateResponse,
+        )
+
     def list(
         self,
         workspace_id: str,
@@ -405,6 +495,9 @@ class ObservationsResourceWithRawResponse:
     def __init__(self, observations: ObservationsResource) -> None:
         self._observations = observations
 
+        self.create = to_raw_response_wrapper(
+            observations.create,
+        )
         self.list = to_raw_response_wrapper(
             observations.list,
         )
@@ -420,6 +513,9 @@ class AsyncObservationsResourceWithRawResponse:
     def __init__(self, observations: AsyncObservationsResource) -> None:
         self._observations = observations
 
+        self.create = async_to_raw_response_wrapper(
+            observations.create,
+        )
         self.list = async_to_raw_response_wrapper(
             observations.list,
         )
@@ -435,6 +531,9 @@ class ObservationsResourceWithStreamingResponse:
     def __init__(self, observations: ObservationsResource) -> None:
         self._observations = observations
 
+        self.create = to_streamed_response_wrapper(
+            observations.create,
+        )
         self.list = to_streamed_response_wrapper(
             observations.list,
         )
@@ -450,6 +549,9 @@ class AsyncObservationsResourceWithStreamingResponse:
     def __init__(self, observations: AsyncObservationsResource) -> None:
         self._observations = observations
 
+        self.create = async_to_streamed_response_wrapper(
+            observations.create,
+        )
         self.list = async_to_streamed_response_wrapper(
             observations.list,
         )
