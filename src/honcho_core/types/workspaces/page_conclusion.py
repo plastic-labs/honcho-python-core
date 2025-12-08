@@ -3,13 +3,13 @@
 from typing import List, Optional
 
 from ..._models import BaseModel
-from .observation import Observation
+from .conclusion import Conclusion
 
-__all__ = ["PageObservation"]
+__all__ = ["PageConclusion"]
 
 
-class PageObservation(BaseModel):
-    items: List[Observation]
+class PageConclusion(BaseModel):
+    items: List[Conclusion]
 
     page: int
 

@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["ObservationCreateParam"]
+__all__ = ["ConclusionCreateParam"]
 
 
-class ObservationCreateParam(TypedDict, total=False):
+class ConclusionCreateParam(TypedDict, total=False):
     content: Required[str]
 
     observed_id: Required[str]
