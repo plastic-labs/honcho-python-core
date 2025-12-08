@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import typing_extensions
 from typing import Dict, Iterable, Optional
 
 import httpx
@@ -19,58 +18,51 @@ from ..._response import (
 )
 from ...pagination import SyncPage, AsyncPage
 from ..._base_client import AsyncPaginator, make_request_options
-from ...types.workspaces import observation_list_params, observation_query_params, observation_create_params
-from ...types.workspaces.observation import Observation
+from ...types.workspaces import conclusion_list_params, conclusion_query_params, conclusion_create_params
+from ...types.workspaces.conclusion import Conclusion
 from ...types.workspaces.conclusion_create_param import ConclusionCreateParam
-from ...types.workspaces.observation_create_param import ObservationCreateParam
-from ...types.workspaces.observation_query_response import ObservationQueryResponse
-from ...types.workspaces.observation_create_response import ObservationCreateResponse
+from ...types.workspaces.conclusion_query_response import ConclusionQueryResponse
+from ...types.workspaces.conclusion_create_response import ConclusionCreateResponse
 
-__all__ = ["ObservationsResource", "AsyncObservationsResource"]
+__all__ = ["ConclusionsResource", "AsyncConclusionsResource"]
 
 
-class ObservationsResource(SyncAPIResource):
+class ConclusionsResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ObservationsResourceWithRawResponse:
+    def with_raw_response(self) -> ConclusionsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/plastic-labs/honcho-python-core#accessing-raw-response-data-eg-headers
         """
-        return ObservationsResourceWithRawResponse(self)
+        return ConclusionsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ObservationsResourceWithStreamingResponse:
+    def with_streaming_response(self) -> ConclusionsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/plastic-labs/honcho-python-core#with_streaming_response
         """
-        return ObservationsResourceWithStreamingResponse(self)
+        return ConclusionsResourceWithStreamingResponse(self)
 
-    @typing_extensions.deprecated("deprecated")
     def create(
         self,
         workspace_id: str,
         *,
         conclusions: Iterable[ConclusionCreateParam],
-        observations: Iterable[ObservationCreateParam],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ObservationCreateResponse:
+    ) -> ConclusionCreateResponse:
         """
-        Create one or more observations.
+        Create one or more conclusions.
 
-        Creates observations (theory-of-mind facts) for the specified observer/observed
-        peer pairs. Each observation must reference existing peers and a session within
-        the workspace. Embeddings are automatically generated for semantic search.
-
-        Maximum of 100 observations per request.
+        Conclusions are theory-of-mind facts derived from interactions between peers.
 
         Args:
           workspace_id: ID of the workspace
@@ -86,21 +78,14 @@ class ObservationsResource(SyncAPIResource):
         if not workspace_id:
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
         return self._post(
-            f"/v2/workspaces/{workspace_id}/observations",
-            body=maybe_transform(
-                {
-                    "conclusions": conclusions,
-                    "observations": observations,
-                },
-                observation_create_params.ObservationCreateParams,
-            ),
+            f"/v2/workspaces/{workspace_id}/conclusions",
+            body=maybe_transform({"conclusions": conclusions}, conclusion_create_params.ConclusionCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ObservationCreateResponse,
+            cast_to=ConclusionCreateResponse,
         )
 
-    @typing_extensions.deprecated("deprecated")
     def list(
         self,
         workspace_id: str,
@@ -115,14 +100,10 @@ class ObservationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncPage[Observation]:
-        """List all observations using custom filters.
-
-        Observations are listed by recency
-        unless `reverse` is set to `true`.
-
-        Observations can be filtered by session_id, observer_id and observed_id using
-        the filters parameter.
+    ) -> SyncPage[Conclusion]:
+        """
+        List conclusions using custom filters, ordered by recency unless `reverse` is
+        true.
 
         Args:
           workspace_id: ID of the workspace
@@ -144,9 +125,9 @@ class ObservationsResource(SyncAPIResource):
         if not workspace_id:
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
         return self._get_api_list(
-            f"/v2/workspaces/{workspace_id}/observations/list",
-            page=SyncPage[Observation],
-            body=maybe_transform({"filters": filters}, observation_list_params.ObservationListParams),
+            f"/v2/workspaces/{workspace_id}/conclusions/list",
+            page=SyncPage[Conclusion],
+            body=maybe_transform({"filters": filters}, conclusion_list_params.ConclusionListParams),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -158,17 +139,16 @@ class ObservationsResource(SyncAPIResource):
                         "reverse": reverse,
                         "size": size,
                     },
-                    observation_list_params.ObservationListParams,
+                    conclusion_list_params.ConclusionListParams,
                 ),
             ),
-            model=Observation,
+            model=Conclusion,
             method="post",
         )
 
-    @typing_extensions.deprecated("deprecated")
     def delete(
         self,
-        observation_id: str,
+        conclusion_id: str,
         *,
         workspace_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -179,15 +159,12 @@ class ObservationsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
-        Delete a specific observation.
-
-        This permanently deletes the observation (document) from the theory-of-mind
-        system. This action cannot be undone.
+        Delete a specific conclusion (document).
 
         Args:
           workspace_id: ID of the workspace
 
-          observation_id: ID of the observation to delete
+          conclusion_id: ID of the conclusion to delete
 
           extra_headers: Send extra headers
 
@@ -199,17 +176,16 @@ class ObservationsResource(SyncAPIResource):
         """
         if not workspace_id:
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
-        if not observation_id:
-            raise ValueError(f"Expected a non-empty value for `observation_id` but received {observation_id!r}")
+        if not conclusion_id:
+            raise ValueError(f"Expected a non-empty value for `conclusion_id` but received {conclusion_id!r}")
         return self._delete(
-            f"/v2/workspaces/{workspace_id}/observations/{observation_id}",
+            f"/v2/workspaces/{workspace_id}/conclusions/{conclusion_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=object,
         )
 
-    @typing_extensions.deprecated("deprecated")
     def query(
         self,
         workspace_id: str,
@@ -224,13 +200,9 @@ class ObservationsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ObservationQueryResponse:
+    ) -> ConclusionQueryResponse:
         """
-        Query observations using semantic search.
-
-        Performs vector similarity search on observations to find semantically relevant
-        results. Observer and observed are required for semantic search and must be
-        provided in filters.
+        Query conclusions using semantic search.
 
         Args:
           workspace_id: ID of the workspace
@@ -254,7 +226,7 @@ class ObservationsResource(SyncAPIResource):
         if not workspace_id:
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
         return self._post(
-            f"/v2/workspaces/{workspace_id}/observations/query",
+            f"/v2/workspaces/{workspace_id}/conclusions/query",
             body=maybe_transform(
                 {
                     "query": query,
@@ -262,57 +234,51 @@ class ObservationsResource(SyncAPIResource):
                     "filters": filters,
                     "top_k": top_k,
                 },
-                observation_query_params.ObservationQueryParams,
+                conclusion_query_params.ConclusionQueryParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ObservationQueryResponse,
+            cast_to=ConclusionQueryResponse,
         )
 
 
-class AsyncObservationsResource(AsyncAPIResource):
+class AsyncConclusionsResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncObservationsResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncConclusionsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/plastic-labs/honcho-python-core#accessing-raw-response-data-eg-headers
         """
-        return AsyncObservationsResourceWithRawResponse(self)
+        return AsyncConclusionsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncObservationsResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncConclusionsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/plastic-labs/honcho-python-core#with_streaming_response
         """
-        return AsyncObservationsResourceWithStreamingResponse(self)
+        return AsyncConclusionsResourceWithStreamingResponse(self)
 
-    @typing_extensions.deprecated("deprecated")
     async def create(
         self,
         workspace_id: str,
         *,
         conclusions: Iterable[ConclusionCreateParam],
-        observations: Iterable[ObservationCreateParam],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ObservationCreateResponse:
+    ) -> ConclusionCreateResponse:
         """
-        Create one or more observations.
+        Create one or more conclusions.
 
-        Creates observations (theory-of-mind facts) for the specified observer/observed
-        peer pairs. Each observation must reference existing peers and a session within
-        the workspace. Embeddings are automatically generated for semantic search.
-
-        Maximum of 100 observations per request.
+        Conclusions are theory-of-mind facts derived from interactions between peers.
 
         Args:
           workspace_id: ID of the workspace
@@ -328,21 +294,16 @@ class AsyncObservationsResource(AsyncAPIResource):
         if not workspace_id:
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
         return await self._post(
-            f"/v2/workspaces/{workspace_id}/observations",
+            f"/v2/workspaces/{workspace_id}/conclusions",
             body=await async_maybe_transform(
-                {
-                    "conclusions": conclusions,
-                    "observations": observations,
-                },
-                observation_create_params.ObservationCreateParams,
+                {"conclusions": conclusions}, conclusion_create_params.ConclusionCreateParams
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ObservationCreateResponse,
+            cast_to=ConclusionCreateResponse,
         )
 
-    @typing_extensions.deprecated("deprecated")
     def list(
         self,
         workspace_id: str,
@@ -357,14 +318,10 @@ class AsyncObservationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[Observation, AsyncPage[Observation]]:
-        """List all observations using custom filters.
-
-        Observations are listed by recency
-        unless `reverse` is set to `true`.
-
-        Observations can be filtered by session_id, observer_id and observed_id using
-        the filters parameter.
+    ) -> AsyncPaginator[Conclusion, AsyncPage[Conclusion]]:
+        """
+        List conclusions using custom filters, ordered by recency unless `reverse` is
+        true.
 
         Args:
           workspace_id: ID of the workspace
@@ -386,9 +343,9 @@ class AsyncObservationsResource(AsyncAPIResource):
         if not workspace_id:
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
         return self._get_api_list(
-            f"/v2/workspaces/{workspace_id}/observations/list",
-            page=AsyncPage[Observation],
-            body=maybe_transform({"filters": filters}, observation_list_params.ObservationListParams),
+            f"/v2/workspaces/{workspace_id}/conclusions/list",
+            page=AsyncPage[Conclusion],
+            body=maybe_transform({"filters": filters}, conclusion_list_params.ConclusionListParams),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -400,17 +357,16 @@ class AsyncObservationsResource(AsyncAPIResource):
                         "reverse": reverse,
                         "size": size,
                     },
-                    observation_list_params.ObservationListParams,
+                    conclusion_list_params.ConclusionListParams,
                 ),
             ),
-            model=Observation,
+            model=Conclusion,
             method="post",
         )
 
-    @typing_extensions.deprecated("deprecated")
     async def delete(
         self,
-        observation_id: str,
+        conclusion_id: str,
         *,
         workspace_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -421,15 +377,12 @@ class AsyncObservationsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
-        Delete a specific observation.
-
-        This permanently deletes the observation (document) from the theory-of-mind
-        system. This action cannot be undone.
+        Delete a specific conclusion (document).
 
         Args:
           workspace_id: ID of the workspace
 
-          observation_id: ID of the observation to delete
+          conclusion_id: ID of the conclusion to delete
 
           extra_headers: Send extra headers
 
@@ -441,17 +394,16 @@ class AsyncObservationsResource(AsyncAPIResource):
         """
         if not workspace_id:
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
-        if not observation_id:
-            raise ValueError(f"Expected a non-empty value for `observation_id` but received {observation_id!r}")
+        if not conclusion_id:
+            raise ValueError(f"Expected a non-empty value for `conclusion_id` but received {conclusion_id!r}")
         return await self._delete(
-            f"/v2/workspaces/{workspace_id}/observations/{observation_id}",
+            f"/v2/workspaces/{workspace_id}/conclusions/{conclusion_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=object,
         )
 
-    @typing_extensions.deprecated("deprecated")
     async def query(
         self,
         workspace_id: str,
@@ -466,13 +418,9 @@ class AsyncObservationsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ObservationQueryResponse:
+    ) -> ConclusionQueryResponse:
         """
-        Query observations using semantic search.
-
-        Performs vector similarity search on observations to find semantically relevant
-        results. Observer and observed are required for semantic search and must be
-        provided in filters.
+        Query conclusions using semantic search.
 
         Args:
           workspace_id: ID of the workspace
@@ -496,7 +444,7 @@ class AsyncObservationsResource(AsyncAPIResource):
         if not workspace_id:
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
         return await self._post(
-            f"/v2/workspaces/{workspace_id}/observations/query",
+            f"/v2/workspaces/{workspace_id}/conclusions/query",
             body=await async_maybe_transform(
                 {
                     "query": query,
@@ -504,114 +452,82 @@ class AsyncObservationsResource(AsyncAPIResource):
                     "filters": filters,
                     "top_k": top_k,
                 },
-                observation_query_params.ObservationQueryParams,
+                conclusion_query_params.ConclusionQueryParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ObservationQueryResponse,
+            cast_to=ConclusionQueryResponse,
         )
 
 
-class ObservationsResourceWithRawResponse:
-    def __init__(self, observations: ObservationsResource) -> None:
-        self._observations = observations
+class ConclusionsResourceWithRawResponse:
+    def __init__(self, conclusions: ConclusionsResource) -> None:
+        self._conclusions = conclusions
 
-        self.create = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                observations.create,  # pyright: ignore[reportDeprecated],
-            )
+        self.create = to_raw_response_wrapper(
+            conclusions.create,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                observations.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = to_raw_response_wrapper(
+            conclusions.list,
         )
-        self.delete = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                observations.delete,  # pyright: ignore[reportDeprecated],
-            )
+        self.delete = to_raw_response_wrapper(
+            conclusions.delete,
         )
-        self.query = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                observations.query,  # pyright: ignore[reportDeprecated],
-            )
+        self.query = to_raw_response_wrapper(
+            conclusions.query,
         )
 
 
-class AsyncObservationsResourceWithRawResponse:
-    def __init__(self, observations: AsyncObservationsResource) -> None:
-        self._observations = observations
+class AsyncConclusionsResourceWithRawResponse:
+    def __init__(self, conclusions: AsyncConclusionsResource) -> None:
+        self._conclusions = conclusions
 
-        self.create = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                observations.create,  # pyright: ignore[reportDeprecated],
-            )
+        self.create = async_to_raw_response_wrapper(
+            conclusions.create,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                observations.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = async_to_raw_response_wrapper(
+            conclusions.list,
         )
-        self.delete = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                observations.delete,  # pyright: ignore[reportDeprecated],
-            )
+        self.delete = async_to_raw_response_wrapper(
+            conclusions.delete,
         )
-        self.query = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                observations.query,  # pyright: ignore[reportDeprecated],
-            )
+        self.query = async_to_raw_response_wrapper(
+            conclusions.query,
         )
 
 
-class ObservationsResourceWithStreamingResponse:
-    def __init__(self, observations: ObservationsResource) -> None:
-        self._observations = observations
+class ConclusionsResourceWithStreamingResponse:
+    def __init__(self, conclusions: ConclusionsResource) -> None:
+        self._conclusions = conclusions
 
-        self.create = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                observations.create,  # pyright: ignore[reportDeprecated],
-            )
+        self.create = to_streamed_response_wrapper(
+            conclusions.create,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                observations.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = to_streamed_response_wrapper(
+            conclusions.list,
         )
-        self.delete = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                observations.delete,  # pyright: ignore[reportDeprecated],
-            )
+        self.delete = to_streamed_response_wrapper(
+            conclusions.delete,
         )
-        self.query = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                observations.query,  # pyright: ignore[reportDeprecated],
-            )
+        self.query = to_streamed_response_wrapper(
+            conclusions.query,
         )
 
 
-class AsyncObservationsResourceWithStreamingResponse:
-    def __init__(self, observations: AsyncObservationsResource) -> None:
-        self._observations = observations
+class AsyncConclusionsResourceWithStreamingResponse:
+    def __init__(self, conclusions: AsyncConclusionsResource) -> None:
+        self._conclusions = conclusions
 
-        self.create = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                observations.create,  # pyright: ignore[reportDeprecated],
-            )
+        self.create = async_to_streamed_response_wrapper(
+            conclusions.create,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                observations.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = async_to_streamed_response_wrapper(
+            conclusions.list,
         )
-        self.delete = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                observations.delete,  # pyright: ignore[reportDeprecated],
-            )
+        self.delete = async_to_streamed_response_wrapper(
+            conclusions.delete,
         )
-        self.query = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                observations.query,  # pyright: ignore[reportDeprecated],
-            )
+        self.query = async_to_streamed_response_wrapper(
+            conclusions.query,
         )

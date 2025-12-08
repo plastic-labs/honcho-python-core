@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import typing_extensions
 from typing import Dict, Optional
 from typing_extensions import Literal
 
@@ -11,6 +12,7 @@ from ...types import (
     workspace_list_params,
     workspace_search_params,
     workspace_update_params,
+    workspace_queue_status_params,
     workspace_get_or_create_params,
     workspace_trigger_dream_params,
     workspace_deriver_status_params,
@@ -32,6 +34,14 @@ from ..._response import (
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
+)
+from .conclusions import (
+    ConclusionsResource,
+    AsyncConclusionsResource,
+    ConclusionsResourceWithRawResponse,
+    AsyncConclusionsResourceWithRawResponse,
+    ConclusionsResourceWithStreamingResponse,
+    AsyncConclusionsResourceWithStreamingResponse,
 )
 from .peers.peers import (
     PeersResource,
@@ -60,6 +70,7 @@ from .sessions.sessions import (
     SessionsResourceWithStreamingResponse,
     AsyncSessionsResourceWithStreamingResponse,
 )
+from ...types.queue_status import QueueStatus
 from ...types.deriver_status import DeriverStatus
 from ...types.workspace_search_response import WorkspaceSearchResponse
 from ...types.workspace_configuration_param import WorkspaceConfigurationParam
@@ -68,6 +79,10 @@ __all__ = ["WorkspacesResource", "AsyncWorkspacesResource"]
 
 
 class WorkspacesResource(SyncAPIResource):
+    @cached_property
+    def conclusions(self) -> ConclusionsResource:
+        return ConclusionsResource(self._client)
+
     @cached_property
     def observations(self) -> ObservationsResource:
         return ObservationsResource(self._client)
@@ -237,6 +252,7 @@ class WorkspacesResource(SyncAPIResource):
             cast_to=Workspace,
         )
 
+    @typing_extensions.deprecated("deprecated")
     def deriver_status(
         self,
         workspace_id: str,
@@ -251,9 +267,9 @@ class WorkspacesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeriverStatus:
-        """
-        Get the deriver processing status, optionally scoped to an observer, sender,
-        and/or session
+        """Deprecated: use /queue/status.
+
+        Provides identical response payload.
 
         Args:
           workspace_id: ID of the workspace
@@ -340,6 +356,62 @@ class WorkspacesResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Workspace,
+        )
+
+    def queue_status(
+        self,
+        workspace_id: str,
+        *,
+        observer_id: Optional[str] | Omit = omit,
+        sender_id: Optional[str] | Omit = omit,
+        session_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> QueueStatus:
+        """
+        Get the processing queue status, optionally scoped to an observer, sender,
+        and/or session.
+
+        Args:
+          workspace_id: ID of the workspace
+
+          observer_id: Optional observer ID to filter by
+
+          sender_id: Optional sender ID to filter by
+
+          session_id: Optional session ID to filter by
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        return self._get(
+            f"/v2/workspaces/{workspace_id}/queue/status",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "observer_id": observer_id,
+                        "sender_id": sender_id,
+                        "session_id": session_id,
+                    },
+                    workspace_queue_status_params.WorkspaceQueueStatusParams,
+                ),
+            ),
+            cast_to=QueueStatus,
         )
 
     def search(
@@ -453,6 +525,10 @@ class WorkspacesResource(SyncAPIResource):
 
 
 class AsyncWorkspacesResource(AsyncAPIResource):
+    @cached_property
+    def conclusions(self) -> AsyncConclusionsResource:
+        return AsyncConclusionsResource(self._client)
+
     @cached_property
     def observations(self) -> AsyncObservationsResource:
         return AsyncObservationsResource(self._client)
@@ -622,6 +698,7 @@ class AsyncWorkspacesResource(AsyncAPIResource):
             cast_to=Workspace,
         )
 
+    @typing_extensions.deprecated("deprecated")
     async def deriver_status(
         self,
         workspace_id: str,
@@ -636,9 +713,9 @@ class AsyncWorkspacesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeriverStatus:
-        """
-        Get the deriver processing status, optionally scoped to an observer, sender,
-        and/or session
+        """Deprecated: use /queue/status.
+
+        Provides identical response payload.
 
         Args:
           workspace_id: ID of the workspace
@@ -725,6 +802,62 @@ class AsyncWorkspacesResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=Workspace,
+        )
+
+    async def queue_status(
+        self,
+        workspace_id: str,
+        *,
+        observer_id: Optional[str] | Omit = omit,
+        sender_id: Optional[str] | Omit = omit,
+        session_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> QueueStatus:
+        """
+        Get the processing queue status, optionally scoped to an observer, sender,
+        and/or session.
+
+        Args:
+          workspace_id: ID of the workspace
+
+          observer_id: Optional observer ID to filter by
+
+          sender_id: Optional sender ID to filter by
+
+          session_id: Optional session ID to filter by
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        return await self._get(
+            f"/v2/workspaces/{workspace_id}/queue/status",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "observer_id": observer_id,
+                        "sender_id": sender_id,
+                        "session_id": session_id,
+                    },
+                    workspace_queue_status_params.WorkspaceQueueStatusParams,
+                ),
+            ),
+            cast_to=QueueStatus,
         )
 
     async def search(
@@ -850,11 +983,16 @@ class WorkspacesResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             workspaces.delete,
         )
-        self.deriver_status = to_raw_response_wrapper(
-            workspaces.deriver_status,
+        self.deriver_status = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                workspaces.deriver_status,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.get_or_create = to_raw_response_wrapper(
             workspaces.get_or_create,
+        )
+        self.queue_status = to_raw_response_wrapper(
+            workspaces.queue_status,
         )
         self.search = to_raw_response_wrapper(
             workspaces.search,
@@ -862,6 +1000,10 @@ class WorkspacesResourceWithRawResponse:
         self.trigger_dream = to_raw_response_wrapper(
             workspaces.trigger_dream,
         )
+
+    @cached_property
+    def conclusions(self) -> ConclusionsResourceWithRawResponse:
+        return ConclusionsResourceWithRawResponse(self._workspaces.conclusions)
 
     @cached_property
     def observations(self) -> ObservationsResourceWithRawResponse:
@@ -893,11 +1035,16 @@ class AsyncWorkspacesResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             workspaces.delete,
         )
-        self.deriver_status = async_to_raw_response_wrapper(
-            workspaces.deriver_status,
+        self.deriver_status = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                workspaces.deriver_status,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.get_or_create = async_to_raw_response_wrapper(
             workspaces.get_or_create,
+        )
+        self.queue_status = async_to_raw_response_wrapper(
+            workspaces.queue_status,
         )
         self.search = async_to_raw_response_wrapper(
             workspaces.search,
@@ -905,6 +1052,10 @@ class AsyncWorkspacesResourceWithRawResponse:
         self.trigger_dream = async_to_raw_response_wrapper(
             workspaces.trigger_dream,
         )
+
+    @cached_property
+    def conclusions(self) -> AsyncConclusionsResourceWithRawResponse:
+        return AsyncConclusionsResourceWithRawResponse(self._workspaces.conclusions)
 
     @cached_property
     def observations(self) -> AsyncObservationsResourceWithRawResponse:
@@ -936,11 +1087,16 @@ class WorkspacesResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             workspaces.delete,
         )
-        self.deriver_status = to_streamed_response_wrapper(
-            workspaces.deriver_status,
+        self.deriver_status = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                workspaces.deriver_status,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.get_or_create = to_streamed_response_wrapper(
             workspaces.get_or_create,
+        )
+        self.queue_status = to_streamed_response_wrapper(
+            workspaces.queue_status,
         )
         self.search = to_streamed_response_wrapper(
             workspaces.search,
@@ -948,6 +1104,10 @@ class WorkspacesResourceWithStreamingResponse:
         self.trigger_dream = to_streamed_response_wrapper(
             workspaces.trigger_dream,
         )
+
+    @cached_property
+    def conclusions(self) -> ConclusionsResourceWithStreamingResponse:
+        return ConclusionsResourceWithStreamingResponse(self._workspaces.conclusions)
 
     @cached_property
     def observations(self) -> ObservationsResourceWithStreamingResponse:
@@ -979,11 +1139,16 @@ class AsyncWorkspacesResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             workspaces.delete,
         )
-        self.deriver_status = async_to_streamed_response_wrapper(
-            workspaces.deriver_status,
+        self.deriver_status = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                workspaces.deriver_status,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.get_or_create = async_to_streamed_response_wrapper(
             workspaces.get_or_create,
+        )
+        self.queue_status = async_to_streamed_response_wrapper(
+            workspaces.queue_status,
         )
         self.search = async_to_streamed_response_wrapper(
             workspaces.search,
@@ -991,6 +1156,10 @@ class AsyncWorkspacesResourceWithStreamingResponse:
         self.trigger_dream = async_to_streamed_response_wrapper(
             workspaces.trigger_dream,
         )
+
+    @cached_property
+    def conclusions(self) -> AsyncConclusionsResourceWithStreamingResponse:
+        return AsyncConclusionsResourceWithStreamingResponse(self._workspaces.conclusions)
 
     @cached_property
     def observations(self) -> AsyncObservationsResourceWithStreamingResponse:

@@ -575,10 +575,10 @@ class TestHoncho:
         # explicit environment arg requires explicitness
         with update_env(HONCHO_BASE_URL="http://localhost:5000/from/env"):
             with pytest.raises(ValueError, match=r"you must pass base_url=None"):
-                Honcho(api_key=api_key, _strict_response_validation=True, environment="demo")
+                Honcho(api_key=api_key, _strict_response_validation=True, environment="production")
 
-            client = Honcho(base_url=None, api_key=api_key, _strict_response_validation=True, environment="demo")
-            assert str(client.base_url).startswith("https://demo.honcho.dev")
+            client = Honcho(base_url=None, api_key=api_key, _strict_response_validation=True, environment="production")
+            assert str(client.base_url).startswith("https://api.honcho.dev")
 
             client.close()
 
@@ -1412,10 +1412,12 @@ class TestAsyncHoncho:
         # explicit environment arg requires explicitness
         with update_env(HONCHO_BASE_URL="http://localhost:5000/from/env"):
             with pytest.raises(ValueError, match=r"you must pass base_url=None"):
-                AsyncHoncho(api_key=api_key, _strict_response_validation=True, environment="demo")
+                AsyncHoncho(api_key=api_key, _strict_response_validation=True, environment="production")
 
-            client = AsyncHoncho(base_url=None, api_key=api_key, _strict_response_validation=True, environment="demo")
-            assert str(client.base_url).startswith("https://demo.honcho.dev")
+            client = AsyncHoncho(
+                base_url=None, api_key=api_key, _strict_response_validation=True, environment="production"
+            )
+            assert str(client.base_url).startswith("https://api.honcho.dev")
 
             await client.close()
 
