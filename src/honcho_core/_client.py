@@ -44,9 +44,8 @@ __all__ = [
 ]
 
 ENVIRONMENTS: Dict[str, str] = {
-    "demo": "https://demo.honcho.dev",
-    "local": "http://localhost:8000",
     "production": "https://api.honcho.dev",
+    "local": "http://localhost:8000",
 }
 
 
@@ -59,13 +58,13 @@ class Honcho(SyncAPIClient):
     # client options
     api_key: str | None
 
-    _environment: Literal["demo", "local", "production"] | NotGiven
+    _environment: Literal["production", "local"] | NotGiven
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["demo", "local", "production"] | NotGiven = not_given,
+        environment: Literal["production", "local"] | NotGiven = not_given,
         base_url: str | httpx.URL | None | NotGiven = not_given,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -112,7 +111,7 @@ class Honcho(SyncAPIClient):
         elif base_url_env is not None:
             base_url = base_url_env
         else:
-            self._environment = environment = "demo"
+            self._environment = environment = "production"
 
             try:
                 base_url = ENVIRONMENTS[environment]
@@ -161,7 +160,7 @@ class Honcho(SyncAPIClient):
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["demo", "local", "production"] | None = None,
+        environment: Literal["production", "local"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.Client | None = None,
@@ -253,13 +252,13 @@ class AsyncHoncho(AsyncAPIClient):
     # client options
     api_key: str | None
 
-    _environment: Literal["demo", "local", "production"] | NotGiven
+    _environment: Literal["production", "local"] | NotGiven
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["demo", "local", "production"] | NotGiven = not_given,
+        environment: Literal["production", "local"] | NotGiven = not_given,
         base_url: str | httpx.URL | None | NotGiven = not_given,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -306,7 +305,7 @@ class AsyncHoncho(AsyncAPIClient):
         elif base_url_env is not None:
             base_url = base_url_env
         else:
-            self._environment = environment = "demo"
+            self._environment = environment = "production"
 
             try:
                 base_url = ENVIRONMENTS[environment]
@@ -355,7 +354,7 @@ class AsyncHoncho(AsyncAPIClient):
         self,
         *,
         api_key: str | None = None,
-        environment: Literal["demo", "local", "production"] | None = None,
+        environment: Literal["production", "local"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.AsyncClient | None = None,

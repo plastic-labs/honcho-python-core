@@ -4,10 +4,10 @@ from datetime import datetime
 
 from ..._models import BaseModel
 
-__all__ = ["Observations"]
+__all__ = ["Conclusion"]
 
 
-class Observations(BaseModel):
+class Conclusion(BaseModel):
     id: str
 
     content: str
@@ -15,9 +15,9 @@ class Observations(BaseModel):
     created_at: datetime
 
     observed_id: str
-    """The peer being observed"""
+    """The peer the conclusion is about"""
 
     observer_id: str
-    """The peer who made the observation"""
+    """The peer who made the conclusion"""
 
     session_id: str
