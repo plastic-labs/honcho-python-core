@@ -8,6 +8,8 @@ __all__ = ["QueueStatus", "Sessions"]
 
 
 class Sessions(BaseModel):
+    """Status for a specific session within the processing queue."""
+
     completed_work_units: int
     """Completed work units"""
 
@@ -25,6 +27,8 @@ class Sessions(BaseModel):
 
 
 class QueueStatus(BaseModel):
+    """Aggregated processing queue status."""
+
     completed_work_units: int
     """Completed work units"""
 
