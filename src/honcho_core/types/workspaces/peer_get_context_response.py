@@ -9,6 +9,8 @@ __all__ = ["PeerGetContextResponse", "Representation", "RepresentationDeductive"
 
 
 class RepresentationDeductive(BaseModel):
+    """Deductive observation with multiple premises and one conclusion, plus metadata."""
+
     conclusion: str
     """The deductive conclusion"""
 
@@ -23,6 +25,8 @@ class RepresentationDeductive(BaseModel):
 
 
 class RepresentationExplicit(BaseModel):
+    """Explicit observation with content and metadata."""
+
     content: str
     """The explicit observation"""
 
@@ -34,6 +38,24 @@ class RepresentationExplicit(BaseModel):
 
 
 class Representation(BaseModel):
+    """
+    A Representation is a traversable and diffable map of observations.
+    At the base, we have a list of explicit observations, derived from a peer's messages.
+
+    From there, deductive observations can be made by establishing logical relationships between explicit observations.
+
+    In the future, we can add more levels of reasoning on top of these.
+
+    All of a peer's observations are stored as documents in a collection. These documents can be queried in various ways
+    to produce this Representation object.
+
+    Additionally, a "working representation" is a version of this data structure representing the most recent observations
+    within a single session.
+
+    A representation can have a maximum number of observations, which is applied individually to each level of reasoning.
+    If a maximum is set, observations are added and removed in FIFO order.
+    """
+
     deductive: Optional[List[RepresentationDeductive]] = None
     """
     Conclusions that MUST be true given explicit facts and premises - strict logical
@@ -49,6 +71,8 @@ class Representation(BaseModel):
 
 
 class PeerGetContextResponse(BaseModel):
+    """Context for a peer, including representation and peer card."""
+
     peer_id: str
     """The ID of the peer"""
 

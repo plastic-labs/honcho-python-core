@@ -8,6 +8,8 @@ __all__ = ["ObservationCreateParam"]
 
 
 class ObservationCreateParam(TypedDict, total=False):
+    """Deprecated: use ConclusionCreate."""
+
     content: Required[str]
 
     observed_id: Required[str]

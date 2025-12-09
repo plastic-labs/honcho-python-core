@@ -14,6 +14,11 @@ __all__ = ["MessageCreateParam", "Configuration"]
 
 
 class Configuration(TypedDict, total=False):
+    """The set of options that can be in a message DB-level configuration dictionary.
+
+    All fields are optional. Message-level configuration overrides all other configurations.
+    """
+
     deriver: Optional[DeriverConfigurationParam]
     """Configuration for deriver functionality."""
 

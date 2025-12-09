@@ -8,6 +8,8 @@ __all__ = ["Conclusion"]
 
 
 class Conclusion(BaseModel):
+    """Conclusion response - external view of a document."""
+
     id: str
 
     content: str

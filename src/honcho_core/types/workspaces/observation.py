@@ -8,6 +8,8 @@ __all__ = ["Observation"]
 
 
 class Observation(BaseModel):
+    """Deprecated: use Conclusion."""
+
     id: str
 
     content: str

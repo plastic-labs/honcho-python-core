@@ -8,6 +8,8 @@ __all__ = ["ConclusionCreateParam"]
 
 
 class ConclusionCreateParam(TypedDict, total=False):
+    """Schema for creating a single conclusion."""
+
     content: Required[str]
 
     observed_id: Required[str]
