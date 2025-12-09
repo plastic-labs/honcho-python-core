@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.7.0 (2025-12-09)
+
+Full Changelog: [v1.6.1...v1.7.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.6.1...v1.7.0)
+
+### Features
+
+* **api:** Backwards compatible changes ([2f4e4dd](https://github.com/plastic-labs/honcho-python-core/commit/2f4e4dd8503080c857581d73e56ae9eaf95bfecb))
+
+
+### Bug Fixes
+
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([9e5bea8](https://github.com/plastic-labs/honcho-python-core/commit/9e5bea8cf22a85758c6bc3cc12d6625895adc418))
+
+
+### Chores
+
+* add missing docstrings ([daea222](https://github.com/plastic-labs/honcho-python-core/commit/daea22252f74ee776317c39e7bcfce7ea6eea587))
+
 ## 1.6.1 (2025-12-04)
 
 Full Changelog: [v1.6.0...v1.6.1](https://github.com/plastic-labs/honcho-python-core/compare/v1.6.0...v1.6.1)
