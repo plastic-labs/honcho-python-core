@@ -14,6 +14,11 @@ __all__ = ["SessionConfigurationParam"]
 
 
 class SessionConfigurationParamTyped(TypedDict, total=False):
+    """The set of options that can be in a session DB-level configuration dictionary.
+
+    All fields are optional. Session-level configuration overrides workspace-level configuration, which overrides global configuration.
+    """
+
     deriver: Optional[DeriverConfigurationParam]
     """Configuration for deriver functionality."""
 
