@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import typing_extensions
 from typing import Dict, Iterable, Optional
 
 import httpx
@@ -21,7 +20,6 @@ from ...pagination import SyncPage, AsyncPage
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.workspaces import observation_list_params, observation_query_params, observation_create_params
 from ...types.workspaces.observation import Observation
-from ...types.workspaces.conclusion_create_param import ConclusionCreateParam
 from ...types.workspaces.observation_create_param import ObservationCreateParam
 from ...types.workspaces.observation_query_response import ObservationQueryResponse
 from ...types.workspaces.observation_create_response import ObservationCreateResponse
@@ -49,12 +47,10 @@ class ObservationsResource(SyncAPIResource):
         """
         return ObservationsResourceWithStreamingResponse(self)
 
-    @typing_extensions.deprecated("deprecated")
     def create(
         self,
         workspace_id: str,
         *,
-        conclusions: Iterable[ConclusionCreateParam],
         observations: Iterable[ObservationCreateParam],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -87,20 +83,13 @@ class ObservationsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
         return self._post(
             f"/v2/workspaces/{workspace_id}/observations",
-            body=maybe_transform(
-                {
-                    "conclusions": conclusions,
-                    "observations": observations,
-                },
-                observation_create_params.ObservationCreateParams,
-            ),
+            body=maybe_transform({"observations": observations}, observation_create_params.ObservationCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ObservationCreateResponse,
         )
 
-    @typing_extensions.deprecated("deprecated")
     def list(
         self,
         workspace_id: str,
@@ -165,7 +154,6 @@ class ObservationsResource(SyncAPIResource):
             method="post",
         )
 
-    @typing_extensions.deprecated("deprecated")
     def delete(
         self,
         observation_id: str,
@@ -209,7 +197,6 @@ class ObservationsResource(SyncAPIResource):
             cast_to=object,
         )
 
-    @typing_extensions.deprecated("deprecated")
     def query(
         self,
         workspace_id: str,
@@ -291,12 +278,10 @@ class AsyncObservationsResource(AsyncAPIResource):
         """
         return AsyncObservationsResourceWithStreamingResponse(self)
 
-    @typing_extensions.deprecated("deprecated")
     async def create(
         self,
         workspace_id: str,
         *,
-        conclusions: Iterable[ConclusionCreateParam],
         observations: Iterable[ObservationCreateParam],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -330,11 +315,7 @@ class AsyncObservationsResource(AsyncAPIResource):
         return await self._post(
             f"/v2/workspaces/{workspace_id}/observations",
             body=await async_maybe_transform(
-                {
-                    "conclusions": conclusions,
-                    "observations": observations,
-                },
-                observation_create_params.ObservationCreateParams,
+                {"observations": observations}, observation_create_params.ObservationCreateParams
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -342,7 +323,6 @@ class AsyncObservationsResource(AsyncAPIResource):
             cast_to=ObservationCreateResponse,
         )
 
-    @typing_extensions.deprecated("deprecated")
     def list(
         self,
         workspace_id: str,
@@ -407,7 +387,6 @@ class AsyncObservationsResource(AsyncAPIResource):
             method="post",
         )
 
-    @typing_extensions.deprecated("deprecated")
     async def delete(
         self,
         observation_id: str,
@@ -451,7 +430,6 @@ class AsyncObservationsResource(AsyncAPIResource):
             cast_to=object,
         )
 
-    @typing_extensions.deprecated("deprecated")
     async def query(
         self,
         workspace_id: str,
@@ -517,25 +495,17 @@ class ObservationsResourceWithRawResponse:
     def __init__(self, observations: ObservationsResource) -> None:
         self._observations = observations
 
-        self.create = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                observations.create,  # pyright: ignore[reportDeprecated],
-            )
+        self.create = to_raw_response_wrapper(
+            observations.create,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                observations.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = to_raw_response_wrapper(
+            observations.list,
         )
-        self.delete = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                observations.delete,  # pyright: ignore[reportDeprecated],
-            )
+        self.delete = to_raw_response_wrapper(
+            observations.delete,
         )
-        self.query = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                observations.query,  # pyright: ignore[reportDeprecated],
-            )
+        self.query = to_raw_response_wrapper(
+            observations.query,
         )
 
 
@@ -543,25 +513,17 @@ class AsyncObservationsResourceWithRawResponse:
     def __init__(self, observations: AsyncObservationsResource) -> None:
         self._observations = observations
 
-        self.create = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                observations.create,  # pyright: ignore[reportDeprecated],
-            )
+        self.create = async_to_raw_response_wrapper(
+            observations.create,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                observations.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = async_to_raw_response_wrapper(
+            observations.list,
         )
-        self.delete = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                observations.delete,  # pyright: ignore[reportDeprecated],
-            )
+        self.delete = async_to_raw_response_wrapper(
+            observations.delete,
         )
-        self.query = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                observations.query,  # pyright: ignore[reportDeprecated],
-            )
+        self.query = async_to_raw_response_wrapper(
+            observations.query,
         )
 
 
@@ -569,25 +531,17 @@ class ObservationsResourceWithStreamingResponse:
     def __init__(self, observations: ObservationsResource) -> None:
         self._observations = observations
 
-        self.create = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                observations.create,  # pyright: ignore[reportDeprecated],
-            )
+        self.create = to_streamed_response_wrapper(
+            observations.create,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                observations.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = to_streamed_response_wrapper(
+            observations.list,
         )
-        self.delete = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                observations.delete,  # pyright: ignore[reportDeprecated],
-            )
+        self.delete = to_streamed_response_wrapper(
+            observations.delete,
         )
-        self.query = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                observations.query,  # pyright: ignore[reportDeprecated],
-            )
+        self.query = to_streamed_response_wrapper(
+            observations.query,
         )
 
 
@@ -595,23 +549,15 @@ class AsyncObservationsResourceWithStreamingResponse:
     def __init__(self, observations: AsyncObservationsResource) -> None:
         self._observations = observations
 
-        self.create = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                observations.create,  # pyright: ignore[reportDeprecated],
-            )
+        self.create = async_to_streamed_response_wrapper(
+            observations.create,
         )
-        self.list = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                observations.list,  # pyright: ignore[reportDeprecated],
-            )
+        self.list = async_to_streamed_response_wrapper(
+            observations.list,
         )
-        self.delete = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                observations.delete,  # pyright: ignore[reportDeprecated],
-            )
+        self.delete = async_to_streamed_response_wrapper(
+            observations.delete,
         )
-        self.query = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                observations.query,  # pyright: ignore[reportDeprecated],
-            )
+        self.query = async_to_streamed_response_wrapper(
+            observations.query,
         )

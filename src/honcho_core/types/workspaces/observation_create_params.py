@@ -5,13 +5,10 @@ from __future__ import annotations
 from typing import Iterable
 from typing_extensions import Required, TypedDict
 
-from .conclusion_create_param import ConclusionCreateParam
 from .observation_create_param import ObservationCreateParam
 
 __all__ = ["ObservationCreateParams"]
 
 
 class ObservationCreateParams(TypedDict, total=False):
-    conclusions: Required[Iterable[ConclusionCreateParam]]
-
     observations: Required[Iterable[ObservationCreateParam]]
