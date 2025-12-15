@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from .workspace import Workspace as Workspace
-from .queue_status import QueueStatus as QueueStatus
 from .deriver_status import DeriverStatus as DeriverStatus
 from .key_create_params import KeyCreateParams as KeyCreateParams
 from .workspace_list_params import WorkspaceListParams as WorkspaceListParams
@@ -15,7 +14,6 @@ from .deriver_configuration_param import DeriverConfigurationParam as DeriverCon
 from .summary_configuration_param import SummaryConfigurationParam as SummaryConfigurationParam
 from .peer_card_configuration_param import PeerCardConfigurationParam as PeerCardConfigurationParam
 from .workspace_configuration_param import WorkspaceConfigurationParam as WorkspaceConfigurationParam
-from .workspace_queue_status_params import WorkspaceQueueStatusParams as WorkspaceQueueStatusParams
 from .workspace_get_or_create_params import WorkspaceGetOrCreateParams as WorkspaceGetOrCreateParams
 from .workspace_trigger_dream_params import WorkspaceTriggerDreamParams as WorkspaceTriggerDreamParams
 from .workspace_deriver_status_params import WorkspaceDeriverStatusParams as WorkspaceDeriverStatusParams

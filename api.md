@@ -9,7 +9,6 @@ from honcho_core.types import (
     DreamConfiguration,
     MessageSearchOptions,
     PeerCardConfiguration,
-    QueueStatus,
     SummaryConfiguration,
     Workspace,
     WorkspaceConfiguration,
@@ -24,32 +23,8 @@ Methods:
 - <code title="delete /v2/workspaces/{workspace_id}">client.workspaces.<a href="./src/honcho_core/resources/workspaces/workspaces.py">delete</a>(workspace_id) -> <a href="./src/honcho_core/types/workspace.py">Workspace</a></code>
 - <code title="get /v2/workspaces/{workspace_id}/deriver/status">client.workspaces.<a href="./src/honcho_core/resources/workspaces/workspaces.py">deriver_status</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspace_deriver_status_params.py">params</a>) -> <a href="./src/honcho_core/types/deriver_status.py">DeriverStatus</a></code>
 - <code title="post /v2/workspaces">client.workspaces.<a href="./src/honcho_core/resources/workspaces/workspaces.py">get_or_create</a>(\*\*<a href="src/honcho_core/types/workspace_get_or_create_params.py">params</a>) -> <a href="./src/honcho_core/types/workspace.py">Workspace</a></code>
-- <code title="get /v2/workspaces/{workspace_id}/queue/status">client.workspaces.<a href="./src/honcho_core/resources/workspaces/workspaces.py">queue_status</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspace_queue_status_params.py">params</a>) -> <a href="./src/honcho_core/types/queue_status.py">QueueStatus</a></code>
 - <code title="post /v2/workspaces/{workspace_id}/search">client.workspaces.<a href="./src/honcho_core/resources/workspaces/workspaces.py">search</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspace_search_params.py">params</a>) -> <a href="./src/honcho_core/types/workspace_search_response.py">WorkspaceSearchResponse</a></code>
 - <code title="post /v2/workspaces/{workspace_id}/trigger_dream">client.workspaces.<a href="./src/honcho_core/resources/workspaces/workspaces.py">trigger_dream</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspace_trigger_dream_params.py">params</a>) -> None</code>
-
-## Conclusions
-
-Types:
-
-```python
-from honcho_core.types.workspaces import (
-    Conclusion,
-    ConclusionCreate,
-    ConclusionGet,
-    ConclusionQuery,
-    PageConclusion,
-    ConclusionCreateResponse,
-    ConclusionQueryResponse,
-)
-```
-
-Methods:
-
-- <code title="post /v2/workspaces/{workspace_id}/conclusions">client.workspaces.conclusions.<a href="./src/honcho_core/resources/workspaces/conclusions.py">create</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspaces/conclusion_create_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/conclusion_create_response.py">ConclusionCreateResponse</a></code>
-- <code title="post /v2/workspaces/{workspace_id}/conclusions/list">client.workspaces.conclusions.<a href="./src/honcho_core/resources/workspaces/conclusions.py">list</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspaces/conclusion_list_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/conclusion.py">SyncPage[Conclusion]</a></code>
-- <code title="delete /v2/workspaces/{workspace_id}/conclusions/{conclusion_id}">client.workspaces.conclusions.<a href="./src/honcho_core/resources/workspaces/conclusions.py">delete</a>(conclusion_id, \*, workspace_id) -> object</code>
-- <code title="post /v2/workspaces/{workspace_id}/conclusions/query">client.workspaces.conclusions.<a href="./src/honcho_core/resources/workspaces/conclusions.py">query</a>(workspace_id, \*\*<a href="src/honcho_core/types/workspaces/conclusion_query_params.py">params</a>) -> <a href="./src/honcho_core/types/workspaces/conclusion_query_response.py">ConclusionQueryResponse</a></code>
 
 ## Observations
 
@@ -84,6 +59,7 @@ from honcho_core.types.workspaces import (
     PageSession,
     Peer,
     PeerCardResponse,
+    Representation,
     SessionGet,
     PeerChatResponse,
     PeerGetContextResponse,

@@ -8,15 +8,15 @@ __all__ = ["ObservationCreateParam"]
 
 
 class ObservationCreateParam(TypedDict, total=False):
-    """Deprecated: use ConclusionCreate."""
+    """Schema for creating a single observation"""
 
     content: Required[str]
 
     observed_id: Required[str]
-    """The peer the conclusion is about"""
+    """The peer being observed"""
 
     observer_id: Required[str]
-    """The peer making the conclusion"""
+    """The peer making the observation"""
 
     session_id: Required[str]
-    """The session this conclusion relates to"""
+    """The session this observation relates to"""
