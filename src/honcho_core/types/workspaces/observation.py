@@ -8,7 +8,7 @@ __all__ = ["Observation"]
 
 
 class Observation(BaseModel):
-    """Deprecated: use Conclusion."""
+    """Observation response - external view of a document"""
 
     id: str
 
@@ -17,9 +17,9 @@ class Observation(BaseModel):
     created_at: datetime
 
     observed_id: str
-    """The peer the conclusion is about"""
+    """The peer being observed"""
 
     observer_id: str
-    """The peer who made the conclusion"""
+    """The peer who made the observation"""
 
     session_id: str

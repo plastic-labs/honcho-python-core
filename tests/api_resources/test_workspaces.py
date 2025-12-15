@@ -11,13 +11,10 @@ from honcho_core import Honcho, AsyncHoncho
 from tests.utils import assert_matches_type
 from honcho_core.types import (
     Workspace,
-    QueueStatus,
     DeriverStatus,
     WorkspaceSearchResponse,
 )
 from honcho_core.pagination import SyncPage, AsyncPage
-
-# pyright: reportDeprecated=false
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -161,31 +158,26 @@ class TestWorkspaces:
 
     @parametrize
     def test_method_deriver_status(self, client: Honcho) -> None:
-        with pytest.warns(DeprecationWarning):
-            workspace = client.workspaces.deriver_status(
-                workspace_id="workspace_id",
-            )
-
+        workspace = client.workspaces.deriver_status(
+            workspace_id="workspace_id",
+        )
         assert_matches_type(DeriverStatus, workspace, path=["response"])
 
     @parametrize
     def test_method_deriver_status_with_all_params(self, client: Honcho) -> None:
-        with pytest.warns(DeprecationWarning):
-            workspace = client.workspaces.deriver_status(
-                workspace_id="workspace_id",
-                observer_id="observer_id",
-                sender_id="sender_id",
-                session_id="session_id",
-            )
-
+        workspace = client.workspaces.deriver_status(
+            workspace_id="workspace_id",
+            observer_id="observer_id",
+            sender_id="sender_id",
+            session_id="session_id",
+        )
         assert_matches_type(DeriverStatus, workspace, path=["response"])
 
     @parametrize
     def test_raw_response_deriver_status(self, client: Honcho) -> None:
-        with pytest.warns(DeprecationWarning):
-            response = client.workspaces.with_raw_response.deriver_status(
-                workspace_id="workspace_id",
-            )
+        response = client.workspaces.with_raw_response.deriver_status(
+            workspace_id="workspace_id",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -194,25 +186,23 @@ class TestWorkspaces:
 
     @parametrize
     def test_streaming_response_deriver_status(self, client: Honcho) -> None:
-        with pytest.warns(DeprecationWarning):
-            with client.workspaces.with_streaming_response.deriver_status(
-                workspace_id="workspace_id",
-            ) as response:
-                assert not response.is_closed
-                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with client.workspaces.with_streaming_response.deriver_status(
+            workspace_id="workspace_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-                workspace = response.parse()
-                assert_matches_type(DeriverStatus, workspace, path=["response"])
+            workspace = response.parse()
+            assert_matches_type(DeriverStatus, workspace, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
     def test_path_params_deriver_status(self, client: Honcho) -> None:
-        with pytest.warns(DeprecationWarning):
-            with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
-                client.workspaces.with_raw_response.deriver_status(
-                    workspace_id="",
-                )
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
+            client.workspaces.with_raw_response.deriver_status(
+                workspace_id="",
+            )
 
     @parametrize
     def test_method_get_or_create(self, client: Honcho) -> None:
@@ -268,54 +258,6 @@ class TestWorkspaces:
             assert_matches_type(Workspace, workspace, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    def test_method_queue_status(self, client: Honcho) -> None:
-        workspace = client.workspaces.queue_status(
-            workspace_id="workspace_id",
-        )
-        assert_matches_type(QueueStatus, workspace, path=["response"])
-
-    @parametrize
-    def test_method_queue_status_with_all_params(self, client: Honcho) -> None:
-        workspace = client.workspaces.queue_status(
-            workspace_id="workspace_id",
-            observer_id="observer_id",
-            sender_id="sender_id",
-            session_id="session_id",
-        )
-        assert_matches_type(QueueStatus, workspace, path=["response"])
-
-    @parametrize
-    def test_raw_response_queue_status(self, client: Honcho) -> None:
-        response = client.workspaces.with_raw_response.queue_status(
-            workspace_id="workspace_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        workspace = response.parse()
-        assert_matches_type(QueueStatus, workspace, path=["response"])
-
-    @parametrize
-    def test_streaming_response_queue_status(self, client: Honcho) -> None:
-        with client.workspaces.with_streaming_response.queue_status(
-            workspace_id="workspace_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            workspace = response.parse()
-            assert_matches_type(QueueStatus, workspace, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    def test_path_params_queue_status(self, client: Honcho) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
-            client.workspaces.with_raw_response.queue_status(
-                workspace_id="",
-            )
 
     @parametrize
     def test_method_search(self, client: Honcho) -> None:
@@ -567,31 +509,26 @@ class TestAsyncWorkspaces:
 
     @parametrize
     async def test_method_deriver_status(self, async_client: AsyncHoncho) -> None:
-        with pytest.warns(DeprecationWarning):
-            workspace = await async_client.workspaces.deriver_status(
-                workspace_id="workspace_id",
-            )
-
+        workspace = await async_client.workspaces.deriver_status(
+            workspace_id="workspace_id",
+        )
         assert_matches_type(DeriverStatus, workspace, path=["response"])
 
     @parametrize
     async def test_method_deriver_status_with_all_params(self, async_client: AsyncHoncho) -> None:
-        with pytest.warns(DeprecationWarning):
-            workspace = await async_client.workspaces.deriver_status(
-                workspace_id="workspace_id",
-                observer_id="observer_id",
-                sender_id="sender_id",
-                session_id="session_id",
-            )
-
+        workspace = await async_client.workspaces.deriver_status(
+            workspace_id="workspace_id",
+            observer_id="observer_id",
+            sender_id="sender_id",
+            session_id="session_id",
+        )
         assert_matches_type(DeriverStatus, workspace, path=["response"])
 
     @parametrize
     async def test_raw_response_deriver_status(self, async_client: AsyncHoncho) -> None:
-        with pytest.warns(DeprecationWarning):
-            response = await async_client.workspaces.with_raw_response.deriver_status(
-                workspace_id="workspace_id",
-            )
+        response = await async_client.workspaces.with_raw_response.deriver_status(
+            workspace_id="workspace_id",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -600,25 +537,23 @@ class TestAsyncWorkspaces:
 
     @parametrize
     async def test_streaming_response_deriver_status(self, async_client: AsyncHoncho) -> None:
-        with pytest.warns(DeprecationWarning):
-            async with async_client.workspaces.with_streaming_response.deriver_status(
-                workspace_id="workspace_id",
-            ) as response:
-                assert not response.is_closed
-                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        async with async_client.workspaces.with_streaming_response.deriver_status(
+            workspace_id="workspace_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-                workspace = await response.parse()
-                assert_matches_type(DeriverStatus, workspace, path=["response"])
+            workspace = await response.parse()
+            assert_matches_type(DeriverStatus, workspace, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
     async def test_path_params_deriver_status(self, async_client: AsyncHoncho) -> None:
-        with pytest.warns(DeprecationWarning):
-            with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
-                await async_client.workspaces.with_raw_response.deriver_status(
-                    workspace_id="",
-                )
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
+            await async_client.workspaces.with_raw_response.deriver_status(
+                workspace_id="",
+            )
 
     @parametrize
     async def test_method_get_or_create(self, async_client: AsyncHoncho) -> None:
@@ -674,54 +609,6 @@ class TestAsyncWorkspaces:
             assert_matches_type(Workspace, workspace, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    async def test_method_queue_status(self, async_client: AsyncHoncho) -> None:
-        workspace = await async_client.workspaces.queue_status(
-            workspace_id="workspace_id",
-        )
-        assert_matches_type(QueueStatus, workspace, path=["response"])
-
-    @parametrize
-    async def test_method_queue_status_with_all_params(self, async_client: AsyncHoncho) -> None:
-        workspace = await async_client.workspaces.queue_status(
-            workspace_id="workspace_id",
-            observer_id="observer_id",
-            sender_id="sender_id",
-            session_id="session_id",
-        )
-        assert_matches_type(QueueStatus, workspace, path=["response"])
-
-    @parametrize
-    async def test_raw_response_queue_status(self, async_client: AsyncHoncho) -> None:
-        response = await async_client.workspaces.with_raw_response.queue_status(
-            workspace_id="workspace_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        workspace = await response.parse()
-        assert_matches_type(QueueStatus, workspace, path=["response"])
-
-    @parametrize
-    async def test_streaming_response_queue_status(self, async_client: AsyncHoncho) -> None:
-        async with async_client.workspaces.with_streaming_response.queue_status(
-            workspace_id="workspace_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            workspace = await response.parse()
-            assert_matches_type(QueueStatus, workspace, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    async def test_path_params_queue_status(self, async_client: AsyncHoncho) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
-            await async_client.workspaces.with_raw_response.queue_status(
-                workspace_id="",
-            )
 
     @parametrize
     async def test_method_search(self, async_client: AsyncHoncho) -> None:
