@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.0 (2025-12-15)
+
+Full Changelog: [v1.7.0...v1.8.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.7.0...v1.8.0)
+
+### Features
+
+* **api:** remove accidental "conclusions" and "QueueStatus" from main ([2eb1c84](https://github.com/plastic-labs/honcho-python-core/commit/2eb1c84b15d9df54ca5c247423f1ece00f212599))
+
 ## 1.7.0 (2025-12-09)
 
 Full Changelog: [v1.6.1...v1.7.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.6.1...v1.7.0)
