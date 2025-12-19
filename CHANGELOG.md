@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.8.1 (2025-12-19)
+
+Full Changelog: [v1.8.0...v1.8.1](https://github.com/plastic-labs/honcho-python-core/compare/v1.8.0...v1.8.1)
+
+### Bug Fixes
+
+* use async_to_httpx_files in patch method ([ebe0efb](https://github.com/plastic-labs/honcho-python-core/commit/ebe0efb5b9b604f276143fc9ca75e06274dfb514))
+
+
+### Chores
+
+* **internal:** add `--fix` argument to lint script ([18d386f](https://github.com/plastic-labs/honcho-python-core/commit/18d386fc335b0f521dfffe625a32f10eb3ad1636))
+* **internal:** add missing files argument to base client ([a7e9420](https://github.com/plastic-labs/honcho-python-core/commit/a7e9420ae981e524bb8a313b98df0a12c1385d1d))
+* speedup initial import ([5f36a02](https://github.com/plastic-labs/honcho-python-core/commit/5f36a02830d793290236a4d73a17bd62c0027719))
+
 ## 1.8.0 (2025-12-15)
 
 Full Changelog: [v1.7.0...v1.8.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.7.0...v1.8.0)
