@@ -95,13 +95,9 @@ class SessionsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
-        Update the metadata of a Session
+        Update a Session's metadata and/or configuration.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session to update
-
           configuration: The set of options that can be in a session DB-level configuration dictionary.
 
               All fields are optional. Session-level configuration overrides workspace-level
@@ -149,11 +145,9 @@ class SessionsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPage[Session]:
         """
-        Get All Sessions in a Workspace
+        Get all Sessions for a Workspace, paginated with optional filters.
 
         Args:
-          workspace_id: ID of the workspace
-
           page: Page number
 
           size: Page size
@@ -202,19 +196,15 @@ class SessionsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
-        Delete a session and all associated data.
+        Delete a Session and all associated messages.
 
-        The session is marked as inactive immediately and returns 202 Accepted. The
-        actual deletion of all related data (messages, embeddings, documents, etc.)
-        happens asynchronously via the queue with retry support.
+        The Session is marked as inactive immediately and returns 202 Accepted. The
+        actual deletion of all related data happens asynchronously via the queue with
+        retry support.
 
         This action cannot be undone.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session to delete
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -249,13 +239,9 @@ class SessionsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
-        Clone a session, optionally up to a specific message
+        Clone a Session, optionally up to a specific message ID.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session to clone
-
           message_id: Message ID to cut off the clone at
 
           extra_headers: Send extra headers
@@ -270,7 +256,7 @@ class SessionsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
         if not session_id:
             raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
-        return self._get(
+        return self._post(
             f"/v2/workspaces/{workspace_id}/sessions/{session_id}/clone",
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -304,7 +290,7 @@ class SessionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionGetContextResponse:
-        """Produce a context object from the session.
+        """Produce a context object from the Session.
 
         The caller provides an optional token
         limit which the entire context must fit into. If not provided, the context will
@@ -314,10 +300,6 @@ class SessionsResource(SyncAPIResource):
         does not want a summary, we allocate all the tokens to recent messages.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
           include_most_derived: Only used if `last_message` is provided. Whether to include the most derived
               observations in the representation
 
@@ -404,14 +386,12 @@ class SessionsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
-        Get a specific session in a workspace.
+        Get a Session by ID or create a new Session with the given ID.
 
-        If session_id is provided as a query parameter, it verifies the session is in
-        the workspace. Otherwise, it uses the session_id from the JWT for verification.
+        If Session ID is provided as a parameter, it verifies the Session is in the
+        Workspace. Otherwise, it uses the session_id from the JWT for verification.
 
         Args:
-          workspace_id: ID of the workspace
-
           configuration: The set of options that can be in a session DB-level configuration dictionary.
 
               All fields are optional. Session-level configuration overrides workspace-level
@@ -459,14 +439,12 @@ class SessionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionSearchResponse:
-        """
-        Search a Session
+        """Search a Session with optional filters.
+
+        Use `limit` to control the number of
+        results returned.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
           query: Search query
 
           filters: Filters to scope the search
@@ -514,16 +492,12 @@ class SessionsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionSummariesResponse:
         """
-        Get available summaries for a session.
+        Get available summaries for a Session.
 
         Returns both short and long summaries if available, including metadata like the
         message ID they cover up to, creation timestamp, and token count.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -588,13 +562,9 @@ class AsyncSessionsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
-        Update the metadata of a Session
+        Update a Session's metadata and/or configuration.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session to update
-
           configuration: The set of options that can be in a session DB-level configuration dictionary.
 
               All fields are optional. Session-level configuration overrides workspace-level
@@ -642,11 +612,9 @@ class AsyncSessionsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Session, AsyncPage[Session]]:
         """
-        Get All Sessions in a Workspace
+        Get all Sessions for a Workspace, paginated with optional filters.
 
         Args:
-          workspace_id: ID of the workspace
-
           page: Page number
 
           size: Page size
@@ -695,19 +663,15 @@ class AsyncSessionsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
-        Delete a session and all associated data.
+        Delete a Session and all associated messages.
 
-        The session is marked as inactive immediately and returns 202 Accepted. The
-        actual deletion of all related data (messages, embeddings, documents, etc.)
-        happens asynchronously via the queue with retry support.
+        The Session is marked as inactive immediately and returns 202 Accepted. The
+        actual deletion of all related data happens asynchronously via the queue with
+        retry support.
 
         This action cannot be undone.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session to delete
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -742,13 +706,9 @@ class AsyncSessionsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
-        Clone a session, optionally up to a specific message
+        Clone a Session, optionally up to a specific message ID.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session to clone
-
           message_id: Message ID to cut off the clone at
 
           extra_headers: Send extra headers
@@ -763,7 +723,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
         if not session_id:
             raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
-        return await self._get(
+        return await self._post(
             f"/v2/workspaces/{workspace_id}/sessions/{session_id}/clone",
             options=make_request_options(
                 extra_headers=extra_headers,
@@ -797,7 +757,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionGetContextResponse:
-        """Produce a context object from the session.
+        """Produce a context object from the Session.
 
         The caller provides an optional token
         limit which the entire context must fit into. If not provided, the context will
@@ -807,10 +767,6 @@ class AsyncSessionsResource(AsyncAPIResource):
         does not want a summary, we allocate all the tokens to recent messages.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
           include_most_derived: Only used if `last_message` is provided. Whether to include the most derived
               observations in the representation
 
@@ -897,14 +853,12 @@ class AsyncSessionsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
-        Get a specific session in a workspace.
+        Get a Session by ID or create a new Session with the given ID.
 
-        If session_id is provided as a query parameter, it verifies the session is in
-        the workspace. Otherwise, it uses the session_id from the JWT for verification.
+        If Session ID is provided as a parameter, it verifies the Session is in the
+        Workspace. Otherwise, it uses the session_id from the JWT for verification.
 
         Args:
-          workspace_id: ID of the workspace
-
           configuration: The set of options that can be in a session DB-level configuration dictionary.
 
               All fields are optional. Session-level configuration overrides workspace-level
@@ -952,14 +906,12 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionSearchResponse:
-        """
-        Search a Session
+        """Search a Session with optional filters.
+
+        Use `limit` to control the number of
+        results returned.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
           query: Search query
 
           filters: Filters to scope the search
@@ -1007,16 +959,12 @@ class AsyncSessionsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionSummariesResponse:
         """
-        Get available summaries for a session.
+        Get available summaries for a Session.
 
         Returns both short and long summaries if available, including metadata like the
         message ID they cover up to, creation timestamp, and token count.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request

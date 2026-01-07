@@ -10,7 +10,6 @@ __all__ = ["PeerUpdateParams"]
 
 class PeerUpdateParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     configuration: Optional[Dict[str, object]]
 

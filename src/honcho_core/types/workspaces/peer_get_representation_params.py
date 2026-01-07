@@ -5,12 +5,11 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["PeerWorkingRepresentationParams"]
+__all__ = ["PeerGetRepresentationParams"]
 
 
-class PeerWorkingRepresentationParams(TypedDict, total=False):
+class PeerGetRepresentationParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     include_most_derived: Optional[bool]
     """Only used if `search_query` is provided.
@@ -41,7 +40,7 @@ class PeerWorkingRepresentationParams(TypedDict, total=False):
     """
 
     session_id: Optional[str]
-    """Get the working representation within this session"""
+    """Optional session ID within which to scope the representation"""
 
     target: Optional[str]
     """

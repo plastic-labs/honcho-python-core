@@ -11,7 +11,6 @@ from honcho_core import Honcho, AsyncHoncho
 from tests.utils import assert_matches_type
 from honcho_core.types import (
     Workspace,
-    DeriverStatus,
     WorkspaceSearchResponse,
 )
 from honcho_core.pagination import SyncPage, AsyncPage
@@ -34,14 +33,14 @@ class TestWorkspaces:
         workspace = client.workspaces.update(
             workspace_id="workspace_id",
             configuration={
-                "deriver": {
-                    "custom_instructions": "custom_instructions",
-                    "enabled": True,
-                },
                 "dream": {"enabled": True},
                 "peer_card": {
                     "create": True,
                     "use": True,
+                },
+                "reasoning": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
                 },
                 "summary": {
                     "enabled": True,
@@ -123,7 +122,7 @@ class TestWorkspaces:
         workspace = client.workspaces.delete(
             "workspace_id",
         )
-        assert_matches_type(Workspace, workspace, path=["response"])
+        assert workspace is None
 
     @parametrize
     def test_raw_response_delete(self, client: Honcho) -> None:
@@ -134,7 +133,7 @@ class TestWorkspaces:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         workspace = response.parse()
-        assert_matches_type(Workspace, workspace, path=["response"])
+        assert workspace is None
 
     @parametrize
     def test_streaming_response_delete(self, client: Honcho) -> None:
@@ -145,7 +144,7 @@ class TestWorkspaces:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             workspace = response.parse()
-            assert_matches_type(Workspace, workspace, path=["response"])
+            assert workspace is None
 
         assert cast(Any, response.is_closed) is True
 
@@ -154,54 +153,6 @@ class TestWorkspaces:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
             client.workspaces.with_raw_response.delete(
                 "",
-            )
-
-    @parametrize
-    def test_method_deriver_status(self, client: Honcho) -> None:
-        workspace = client.workspaces.deriver_status(
-            workspace_id="workspace_id",
-        )
-        assert_matches_type(DeriverStatus, workspace, path=["response"])
-
-    @parametrize
-    def test_method_deriver_status_with_all_params(self, client: Honcho) -> None:
-        workspace = client.workspaces.deriver_status(
-            workspace_id="workspace_id",
-            observer_id="observer_id",
-            sender_id="sender_id",
-            session_id="session_id",
-        )
-        assert_matches_type(DeriverStatus, workspace, path=["response"])
-
-    @parametrize
-    def test_raw_response_deriver_status(self, client: Honcho) -> None:
-        response = client.workspaces.with_raw_response.deriver_status(
-            workspace_id="workspace_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        workspace = response.parse()
-        assert_matches_type(DeriverStatus, workspace, path=["response"])
-
-    @parametrize
-    def test_streaming_response_deriver_status(self, client: Honcho) -> None:
-        with client.workspaces.with_streaming_response.deriver_status(
-            workspace_id="workspace_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            workspace = response.parse()
-            assert_matches_type(DeriverStatus, workspace, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    def test_path_params_deriver_status(self, client: Honcho) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
-            client.workspaces.with_raw_response.deriver_status(
-                workspace_id="",
             )
 
     @parametrize
@@ -216,14 +167,14 @@ class TestWorkspaces:
         workspace = client.workspaces.get_or_create(
             id="id",
             configuration={
-                "deriver": {
-                    "custom_instructions": "custom_instructions",
-                    "enabled": True,
-                },
                 "dream": {"enabled": True},
                 "peer_card": {
                     "create": True,
                     "use": True,
+                },
+                "reasoning": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
                 },
                 "summary": {
                     "enabled": True,
@@ -258,6 +209,68 @@ class TestWorkspaces:
             assert_matches_type(Workspace, workspace, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_method_schedule_dream(self, client: Honcho) -> None:
+        workspace = client.workspaces.schedule_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+            session_id="session_id",
+        )
+        assert workspace is None
+
+    @parametrize
+    def test_method_schedule_dream_with_all_params(self, client: Honcho) -> None:
+        workspace = client.workspaces.schedule_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+            session_id="session_id",
+            observed="observed",
+            reasoning_focus="deduction",
+        )
+        assert workspace is None
+
+    @parametrize
+    def test_raw_response_schedule_dream(self, client: Honcho) -> None:
+        response = client.workspaces.with_raw_response.schedule_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+            session_id="session_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        workspace = response.parse()
+        assert workspace is None
+
+    @parametrize
+    def test_streaming_response_schedule_dream(self, client: Honcho) -> None:
+        with client.workspaces.with_streaming_response.schedule_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+            session_id="session_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            workspace = response.parse()
+            assert workspace is None
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_schedule_dream(self, client: Honcho) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
+            client.workspaces.with_raw_response.schedule_dream(
+                workspace_id="",
+                dream_type="consolidate",
+                observer="observer",
+                session_id="session_id",
+            )
 
     @parametrize
     def test_method_search(self, client: Honcho) -> None:
@@ -311,62 +324,6 @@ class TestWorkspaces:
                 query="query",
             )
 
-    @parametrize
-    def test_method_trigger_dream(self, client: Honcho) -> None:
-        workspace = client.workspaces.trigger_dream(
-            workspace_id="workspace_id",
-            dream_type="consolidate",
-            observer="observer",
-        )
-        assert workspace is None
-
-    @parametrize
-    def test_method_trigger_dream_with_all_params(self, client: Honcho) -> None:
-        workspace = client.workspaces.trigger_dream(
-            workspace_id="workspace_id",
-            dream_type="consolidate",
-            observer="observer",
-            observed="observed",
-        )
-        assert workspace is None
-
-    @parametrize
-    def test_raw_response_trigger_dream(self, client: Honcho) -> None:
-        response = client.workspaces.with_raw_response.trigger_dream(
-            workspace_id="workspace_id",
-            dream_type="consolidate",
-            observer="observer",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        workspace = response.parse()
-        assert workspace is None
-
-    @parametrize
-    def test_streaming_response_trigger_dream(self, client: Honcho) -> None:
-        with client.workspaces.with_streaming_response.trigger_dream(
-            workspace_id="workspace_id",
-            dream_type="consolidate",
-            observer="observer",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            workspace = response.parse()
-            assert workspace is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    def test_path_params_trigger_dream(self, client: Honcho) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
-            client.workspaces.with_raw_response.trigger_dream(
-                workspace_id="",
-                dream_type="consolidate",
-                observer="observer",
-            )
-
 
 class TestAsyncWorkspaces:
     parametrize = pytest.mark.parametrize(
@@ -385,14 +342,14 @@ class TestAsyncWorkspaces:
         workspace = await async_client.workspaces.update(
             workspace_id="workspace_id",
             configuration={
-                "deriver": {
-                    "custom_instructions": "custom_instructions",
-                    "enabled": True,
-                },
                 "dream": {"enabled": True},
                 "peer_card": {
                     "create": True,
                     "use": True,
+                },
+                "reasoning": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
                 },
                 "summary": {
                     "enabled": True,
@@ -474,7 +431,7 @@ class TestAsyncWorkspaces:
         workspace = await async_client.workspaces.delete(
             "workspace_id",
         )
-        assert_matches_type(Workspace, workspace, path=["response"])
+        assert workspace is None
 
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncHoncho) -> None:
@@ -485,7 +442,7 @@ class TestAsyncWorkspaces:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         workspace = await response.parse()
-        assert_matches_type(Workspace, workspace, path=["response"])
+        assert workspace is None
 
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncHoncho) -> None:
@@ -496,7 +453,7 @@ class TestAsyncWorkspaces:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             workspace = await response.parse()
-            assert_matches_type(Workspace, workspace, path=["response"])
+            assert workspace is None
 
         assert cast(Any, response.is_closed) is True
 
@@ -505,54 +462,6 @@ class TestAsyncWorkspaces:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
             await async_client.workspaces.with_raw_response.delete(
                 "",
-            )
-
-    @parametrize
-    async def test_method_deriver_status(self, async_client: AsyncHoncho) -> None:
-        workspace = await async_client.workspaces.deriver_status(
-            workspace_id="workspace_id",
-        )
-        assert_matches_type(DeriverStatus, workspace, path=["response"])
-
-    @parametrize
-    async def test_method_deriver_status_with_all_params(self, async_client: AsyncHoncho) -> None:
-        workspace = await async_client.workspaces.deriver_status(
-            workspace_id="workspace_id",
-            observer_id="observer_id",
-            sender_id="sender_id",
-            session_id="session_id",
-        )
-        assert_matches_type(DeriverStatus, workspace, path=["response"])
-
-    @parametrize
-    async def test_raw_response_deriver_status(self, async_client: AsyncHoncho) -> None:
-        response = await async_client.workspaces.with_raw_response.deriver_status(
-            workspace_id="workspace_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        workspace = await response.parse()
-        assert_matches_type(DeriverStatus, workspace, path=["response"])
-
-    @parametrize
-    async def test_streaming_response_deriver_status(self, async_client: AsyncHoncho) -> None:
-        async with async_client.workspaces.with_streaming_response.deriver_status(
-            workspace_id="workspace_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            workspace = await response.parse()
-            assert_matches_type(DeriverStatus, workspace, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    async def test_path_params_deriver_status(self, async_client: AsyncHoncho) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
-            await async_client.workspaces.with_raw_response.deriver_status(
-                workspace_id="",
             )
 
     @parametrize
@@ -567,14 +476,14 @@ class TestAsyncWorkspaces:
         workspace = await async_client.workspaces.get_or_create(
             id="id",
             configuration={
-                "deriver": {
-                    "custom_instructions": "custom_instructions",
-                    "enabled": True,
-                },
                 "dream": {"enabled": True},
                 "peer_card": {
                     "create": True,
                     "use": True,
+                },
+                "reasoning": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
                 },
                 "summary": {
                     "enabled": True,
@@ -609,6 +518,68 @@ class TestAsyncWorkspaces:
             assert_matches_type(Workspace, workspace, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_method_schedule_dream(self, async_client: AsyncHoncho) -> None:
+        workspace = await async_client.workspaces.schedule_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+            session_id="session_id",
+        )
+        assert workspace is None
+
+    @parametrize
+    async def test_method_schedule_dream_with_all_params(self, async_client: AsyncHoncho) -> None:
+        workspace = await async_client.workspaces.schedule_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+            session_id="session_id",
+            observed="observed",
+            reasoning_focus="deduction",
+        )
+        assert workspace is None
+
+    @parametrize
+    async def test_raw_response_schedule_dream(self, async_client: AsyncHoncho) -> None:
+        response = await async_client.workspaces.with_raw_response.schedule_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+            session_id="session_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        workspace = await response.parse()
+        assert workspace is None
+
+    @parametrize
+    async def test_streaming_response_schedule_dream(self, async_client: AsyncHoncho) -> None:
+        async with async_client.workspaces.with_streaming_response.schedule_dream(
+            workspace_id="workspace_id",
+            dream_type="consolidate",
+            observer="observer",
+            session_id="session_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            workspace = await response.parse()
+            assert workspace is None
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_schedule_dream(self, async_client: AsyncHoncho) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
+            await async_client.workspaces.with_raw_response.schedule_dream(
+                workspace_id="",
+                dream_type="consolidate",
+                observer="observer",
+                session_id="session_id",
+            )
 
     @parametrize
     async def test_method_search(self, async_client: AsyncHoncho) -> None:
@@ -660,60 +631,4 @@ class TestAsyncWorkspaces:
             await async_client.workspaces.with_raw_response.search(
                 workspace_id="",
                 query="query",
-            )
-
-    @parametrize
-    async def test_method_trigger_dream(self, async_client: AsyncHoncho) -> None:
-        workspace = await async_client.workspaces.trigger_dream(
-            workspace_id="workspace_id",
-            dream_type="consolidate",
-            observer="observer",
-        )
-        assert workspace is None
-
-    @parametrize
-    async def test_method_trigger_dream_with_all_params(self, async_client: AsyncHoncho) -> None:
-        workspace = await async_client.workspaces.trigger_dream(
-            workspace_id="workspace_id",
-            dream_type="consolidate",
-            observer="observer",
-            observed="observed",
-        )
-        assert workspace is None
-
-    @parametrize
-    async def test_raw_response_trigger_dream(self, async_client: AsyncHoncho) -> None:
-        response = await async_client.workspaces.with_raw_response.trigger_dream(
-            workspace_id="workspace_id",
-            dream_type="consolidate",
-            observer="observer",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        workspace = await response.parse()
-        assert workspace is None
-
-    @parametrize
-    async def test_streaming_response_trigger_dream(self, async_client: AsyncHoncho) -> None:
-        async with async_client.workspaces.with_streaming_response.trigger_dream(
-            workspace_id="workspace_id",
-            dream_type="consolidate",
-            observer="observer",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            workspace = await response.parse()
-            assert workspace is None
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    async def test_path_params_trigger_dream(self, async_client: AsyncHoncho) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
-            await async_client.workspaces.with_raw_response.trigger_dream(
-                workspace_id="",
-                dream_type="consolidate",
-                observer="observer",
             )

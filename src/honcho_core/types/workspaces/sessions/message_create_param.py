@@ -7,8 +7,8 @@ from datetime import datetime
 from typing_extensions import Required, Annotated, TypedDict
 
 from ...._utils import PropertyInfo
-from ...deriver_configuration_param import DeriverConfigurationParam
 from ...peer_card_configuration_param import PeerCardConfigurationParam
+from ...reasoning_configuration_param import ReasoningConfigurationParam
 
 __all__ = ["MessageCreateParam", "Configuration"]
 
@@ -19,15 +19,15 @@ class Configuration(TypedDict, total=False):
     All fields are optional. Message-level configuration overrides all other configurations.
     """
 
-    deriver: Optional[DeriverConfigurationParam]
-    """Configuration for deriver functionality."""
-
     peer_card: Optional[PeerCardConfigurationParam]
     """Configuration for peer card functionality.
 
-    If deriver is disabled, peer cards will also be disabled and these settings will
-    be ignored.
+    If reasoning is disabled, peer cards will also be disabled and these settings
+    will be ignored.
     """
+
+    reasoning: Optional[ReasoningConfigurationParam]
+    """Configuration for reasoning functionality."""
 
 
 class MessageCreateParam(TypedDict, total=False):

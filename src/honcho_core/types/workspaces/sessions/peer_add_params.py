@@ -12,7 +12,6 @@ __all__ = ["PeerAddParams"]
 
 class PeerAddParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     body: Required[Dict[str, SessionPeerConfigParam]]
-    """List of peer IDs to add to the session"""
+    """List of peer IDs (with session-level configuration) to add to the session"""

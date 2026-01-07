@@ -6,7 +6,7 @@ from typing import Dict, Optional
 
 import httpx
 
-from ...._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
+from ...._types import Body, Omit, Query, Headers, NoneType, NotGiven, SequenceNotStr, omit, not_given
 from ...._utils import maybe_transform, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -66,14 +66,11 @@ class PeersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPage[Peer]:
-        """
-        Get peers from a session
+        """Get all Peers in a Session.
+
+        Results are paginated.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
           page: Page number
 
           size: Page size
@@ -122,15 +119,13 @@ class PeersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
-        """
-        Add peers to a session
+        """Add Peers to a Session.
+
+        If a Peer does not yet exist, it will be created
+        automatically.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
-          body: List of peer IDs to add to the session
+          body: List of peer IDs (with session-level configuration) to add to the session
 
           extra_headers: Send extra headers
 
@@ -167,15 +162,9 @@ class PeersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionPeerConfig:
         """
-        Get the configuration for a peer in a session
+        Get the configuration for a Peer in a Session.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
-          peer_id: ID of the peer
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -212,13 +201,9 @@ class PeersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
-        Remove peers from a session
+        Remove Peers by ID from a Session.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
           body: List of peer IDs to remove from the session
 
           extra_headers: Send extra headers
@@ -255,15 +240,15 @@ class PeersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
-        """
-        Set the peers in a session
+        """Set the Peers in a Session.
+
+        If a Peer does not yet exist, it will be created
+        automatically.
+
+        This will fully replace the current set of Peers in the Session.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
-          body: List of peer IDs to set for the session
+          body: List of peer IDs (with session-level configuration) to set for the session
 
           extra_headers: Send extra headers
 
@@ -300,18 +285,12 @@ class PeersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    ) -> None:
         """
-        Set the configuration for a peer in a session
+        Set the configuration for a Peer in a Session.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
-          peer_id: ID of the peer
-
-          observe_me: Whether honcho should form a global theory-of-mind representation of this peer
+          observe_me: Whether Honcho will use reasoning to form a representation of this peer
 
           observe_others: Whether this peer should form a session-level theory-of-mind representation of
               other peers in the session
@@ -330,7 +309,8 @@ class PeersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
         if not peer_id:
             raise ValueError(f"Expected a non-empty value for `peer_id` but received {peer_id!r}")
-        return self._post(
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return self._put(
             f"/v2/workspaces/{workspace_id}/sessions/{session_id}/peers/{peer_id}/config",
             body=maybe_transform(
                 {
@@ -342,7 +322,7 @@ class PeersResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=object,
+            cast_to=NoneType,
         )
 
 
@@ -380,14 +360,11 @@ class AsyncPeersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Peer, AsyncPage[Peer]]:
-        """
-        Get peers from a session
+        """Get all Peers in a Session.
+
+        Results are paginated.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
           page: Page number
 
           size: Page size
@@ -436,15 +413,13 @@ class AsyncPeersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
-        """
-        Add peers to a session
+        """Add Peers to a Session.
+
+        If a Peer does not yet exist, it will be created
+        automatically.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
-          body: List of peer IDs to add to the session
+          body: List of peer IDs (with session-level configuration) to add to the session
 
           extra_headers: Send extra headers
 
@@ -481,15 +456,9 @@ class AsyncPeersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionPeerConfig:
         """
-        Get the configuration for a peer in a session
+        Get the configuration for a Peer in a Session.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
-          peer_id: ID of the peer
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -526,13 +495,9 @@ class AsyncPeersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
         """
-        Remove peers from a session
+        Remove Peers by ID from a Session.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
           body: List of peer IDs to remove from the session
 
           extra_headers: Send extra headers
@@ -569,15 +534,15 @@ class AsyncPeersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Session:
-        """
-        Set the peers in a session
+        """Set the Peers in a Session.
+
+        If a Peer does not yet exist, it will be created
+        automatically.
+
+        This will fully replace the current set of Peers in the Session.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
-          body: List of peer IDs to set for the session
+          body: List of peer IDs (with session-level configuration) to set for the session
 
           extra_headers: Send extra headers
 
@@ -614,18 +579,12 @@ class AsyncPeersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    ) -> None:
         """
-        Set the configuration for a peer in a session
+        Set the configuration for a Peer in a Session.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
-          peer_id: ID of the peer
-
-          observe_me: Whether honcho should form a global theory-of-mind representation of this peer
+          observe_me: Whether Honcho will use reasoning to form a representation of this peer
 
           observe_others: Whether this peer should form a session-level theory-of-mind representation of
               other peers in the session
@@ -644,7 +603,8 @@ class AsyncPeersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
         if not peer_id:
             raise ValueError(f"Expected a non-empty value for `peer_id` but received {peer_id!r}")
-        return await self._post(
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return await self._put(
             f"/v2/workspaces/{workspace_id}/sessions/{session_id}/peers/{peer_id}/config",
             body=await async_maybe_transform(
                 {
@@ -656,7 +616,7 @@ class AsyncPeersResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=object,
+            cast_to=NoneType,
         )
 
 

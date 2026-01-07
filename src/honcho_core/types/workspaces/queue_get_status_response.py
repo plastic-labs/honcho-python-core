@@ -2,12 +2,14 @@
 
 from typing import Dict, Optional
 
-from .._models import BaseModel
+from ..._models import BaseModel
 
-__all__ = ["DeriverStatus", "Sessions"]
+__all__ = ["QueueGetStatusResponse", "Sessions"]
 
 
 class Sessions(BaseModel):
+    """Status for a specific session within the processing queue."""
+
     completed_work_units: int
     """Completed work units"""
 
@@ -24,7 +26,9 @@ class Sessions(BaseModel):
     """Session ID if filtered by session"""
 
 
-class DeriverStatus(BaseModel):
+class QueueGetStatusResponse(BaseModel):
+    """Aggregated processing queue status."""
+
     completed_work_units: int
     """Completed work units"""
 

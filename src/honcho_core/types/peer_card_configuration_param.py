@@ -13,4 +13,4 @@ class PeerCardConfigurationParam(TypedDict, total=False):
     """Whether to generate peer card based on content."""
 
     use: Optional[bool]
-    """Whether to use peer card related to this peer during deriver process."""
+    """Whether to use peer card related to this peer during reasoning process."""

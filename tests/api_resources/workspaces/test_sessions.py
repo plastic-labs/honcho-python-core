@@ -37,14 +37,14 @@ class TestSessions:
             session_id="session_id",
             workspace_id="workspace_id",
             configuration={
-                "deriver": {
-                    "custom_instructions": "custom_instructions",
-                    "enabled": True,
-                },
                 "dream": {"enabled": True},
                 "peer_card": {
                     "create": True,
                     "use": True,
+                },
+                "reasoning": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
                 },
                 "summary": {
                     "enabled": True,
@@ -329,14 +329,14 @@ class TestSessions:
             workspace_id="workspace_id",
             id="id",
             configuration={
-                "deriver": {
-                    "custom_instructions": "custom_instructions",
-                    "enabled": True,
-                },
                 "dream": {"enabled": True},
                 "peer_card": {
                     "create": True,
                     "use": True,
+                },
+                "reasoning": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
                 },
                 "summary": {
                     "enabled": True,
@@ -520,14 +520,14 @@ class TestAsyncSessions:
             session_id="session_id",
             workspace_id="workspace_id",
             configuration={
-                "deriver": {
-                    "custom_instructions": "custom_instructions",
-                    "enabled": True,
-                },
                 "dream": {"enabled": True},
                 "peer_card": {
                     "create": True,
                     "use": True,
+                },
+                "reasoning": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
                 },
                 "summary": {
                     "enabled": True,
@@ -812,14 +812,14 @@ class TestAsyncSessions:
             workspace_id="workspace_id",
             id="id",
             configuration={
-                "deriver": {
-                    "custom_instructions": "custom_instructions",
-                    "enabled": True,
-                },
                 "dream": {"enabled": True},
                 "peer_card": {
                     "create": True,
                     "use": True,
+                },
+                "reasoning": {
+                    "custom_instructions": "custom_instructions",
+                    "enabled": True,
                 },
                 "summary": {
                     "enabled": True,
