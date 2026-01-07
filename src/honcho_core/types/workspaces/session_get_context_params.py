@@ -14,11 +14,11 @@ class SessionGetContextParams(TypedDict, total=False):
     include_most_derived: bool
     """Only used if `last_message` is provided.
 
-    Whether to include the most derived observations in the representation
+    Whether to include the most derived conclusions in the representation
     """
 
     last_message: Optional[str]
-    """The most recent message, used to fetch semantically relevant observations"""
+    """The most recent message, used to fetch semantically relevant conclusions"""
 
     limit_to_session: bool
     """Only used if `last_message` is provided.
@@ -27,10 +27,10 @@ class SessionGetContextParams(TypedDict, total=False):
     known about the target peer)
     """
 
-    max_observations: Optional[int]
+    max_conclusions: Optional[int]
     """Only used if `last_message` is provided.
 
-    The maximum number of observations to include in the representation
+    The maximum number of conclusions to include in the representation
     """
 
     peer_perspective: Optional[str]
@@ -51,13 +51,13 @@ class SessionGetContextParams(TypedDict, total=False):
     search_max_distance: Optional[float]
     """Only used if `last_message` is provided.
 
-    The maximum distance to search for semantically relevant observations
+    The maximum distance to search for semantically relevant conclusions
     """
 
     search_top_k: Optional[int]
     """Only used if `last_message` is provided.
 
-    The number of semantic-search-retrieved observations to include in the
+    The number of semantic-search-retrieved conclusions to include in the
     representation
     """
 

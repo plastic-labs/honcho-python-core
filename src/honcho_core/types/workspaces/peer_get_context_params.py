@@ -12,15 +12,15 @@ class PeerGetContextParams(TypedDict, total=False):
     workspace_id: Required[str]
 
     include_most_derived: bool
-    """Whether to include the most derived observations in the representation"""
+    """Whether to include the most derived conclusions in the representation"""
 
-    max_observations: Optional[int]
-    """Maximum number of observations to include in the representation"""
+    max_conclusions: Optional[int]
+    """Maximum number of conclusions to include in the representation"""
 
     search_max_distance: Optional[float]
     """Only used if `search_query` is provided.
 
-    Maximum distance for semantically relevant observations
+    Maximum distance for semantically relevant conclusions
     """
 
     search_query: Optional[str]
@@ -29,7 +29,7 @@ class PeerGetContextParams(TypedDict, total=False):
     search_top_k: Optional[int]
     """Only used if `search_query` is provided.
 
-    Number of semantic-search-retrieved observations to include
+    Number of semantic-search-retrieved conclusions to include
     """
 
     target: Optional[str]

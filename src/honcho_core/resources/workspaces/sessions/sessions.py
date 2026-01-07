@@ -276,7 +276,7 @@ class SessionsResource(SyncAPIResource):
         include_most_derived: bool | Omit = omit,
         last_message: Optional[str] | Omit = omit,
         limit_to_session: bool | Omit = omit,
-        max_observations: Optional[int] | Omit = omit,
+        max_conclusions: Optional[int] | Omit = omit,
         peer_perspective: Optional[str] | Omit = omit,
         peer_target: Optional[str] | Omit = omit,
         search_max_distance: Optional[float] | Omit = omit,
@@ -301,14 +301,14 @@ class SessionsResource(SyncAPIResource):
 
         Args:
           include_most_derived: Only used if `last_message` is provided. Whether to include the most derived
-              observations in the representation
+              conclusions in the representation
 
-          last_message: The most recent message, used to fetch semantically relevant observations
+          last_message: The most recent message, used to fetch semantically relevant conclusions
 
           limit_to_session: Only used if `last_message` is provided. Whether to limit the representation to
               the session (as opposed to everything known about the target peer)
 
-          max_observations: Only used if `last_message` is provided. The maximum number of observations to
+          max_conclusions: Only used if `last_message` is provided. The maximum number of conclusions to
               include in the representation
 
           peer_perspective: A peer to get context for. If given, response will attempt to include
@@ -321,10 +321,10 @@ class SessionsResource(SyncAPIResource):
               perspective of that peer_.
 
           search_max_distance: Only used if `last_message` is provided. The maximum distance to search for
-              semantically relevant observations
+              semantically relevant conclusions
 
           search_top_k: Only used if `last_message` is provided. The number of semantic-search-retrieved
-              observations to include in the representation
+              conclusions to include in the representation
 
           summary: Whether or not to include a summary _if_ one is available for the session
 
@@ -356,7 +356,7 @@ class SessionsResource(SyncAPIResource):
                         "include_most_derived": include_most_derived,
                         "last_message": last_message,
                         "limit_to_session": limit_to_session,
-                        "max_observations": max_observations,
+                        "max_conclusions": max_conclusions,
                         "peer_perspective": peer_perspective,
                         "peer_target": peer_target,
                         "search_max_distance": search_max_distance,
@@ -743,7 +743,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         include_most_derived: bool | Omit = omit,
         last_message: Optional[str] | Omit = omit,
         limit_to_session: bool | Omit = omit,
-        max_observations: Optional[int] | Omit = omit,
+        max_conclusions: Optional[int] | Omit = omit,
         peer_perspective: Optional[str] | Omit = omit,
         peer_target: Optional[str] | Omit = omit,
         search_max_distance: Optional[float] | Omit = omit,
@@ -768,14 +768,14 @@ class AsyncSessionsResource(AsyncAPIResource):
 
         Args:
           include_most_derived: Only used if `last_message` is provided. Whether to include the most derived
-              observations in the representation
+              conclusions in the representation
 
-          last_message: The most recent message, used to fetch semantically relevant observations
+          last_message: The most recent message, used to fetch semantically relevant conclusions
 
           limit_to_session: Only used if `last_message` is provided. Whether to limit the representation to
               the session (as opposed to everything known about the target peer)
 
-          max_observations: Only used if `last_message` is provided. The maximum number of observations to
+          max_conclusions: Only used if `last_message` is provided. The maximum number of conclusions to
               include in the representation
 
           peer_perspective: A peer to get context for. If given, response will attempt to include
@@ -788,10 +788,10 @@ class AsyncSessionsResource(AsyncAPIResource):
               perspective of that peer_.
 
           search_max_distance: Only used if `last_message` is provided. The maximum distance to search for
-              semantically relevant observations
+              semantically relevant conclusions
 
           search_top_k: Only used if `last_message` is provided. The number of semantic-search-retrieved
-              observations to include in the representation
+              conclusions to include in the representation
 
           summary: Whether or not to include a summary _if_ one is available for the session
 
@@ -823,7 +823,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                         "include_most_derived": include_most_derived,
                         "last_message": last_message,
                         "limit_to_session": limit_to_session,
-                        "max_observations": max_observations,
+                        "max_conclusions": max_conclusions,
                         "peer_perspective": peer_perspective,
                         "peer_target": peer_target,
                         "search_max_distance": search_max_distance,
