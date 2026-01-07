@@ -82,7 +82,7 @@ class MessagesResource(SyncAPIResource):
         if not session_id:
             raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
         return self._post(
-            f"/v2/workspaces/{workspace_id}/sessions/{session_id}/messages/",
+            f"/v2/workspaces/{workspace_id}/sessions/{session_id}/messages",
             body=maybe_transform({"messages": messages}, message_create_params.MessageCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -104,15 +104,9 @@ class MessagesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Message:
         """
-        Get a Message by ID
+        Get a single message by ID from a Session.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
-          message_id: ID of the message to retrieve
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -150,15 +144,11 @@ class MessagesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Message:
         """
-        Update the metadata of a Message
+        Update the metadata of a message.
+
+        This will overwrite any existing metadata for the message.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
-          message_id: ID of the message to update
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -198,14 +188,11 @@ class MessagesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPage[Message]:
-        """
-        Get all messages for a session
+        """Get all messages for a Session with optional filters.
+
+        Results are paginated.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
           page: Page number
 
           reverse: Whether to reverse the order of results
@@ -356,7 +343,7 @@ class AsyncMessagesResource(AsyncAPIResource):
         if not session_id:
             raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
         return await self._post(
-            f"/v2/workspaces/{workspace_id}/sessions/{session_id}/messages/",
+            f"/v2/workspaces/{workspace_id}/sessions/{session_id}/messages",
             body=await async_maybe_transform({"messages": messages}, message_create_params.MessageCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -378,15 +365,9 @@ class AsyncMessagesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Message:
         """
-        Get a Message by ID
+        Get a single message by ID from a Session.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
-          message_id: ID of the message to retrieve
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -424,15 +405,11 @@ class AsyncMessagesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Message:
         """
-        Update the metadata of a Message
+        Update the metadata of a message.
+
+        This will overwrite any existing metadata for the message.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
-          message_id: ID of the message to update
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -472,14 +449,11 @@ class AsyncMessagesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Message, AsyncPage[Message]]:
-        """
-        Get all messages for a session
+        """Get all messages for a Session with optional filters.
+
+        Results are paginated.
 
         Args:
-          workspace_id: ID of the workspace
-
-          session_id: ID of the session
-
           page: Page number
 
           reverse: Whether to reverse the order of results

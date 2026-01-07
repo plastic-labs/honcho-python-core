@@ -10,10 +10,9 @@ __all__ = ["PeerCardParams"]
 
 class PeerCardParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     target: Optional[str]
-    """The peer whose card to retrieve.
+    """Optional target peer to retrieve a card for, from the observer's perspective.
 
     If not provided, returns the observer's own card
     """

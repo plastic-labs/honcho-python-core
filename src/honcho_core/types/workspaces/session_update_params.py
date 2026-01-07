@@ -12,7 +12,6 @@ __all__ = ["SessionUpdateParams"]
 
 class SessionUpdateParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     configuration: Optional[SessionConfigurationParam]
     """The set of options that can be in a session DB-level configuration dictionary.

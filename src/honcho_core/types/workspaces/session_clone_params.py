@@ -10,7 +10,6 @@ __all__ = ["SessionCloneParams"]
 
 class SessionCloneParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     message_id: Optional[str]
     """Message ID to cut off the clone at"""

@@ -71,7 +71,7 @@ class TestWebhooks:
             endpoint_id="endpoint_id",
             workspace_id="workspace_id",
         )
-        assert_matches_type(object, webhook, path=["response"])
+        assert webhook is None
 
     @parametrize
     def test_raw_response_delete(self, client: Honcho) -> None:
@@ -83,7 +83,7 @@ class TestWebhooks:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         webhook = response.parse()
-        assert_matches_type(object, webhook, path=["response"])
+        assert webhook is None
 
     @parametrize
     def test_streaming_response_delete(self, client: Honcho) -> None:
@@ -95,7 +95,7 @@ class TestWebhooks:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             webhook = response.parse()
-            assert_matches_type(object, webhook, path=["response"])
+            assert webhook is None
 
         assert cast(Any, response.is_closed) is True
 
@@ -252,7 +252,7 @@ class TestAsyncWebhooks:
             endpoint_id="endpoint_id",
             workspace_id="workspace_id",
         )
-        assert_matches_type(object, webhook, path=["response"])
+        assert webhook is None
 
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncHoncho) -> None:
@@ -264,7 +264,7 @@ class TestAsyncWebhooks:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         webhook = await response.parse()
-        assert_matches_type(object, webhook, path=["response"])
+        assert webhook is None
 
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncHoncho) -> None:
@@ -276,7 +276,7 @@ class TestAsyncWebhooks:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             webhook = await response.parse()
-            assert_matches_type(object, webhook, path=["response"])
+            assert webhook is None
 
         assert cast(Any, response.is_closed) is True
 

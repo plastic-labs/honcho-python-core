@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Dict, Optional
 from typing_extensions import TypedDict
 
-__all__ = ["ObservationListParams"]
+__all__ = ["ConclusionListParams"]
 
 
-class ObservationListParams(TypedDict, total=False):
+class ConclusionListParams(TypedDict, total=False):
     page: int
     """Page number"""
 

@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Dict, Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["ObservationQueryParams"]
+__all__ = ["ConclusionQueryParams"]
 
 
-class ObservationQueryParams(TypedDict, total=False):
+class ConclusionQueryParams(TypedDict, total=False):
     query: Required[str]
     """Semantic search query"""
 

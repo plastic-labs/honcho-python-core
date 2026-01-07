@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["WorkspaceDeriverStatusParams"]
+__all__ = ["QueueGetStatusParams"]
 
 
-class WorkspaceDeriverStatusParams(TypedDict, total=False):
+class QueueGetStatusParams(TypedDict, total=False):
     observer_id: Optional[str]
     """Optional observer ID to filter by"""
 

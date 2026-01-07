@@ -12,10 +12,12 @@ __all__ = ["PeerSetCardParams"]
 
 class PeerSetCardParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     peer_card: Required[SequenceNotStr[str]]
     """The peer card content to set"""
 
     target: Optional[str]
-    """The peer whose card to set. If not provided, sets the observer's own card"""
+    """Optional target peer to set a card for, from the observer's perspective.
+
+    If not provided, sets the observer's own card
+    """

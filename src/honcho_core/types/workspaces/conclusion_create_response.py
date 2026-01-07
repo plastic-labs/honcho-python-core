@@ -3,8 +3,8 @@
 from typing import List
 from typing_extensions import TypeAlias
 
-from .observation import Observation
+from .conclusion import Conclusion
 
-__all__ = ["ObservationCreateResponse"]
+__all__ = ["ConclusionCreateResponse"]
 
-ObservationCreateResponse: TypeAlias = List[Observation]
+ConclusionCreateResponse: TypeAlias = List[Conclusion]

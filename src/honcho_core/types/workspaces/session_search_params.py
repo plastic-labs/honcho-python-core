@@ -10,7 +10,6 @@ __all__ = ["SessionSearchParams"]
 
 class SessionSearchParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     query: Required[str]
     """Search query"""

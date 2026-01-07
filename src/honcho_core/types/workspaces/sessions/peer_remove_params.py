@@ -11,7 +11,6 @@ __all__ = ["PeerRemoveParams"]
 
 class PeerRemoveParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     body: Required[SequenceNotStr[str]]
     """List of peer IDs to remove from the session"""

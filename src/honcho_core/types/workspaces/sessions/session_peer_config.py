@@ -9,7 +9,7 @@ __all__ = ["SessionPeerConfig"]
 
 class SessionPeerConfig(BaseModel):
     observe_me: Optional[bool] = None
-    """Whether honcho should form a global theory-of-mind representation of this peer"""
+    """Whether Honcho will use reasoning to form a representation of this peer"""
 
     observe_others: Optional[bool] = None
     """

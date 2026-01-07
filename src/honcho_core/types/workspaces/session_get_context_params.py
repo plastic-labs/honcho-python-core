@@ -10,7 +10,6 @@ __all__ = ["SessionGetContextParams"]
 
 class SessionGetContextParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     include_most_derived: bool
     """Only used if `last_message` is provided.

@@ -9,7 +9,6 @@ __all__ = ["PeerListParams"]
 
 class PeerListParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     page: int
     """Page number"""
