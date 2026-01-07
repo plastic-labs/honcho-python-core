@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -35,14 +36,14 @@ from ....types.workspaces import (
     peer_set_card_params,
     peer_get_context_params,
     peer_get_or_create_params,
-    peer_working_representation_params,
+    peer_get_representation_params,
 )
 from ....types.workspaces.peer import Peer
 from ....types.workspaces.peer_card_response import PeerCardResponse
 from ....types.workspaces.peer_chat_response import PeerChatResponse
 from ....types.workspaces.peer_search_response import PeerSearchResponse
 from ....types.workspaces.peer_get_context_response import PeerGetContextResponse
-from ....types.workspaces.peer_working_representation_response import PeerWorkingRepresentationResponse
+from ....types.workspaces.peer_get_representation_response import PeerGetRepresentationResponse
 
 __all__ = ["PeersResource", "AsyncPeersResource"]
 
@@ -86,13 +87,9 @@ class PeersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Peer:
         """
-        Update a Peer's name and/or metadata
+        Update a Peer's metadata and/or configuration.
 
         Args:
-          workspace_id: ID of the workspace
-
-          peer_id: ID of the peer to update
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -135,11 +132,9 @@ class PeersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPage[Peer]:
         """
-        Get All Peers for a Workspace
+        Get all Peers for a Workspace, paginated with optional filters.
 
         Args:
-          workspace_id: ID of the workspace
-
           page: Page number
 
           size: Page size
@@ -195,12 +190,10 @@ class PeersResource(SyncAPIResource):
         exists. If no target is specified, returns the observer's own peer card.
 
         Args:
-          workspace_id: ID of the workspace
-
           peer_id: ID of the observer peer
 
-          target: The peer whose card to retrieve. If not provided, returns the observer's own
-              card
+          target: Optional target peer to retrieve a card for, from the observer's perspective. If
+              not provided, returns the observer's own card
 
           extra_headers: Send extra headers
 
@@ -232,6 +225,7 @@ class PeersResource(SyncAPIResource):
         *,
         workspace_id: str,
         query: str,
+        reasoning_level: Literal["minimal", "low", "medium", "high", "extra-high"] | Omit = omit,
         session_id: Optional[str] | Omit = omit,
         stream: bool | Omit = omit,
         target: Optional[str] | Omit = omit,
@@ -242,15 +236,16 @@ class PeersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PeerChatResponse:
-        """
-        Chat
+        """Query a Peer's representation using natural language.
+
+        Performs agentic search
+        and reasoning to comprehensively answer the query based on all latent knowledge
+        gathered about the peer from their messages and conclusions.
 
         Args:
-          workspace_id: ID of the workspace
-
-          peer_id: ID of the peer
-
           query: Dialectic API Prompt
+
+          reasoning_level: Level of reasoning to apply: minimal, low, medium, high, or extra-high
 
           session_id: ID of the session to scope the representation to
 
@@ -273,6 +268,7 @@ class PeersResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "query": query,
+                    "reasoning_level": reasoning_level,
                     "session_id": session_id,
                     "stream": stream,
                     "target": target,
@@ -306,18 +302,16 @@ class PeersResource(SyncAPIResource):
         """
         Get context for a peer, including their representation and peer card.
 
-        This endpoint returns the working representation and peer card for a peer. If a
-        target is specified, returns the context for the target from the observer peer's
-        perspective. If no target is specified, returns the peer's own context
-        (self-observation).
+        This endpoint returns a curated subset of the representation and peer card for a
+        peer. If a target is specified, returns the context for the target from the
+        observer peer's perspective. If no target is specified, returns the peer's own
+        context (self-observation).
 
         This is useful for getting all the context needed about a peer without making
         multiple API calls.
 
         Args:
-          workspace_id: ID of the workspace
-
-          peer_id: ID of the peer (observer)
+          peer_id: ID of the observer peer
 
           include_most_derived: Whether to include the most derived observations in the representation
 
@@ -331,8 +325,8 @@ class PeersResource(SyncAPIResource):
           search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
               observations to include
 
-          target: The target peer to get context for. If not provided, returns the peer's own
-              context (self-observation)
+          target: Optional target peer to get context for, from the observer's perspective. If not
+              provided, returns the observer's own context (self-observation)
 
           extra_headers: Send extra headers
 
@@ -383,14 +377,12 @@ class PeersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Peer:
         """
-        Get a Peer by ID
+        Get a Peer by ID or create a new Peer with the given ID.
 
         If peer_id is provided as a query parameter, it uses that (must match JWT
         workspace_id). Otherwise, it uses the peer_id from the JWT.
 
         Args:
-          workspace_id: ID of the workspace
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -417,6 +409,88 @@ class PeersResource(SyncAPIResource):
             cast_to=Peer,
         )
 
+    def get_representation(
+        self,
+        peer_id: str,
+        *,
+        workspace_id: str,
+        include_most_derived: Optional[bool] | Omit = omit,
+        max_observations: Optional[int] | Omit = omit,
+        search_max_distance: Optional[float] | Omit = omit,
+        search_query: Optional[str] | Omit = omit,
+        search_top_k: Optional[int] | Omit = omit,
+        session_id: Optional[str] | Omit = omit,
+        target: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PeerGetRepresentationResponse:
+        """Get a curated subset of a Peer's Representation.
+
+        A Representation is always a
+        subset of the total knowledge about the Peer. The subset can be scoped and
+        filtered in various ways.
+
+        If a session_id is provided in the body, we get the Representation of the Peer
+        scoped to that Session. If a target is provided, we get the Representation of
+        the target from the perspective of the Peer. If no target is provided, we get
+        the omniscient Honcho Representation of the Peer.
+
+        Args:
+          include_most_derived: Only used if `search_query` is provided. Whether to include the most derived
+              observations in the representation
+
+          max_observations: Only used if `search_query` is provided. Maximum number of observations to
+              include in the representation
+
+          search_max_distance: Only used if `search_query` is provided. Maximum distance to search for
+              semantically relevant observations
+
+          search_query: Optional input to curate the representation around semantic search results
+
+          search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
+              observations to include in the representation
+
+          session_id: Optional session ID within which to scope the representation
+
+          target: Optional peer ID to get the representation for, from the perspective of this
+              peer
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        if not peer_id:
+            raise ValueError(f"Expected a non-empty value for `peer_id` but received {peer_id!r}")
+        return self._post(
+            f"/v2/workspaces/{workspace_id}/peers/{peer_id}/representation",
+            body=maybe_transform(
+                {
+                    "include_most_derived": include_most_derived,
+                    "max_observations": max_observations,
+                    "search_max_distance": search_max_distance,
+                    "search_query": search_query,
+                    "search_top_k": search_top_k,
+                    "session_id": session_id,
+                    "target": target,
+                },
+                peer_get_representation_params.PeerGetRepresentationParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=PeerGetRepresentationResponse,
+        )
+
     def search(
         self,
         peer_id: str,
@@ -433,13 +507,9 @@ class PeersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PeerSearchResponse:
         """
-        Search a Peer
+        Search a Peer's messages, optionally filtered by various criteria.
 
         Args:
-          workspace_id: ID of the workspace
-
-          peer_id: ID of the peer
-
           query: Search query
 
           filters: Filters to scope the search
@@ -495,13 +565,12 @@ class PeersResource(SyncAPIResource):
         is specified, sets the observer's own peer card.
 
         Args:
-          workspace_id: ID of the workspace
-
           peer_id: ID of the observer peer
 
           peer_card: The peer card content to set
 
-          target: The peer whose card to set. If not provided, sets the observer's own card
+          target: Optional target peer to set a card for, from the observer's perspective. If not
+              provided, sets the observer's own card
 
           extra_headers: Send extra headers
 
@@ -526,89 +595,6 @@ class PeersResource(SyncAPIResource):
                 query=maybe_transform({"target": target}, peer_set_card_params.PeerSetCardParams),
             ),
             cast_to=PeerCardResponse,
-        )
-
-    def working_representation(
-        self,
-        peer_id: str,
-        *,
-        workspace_id: str,
-        include_most_derived: Optional[bool] | Omit = omit,
-        max_observations: Optional[int] | Omit = omit,
-        search_max_distance: Optional[float] | Omit = omit,
-        search_query: Optional[str] | Omit = omit,
-        search_top_k: Optional[int] | Omit = omit,
-        session_id: Optional[str] | Omit = omit,
-        target: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PeerWorkingRepresentationResponse:
-        """
-        Get a peer's working representation for a session.
-
-        If a session_id is provided in the body, we get the working representation of
-        the peer in that session. If a target is provided, we get the representation of
-        the target from the perspective of the peer. If no target is provided, we get
-        the omniscient Honcho representation of the peer.
-
-        Args:
-          workspace_id: ID of the workspace
-
-          peer_id: ID of the peer
-
-          include_most_derived: Only used if `search_query` is provided. Whether to include the most derived
-              observations in the representation
-
-          max_observations: Only used if `search_query` is provided. Maximum number of observations to
-              include in the representation
-
-          search_max_distance: Only used if `search_query` is provided. Maximum distance to search for
-              semantically relevant observations
-
-          search_query: Optional input to curate the representation around semantic search results
-
-          search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
-              observations to include in the representation
-
-          session_id: Get the working representation within this session
-
-          target: Optional peer ID to get the representation for, from the perspective of this
-              peer
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not workspace_id:
-            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
-        if not peer_id:
-            raise ValueError(f"Expected a non-empty value for `peer_id` but received {peer_id!r}")
-        return self._post(
-            f"/v2/workspaces/{workspace_id}/peers/{peer_id}/representation",
-            body=maybe_transform(
-                {
-                    "include_most_derived": include_most_derived,
-                    "max_observations": max_observations,
-                    "search_max_distance": search_max_distance,
-                    "search_query": search_query,
-                    "search_top_k": search_top_k,
-                    "session_id": session_id,
-                    "target": target,
-                },
-                peer_working_representation_params.PeerWorkingRepresentationParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=PeerWorkingRepresentationResponse,
         )
 
 
@@ -651,13 +637,9 @@ class AsyncPeersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Peer:
         """
-        Update a Peer's name and/or metadata
+        Update a Peer's metadata and/or configuration.
 
         Args:
-          workspace_id: ID of the workspace
-
-          peer_id: ID of the peer to update
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -700,11 +682,9 @@ class AsyncPeersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Peer, AsyncPage[Peer]]:
         """
-        Get All Peers for a Workspace
+        Get all Peers for a Workspace, paginated with optional filters.
 
         Args:
-          workspace_id: ID of the workspace
-
           page: Page number
 
           size: Page size
@@ -760,12 +740,10 @@ class AsyncPeersResource(AsyncAPIResource):
         exists. If no target is specified, returns the observer's own peer card.
 
         Args:
-          workspace_id: ID of the workspace
-
           peer_id: ID of the observer peer
 
-          target: The peer whose card to retrieve. If not provided, returns the observer's own
-              card
+          target: Optional target peer to retrieve a card for, from the observer's perspective. If
+              not provided, returns the observer's own card
 
           extra_headers: Send extra headers
 
@@ -797,6 +775,7 @@ class AsyncPeersResource(AsyncAPIResource):
         *,
         workspace_id: str,
         query: str,
+        reasoning_level: Literal["minimal", "low", "medium", "high", "extra-high"] | Omit = omit,
         session_id: Optional[str] | Omit = omit,
         stream: bool | Omit = omit,
         target: Optional[str] | Omit = omit,
@@ -807,15 +786,16 @@ class AsyncPeersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PeerChatResponse:
-        """
-        Chat
+        """Query a Peer's representation using natural language.
+
+        Performs agentic search
+        and reasoning to comprehensively answer the query based on all latent knowledge
+        gathered about the peer from their messages and conclusions.
 
         Args:
-          workspace_id: ID of the workspace
-
-          peer_id: ID of the peer
-
           query: Dialectic API Prompt
+
+          reasoning_level: Level of reasoning to apply: minimal, low, medium, high, or extra-high
 
           session_id: ID of the session to scope the representation to
 
@@ -838,6 +818,7 @@ class AsyncPeersResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "query": query,
+                    "reasoning_level": reasoning_level,
                     "session_id": session_id,
                     "stream": stream,
                     "target": target,
@@ -871,18 +852,16 @@ class AsyncPeersResource(AsyncAPIResource):
         """
         Get context for a peer, including their representation and peer card.
 
-        This endpoint returns the working representation and peer card for a peer. If a
-        target is specified, returns the context for the target from the observer peer's
-        perspective. If no target is specified, returns the peer's own context
-        (self-observation).
+        This endpoint returns a curated subset of the representation and peer card for a
+        peer. If a target is specified, returns the context for the target from the
+        observer peer's perspective. If no target is specified, returns the peer's own
+        context (self-observation).
 
         This is useful for getting all the context needed about a peer without making
         multiple API calls.
 
         Args:
-          workspace_id: ID of the workspace
-
-          peer_id: ID of the peer (observer)
+          peer_id: ID of the observer peer
 
           include_most_derived: Whether to include the most derived observations in the representation
 
@@ -896,8 +875,8 @@ class AsyncPeersResource(AsyncAPIResource):
           search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
               observations to include
 
-          target: The target peer to get context for. If not provided, returns the peer's own
-              context (self-observation)
+          target: Optional target peer to get context for, from the observer's perspective. If not
+              provided, returns the observer's own context (self-observation)
 
           extra_headers: Send extra headers
 
@@ -948,14 +927,12 @@ class AsyncPeersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Peer:
         """
-        Get a Peer by ID
+        Get a Peer by ID or create a new Peer with the given ID.
 
         If peer_id is provided as a query parameter, it uses that (must match JWT
         workspace_id). Otherwise, it uses the peer_id from the JWT.
 
         Args:
-          workspace_id: ID of the workspace
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -982,6 +959,88 @@ class AsyncPeersResource(AsyncAPIResource):
             cast_to=Peer,
         )
 
+    async def get_representation(
+        self,
+        peer_id: str,
+        *,
+        workspace_id: str,
+        include_most_derived: Optional[bool] | Omit = omit,
+        max_observations: Optional[int] | Omit = omit,
+        search_max_distance: Optional[float] | Omit = omit,
+        search_query: Optional[str] | Omit = omit,
+        search_top_k: Optional[int] | Omit = omit,
+        session_id: Optional[str] | Omit = omit,
+        target: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PeerGetRepresentationResponse:
+        """Get a curated subset of a Peer's Representation.
+
+        A Representation is always a
+        subset of the total knowledge about the Peer. The subset can be scoped and
+        filtered in various ways.
+
+        If a session_id is provided in the body, we get the Representation of the Peer
+        scoped to that Session. If a target is provided, we get the Representation of
+        the target from the perspective of the Peer. If no target is provided, we get
+        the omniscient Honcho Representation of the Peer.
+
+        Args:
+          include_most_derived: Only used if `search_query` is provided. Whether to include the most derived
+              observations in the representation
+
+          max_observations: Only used if `search_query` is provided. Maximum number of observations to
+              include in the representation
+
+          search_max_distance: Only used if `search_query` is provided. Maximum distance to search for
+              semantically relevant observations
+
+          search_query: Optional input to curate the representation around semantic search results
+
+          search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
+              observations to include in the representation
+
+          session_id: Optional session ID within which to scope the representation
+
+          target: Optional peer ID to get the representation for, from the perspective of this
+              peer
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        if not peer_id:
+            raise ValueError(f"Expected a non-empty value for `peer_id` but received {peer_id!r}")
+        return await self._post(
+            f"/v2/workspaces/{workspace_id}/peers/{peer_id}/representation",
+            body=await async_maybe_transform(
+                {
+                    "include_most_derived": include_most_derived,
+                    "max_observations": max_observations,
+                    "search_max_distance": search_max_distance,
+                    "search_query": search_query,
+                    "search_top_k": search_top_k,
+                    "session_id": session_id,
+                    "target": target,
+                },
+                peer_get_representation_params.PeerGetRepresentationParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=PeerGetRepresentationResponse,
+        )
+
     async def search(
         self,
         peer_id: str,
@@ -998,13 +1057,9 @@ class AsyncPeersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PeerSearchResponse:
         """
-        Search a Peer
+        Search a Peer's messages, optionally filtered by various criteria.
 
         Args:
-          workspace_id: ID of the workspace
-
-          peer_id: ID of the peer
-
           query: Search query
 
           filters: Filters to scope the search
@@ -1060,13 +1115,12 @@ class AsyncPeersResource(AsyncAPIResource):
         is specified, sets the observer's own peer card.
 
         Args:
-          workspace_id: ID of the workspace
-
           peer_id: ID of the observer peer
 
           peer_card: The peer card content to set
 
-          target: The peer whose card to set. If not provided, sets the observer's own card
+          target: Optional target peer to set a card for, from the observer's perspective. If not
+              provided, sets the observer's own card
 
           extra_headers: Send extra headers
 
@@ -1093,89 +1147,6 @@ class AsyncPeersResource(AsyncAPIResource):
             cast_to=PeerCardResponse,
         )
 
-    async def working_representation(
-        self,
-        peer_id: str,
-        *,
-        workspace_id: str,
-        include_most_derived: Optional[bool] | Omit = omit,
-        max_observations: Optional[int] | Omit = omit,
-        search_max_distance: Optional[float] | Omit = omit,
-        search_query: Optional[str] | Omit = omit,
-        search_top_k: Optional[int] | Omit = omit,
-        session_id: Optional[str] | Omit = omit,
-        target: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PeerWorkingRepresentationResponse:
-        """
-        Get a peer's working representation for a session.
-
-        If a session_id is provided in the body, we get the working representation of
-        the peer in that session. If a target is provided, we get the representation of
-        the target from the perspective of the peer. If no target is provided, we get
-        the omniscient Honcho representation of the peer.
-
-        Args:
-          workspace_id: ID of the workspace
-
-          peer_id: ID of the peer
-
-          include_most_derived: Only used if `search_query` is provided. Whether to include the most derived
-              observations in the representation
-
-          max_observations: Only used if `search_query` is provided. Maximum number of observations to
-              include in the representation
-
-          search_max_distance: Only used if `search_query` is provided. Maximum distance to search for
-              semantically relevant observations
-
-          search_query: Optional input to curate the representation around semantic search results
-
-          search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
-              observations to include in the representation
-
-          session_id: Get the working representation within this session
-
-          target: Optional peer ID to get the representation for, from the perspective of this
-              peer
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not workspace_id:
-            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
-        if not peer_id:
-            raise ValueError(f"Expected a non-empty value for `peer_id` but received {peer_id!r}")
-        return await self._post(
-            f"/v2/workspaces/{workspace_id}/peers/{peer_id}/representation",
-            body=await async_maybe_transform(
-                {
-                    "include_most_derived": include_most_derived,
-                    "max_observations": max_observations,
-                    "search_max_distance": search_max_distance,
-                    "search_query": search_query,
-                    "search_top_k": search_top_k,
-                    "session_id": session_id,
-                    "target": target,
-                },
-                peer_working_representation_params.PeerWorkingRepresentationParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=PeerWorkingRepresentationResponse,
-        )
-
 
 class PeersResourceWithRawResponse:
     def __init__(self, peers: PeersResource) -> None:
@@ -1199,14 +1170,14 @@ class PeersResourceWithRawResponse:
         self.get_or_create = to_raw_response_wrapper(
             peers.get_or_create,
         )
+        self.get_representation = to_raw_response_wrapper(
+            peers.get_representation,
+        )
         self.search = to_raw_response_wrapper(
             peers.search,
         )
         self.set_card = to_raw_response_wrapper(
             peers.set_card,
-        )
-        self.working_representation = to_raw_response_wrapper(
-            peers.working_representation,
         )
 
     @cached_property
@@ -1236,14 +1207,14 @@ class AsyncPeersResourceWithRawResponse:
         self.get_or_create = async_to_raw_response_wrapper(
             peers.get_or_create,
         )
+        self.get_representation = async_to_raw_response_wrapper(
+            peers.get_representation,
+        )
         self.search = async_to_raw_response_wrapper(
             peers.search,
         )
         self.set_card = async_to_raw_response_wrapper(
             peers.set_card,
-        )
-        self.working_representation = async_to_raw_response_wrapper(
-            peers.working_representation,
         )
 
     @cached_property
@@ -1273,14 +1244,14 @@ class PeersResourceWithStreamingResponse:
         self.get_or_create = to_streamed_response_wrapper(
             peers.get_or_create,
         )
+        self.get_representation = to_streamed_response_wrapper(
+            peers.get_representation,
+        )
         self.search = to_streamed_response_wrapper(
             peers.search,
         )
         self.set_card = to_streamed_response_wrapper(
             peers.set_card,
-        )
-        self.working_representation = to_streamed_response_wrapper(
-            peers.working_representation,
         )
 
     @cached_property
@@ -1310,14 +1281,14 @@ class AsyncPeersResourceWithStreamingResponse:
         self.get_or_create = async_to_streamed_response_wrapper(
             peers.get_or_create,
         )
+        self.get_representation = async_to_streamed_response_wrapper(
+            peers.get_representation,
+        )
         self.search = async_to_streamed_response_wrapper(
             peers.search,
         )
         self.set_card = async_to_streamed_response_wrapper(
             peers.set_card,
-        )
-        self.working_representation = async_to_streamed_response_wrapper(
-            peers.working_representation,
         )
 
     @cached_property

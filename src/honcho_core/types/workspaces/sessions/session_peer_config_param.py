@@ -10,7 +10,7 @@ __all__ = ["SessionPeerConfigParam"]
 
 class SessionPeerConfigParam(TypedDict, total=False):
     observe_me: Optional[bool]
-    """Whether honcho should form a global theory-of-mind representation of this peer"""
+    """Whether Honcho will use reasoning to form a representation of this peer"""
 
     observe_others: Optional[bool]
     """

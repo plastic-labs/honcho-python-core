@@ -3,6 +3,6 @@
 from typing import Dict
 from typing_extensions import TypeAlias
 
-__all__ = ["PeerWorkingRepresentationResponse"]
+__all__ = ["PeerGetRepresentationResponse"]
 
-PeerWorkingRepresentationResponse: TypeAlias = Dict[str, object]
+PeerGetRepresentationResponse: TypeAlias = Dict[str, object]

@@ -10,7 +10,6 @@ __all__ = ["MessageListParams"]
 
 class MessageListParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     page: int
     """Page number"""

@@ -6,9 +6,9 @@ from typing import Dict, Union, Optional
 from typing_extensions import TypeAlias, TypedDict
 
 from .dream_configuration_param import DreamConfigurationParam
-from .deriver_configuration_param import DeriverConfigurationParam
 from .summary_configuration_param import SummaryConfigurationParam
 from .peer_card_configuration_param import PeerCardConfigurationParam
+from .reasoning_configuration_param import ReasoningConfigurationParam
 
 __all__ = ["WorkspaceConfigurationParam"]
 
@@ -19,22 +19,22 @@ class WorkspaceConfigurationParamTyped(TypedDict, total=False):
     All fields are optional. Session-level configuration overrides workspace-level configuration, which overrides global configuration.
     """
 
-    deriver: Optional[DeriverConfigurationParam]
-    """Configuration for deriver functionality."""
-
     dream: Optional[DreamConfigurationParam]
     """Configuration for dream functionality.
 
-    If deriver is disabled, dreams will also be disabled and these settings will be
-    ignored.
+    If reasoning is disabled, dreams will also be disabled and these settings will
+    be ignored.
     """
 
     peer_card: Optional[PeerCardConfigurationParam]
     """Configuration for peer card functionality.
 
-    If deriver is disabled, peer cards will also be disabled and these settings will
-    be ignored.
+    If reasoning is disabled, peer cards will also be disabled and these settings
+    will be ignored.
     """
+
+    reasoning: Optional[ReasoningConfigurationParam]
+    """Configuration for reasoning functionality."""
 
     summary: Optional[SummaryConfigurationParam]
     """Configuration for summary functionality."""

@@ -7,13 +7,20 @@ from typing_extensions import Literal
 
 import httpx
 
+from .queue import (
+    QueueResource,
+    AsyncQueueResource,
+    QueueResourceWithRawResponse,
+    AsyncQueueResourceWithRawResponse,
+    QueueResourceWithStreamingResponse,
+    AsyncQueueResourceWithStreamingResponse,
+)
 from ...types import (
     workspace_list_params,
     workspace_search_params,
     workspace_update_params,
     workspace_get_or_create_params,
-    workspace_trigger_dream_params,
-    workspace_deriver_status_params,
+    workspace_schedule_dream_params,
 )
 from ..._types import Body, Omit, Query, Headers, NoneType, NotGiven, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
@@ -33,6 +40,14 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from .conclusions import (
+    ConclusionsResource,
+    AsyncConclusionsResource,
+    ConclusionsResourceWithRawResponse,
+    AsyncConclusionsResourceWithRawResponse,
+    ConclusionsResourceWithStreamingResponse,
+    AsyncConclusionsResourceWithStreamingResponse,
+)
 from .peers.peers import (
     PeersResource,
     AsyncPeersResource,
@@ -42,14 +57,6 @@ from .peers.peers import (
     AsyncPeersResourceWithStreamingResponse,
 )
 from ...pagination import SyncPage, AsyncPage
-from .observations import (
-    ObservationsResource,
-    AsyncObservationsResource,
-    ObservationsResourceWithRawResponse,
-    AsyncObservationsResourceWithRawResponse,
-    ObservationsResourceWithStreamingResponse,
-    AsyncObservationsResourceWithStreamingResponse,
-)
 from ..._base_client import AsyncPaginator, make_request_options
 from ...types.workspace import Workspace
 from .sessions.sessions import (
@@ -60,7 +67,6 @@ from .sessions.sessions import (
     SessionsResourceWithStreamingResponse,
     AsyncSessionsResourceWithStreamingResponse,
 )
-from ...types.deriver_status import DeriverStatus
 from ...types.workspace_search_response import WorkspaceSearchResponse
 from ...types.workspace_configuration_param import WorkspaceConfigurationParam
 
@@ -68,10 +74,6 @@ __all__ = ["WorkspacesResource", "AsyncWorkspacesResource"]
 
 
 class WorkspacesResource(SyncAPIResource):
-    @cached_property
-    def observations(self) -> ObservationsResource:
-        return ObservationsResource(self._client)
-
     @cached_property
     def peers(self) -> PeersResource:
         return PeersResource(self._client)
@@ -83,6 +85,14 @@ class WorkspacesResource(SyncAPIResource):
     @cached_property
     def webhooks(self) -> WebhooksResource:
         return WebhooksResource(self._client)
+
+    @cached_property
+    def queue(self) -> QueueResource:
+        return QueueResource(self._client)
+
+    @cached_property
+    def conclusions(self) -> ConclusionsResource:
+        return ConclusionsResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> WorkspacesResourceWithRawResponse:
@@ -117,11 +127,9 @@ class WorkspacesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Workspace:
         """
-        Update a Workspace
+        Update Workspace metadata and/or configuration.
 
         Args:
-          workspace_id: ID of the workspace to update
-
           configuration: The set of options that can be in a workspace DB-level configuration dictionary.
 
               All fields are optional. Session-level configuration overrides workspace-level
@@ -166,7 +174,7 @@ class WorkspacesResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncPage[Workspace]:
         """
-        Get all Workspaces
+        Get all Workspaces, paginated with optional filters.
 
         Args:
           page: Page number
@@ -212,13 +220,15 @@ class WorkspacesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Workspace:
-        """
-        Delete a Workspace
+    ) -> None:
+        """Delete a Workspace.
+
+        This will permanently delete all sessions, peers, messages,
+        and conclusions associated with the workspace.
+
+        This action cannot be undone.
 
         Args:
-          workspace_id: ID of the workspace to delete
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -229,68 +239,13 @@ class WorkspacesResource(SyncAPIResource):
         """
         if not workspace_id:
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
             f"/v2/workspaces/{workspace_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Workspace,
-        )
-
-    def deriver_status(
-        self,
-        workspace_id: str,
-        *,
-        observer_id: Optional[str] | Omit = omit,
-        sender_id: Optional[str] | Omit = omit,
-        session_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DeriverStatus:
-        """
-        Get the deriver processing status, optionally scoped to an observer, sender,
-        and/or session
-
-        Args:
-          workspace_id: ID of the workspace
-
-          observer_id: Optional observer ID to filter by
-
-          sender_id: Optional sender ID to filter by
-
-          session_id: Optional session ID to filter by
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not workspace_id:
-            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
-        return self._get(
-            f"/v2/workspaces/{workspace_id}/deriver/status",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "observer_id": observer_id,
-                        "sender_id": sender_id,
-                        "session_id": session_id,
-                    },
-                    workspace_deriver_status_params.WorkspaceDeriverStatusParams,
-                ),
-            ),
-            cast_to=DeriverStatus,
+            cast_to=NoneType,
         )
 
     def get_or_create(
@@ -342,6 +297,76 @@ class WorkspacesResource(SyncAPIResource):
             cast_to=Workspace,
         )
 
+    def schedule_dream(
+        self,
+        workspace_id: str,
+        *,
+        dream_type: Literal["consolidate"],
+        observer: str,
+        session_id: str,
+        observed: Optional[str] | Omit = omit,
+        reasoning_focus: Optional[Literal["deduction", "induction", "knowledge_update"]] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> None:
+        """
+        Manually schedule a dream task for a specific collection.
+
+        This endpoint bypasses all automatic dream conditions (document threshold,
+        minimum hours between dreams) and schedules the dream task for a future
+        execution.
+
+        Currently this endpoint only supports scheduling immediate dreams. In the
+        future, users may pass a cron-style expression to schedule dreams at specific
+        times.
+
+        Args:
+          dream_type: Type of dream to schedule
+
+          observer: Observer peer name
+
+          session_id: Session ID to scope the dream to
+
+          observed: Observed peer name (defaults to observer if not specified)
+
+          reasoning_focus: Optional focus mode to bias the dream toward specific reasoning: 'deduction'
+              prioritizes logical inferences from explicit facts, 'induction' prioritizes
+              pattern recognition across observations, 'knowledge_update' detects when facts
+              have changed over time
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return self._post(
+            f"/v2/workspaces/{workspace_id}/schedule_dream",
+            body=maybe_transform(
+                {
+                    "dream_type": dream_type,
+                    "observer": observer,
+                    "session_id": session_id,
+                    "observed": observed,
+                    "reasoning_focus": reasoning_focus,
+                },
+                workspace_schedule_dream_params.WorkspaceScheduleDreamParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
     def search(
         self,
         workspace_id: str,
@@ -356,12 +381,12 @@ class WorkspacesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WorkspaceSearchResponse:
-        """
-        Search a Workspace
+        """Search messages in a Workspace using optional filters.
+
+        Use `limit` to control
+        the number of results returned.
 
         Args:
-          workspace_id: ID of the workspace to search
-
           query: Search query
 
           filters: Filters to scope the search
@@ -394,69 +419,8 @@ class WorkspacesResource(SyncAPIResource):
             cast_to=WorkspaceSearchResponse,
         )
 
-    def trigger_dream(
-        self,
-        workspace_id: str,
-        *,
-        dream_type: Literal["consolidate", "agent"],
-        observer: str,
-        observed: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """
-        Manually trigger a dream task immediately for a specific collection.
-
-        This endpoint bypasses all automatic dream conditions (document threshold,
-        minimum hours between dreams) and executes the dream task immediately without
-        delay.
-
-        Args:
-          workspace_id: ID of the workspace
-
-          dream_type: Type of dream to trigger
-
-          observer: Observer peer name
-
-          observed: Observed peer name (defaults to observer if not specified)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not workspace_id:
-            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return self._post(
-            f"/v2/workspaces/{workspace_id}/trigger_dream",
-            body=maybe_transform(
-                {
-                    "dream_type": dream_type,
-                    "observer": observer,
-                    "observed": observed,
-                },
-                workspace_trigger_dream_params.WorkspaceTriggerDreamParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
 
 class AsyncWorkspacesResource(AsyncAPIResource):
-    @cached_property
-    def observations(self) -> AsyncObservationsResource:
-        return AsyncObservationsResource(self._client)
-
     @cached_property
     def peers(self) -> AsyncPeersResource:
         return AsyncPeersResource(self._client)
@@ -468,6 +432,14 @@ class AsyncWorkspacesResource(AsyncAPIResource):
     @cached_property
     def webhooks(self) -> AsyncWebhooksResource:
         return AsyncWebhooksResource(self._client)
+
+    @cached_property
+    def queue(self) -> AsyncQueueResource:
+        return AsyncQueueResource(self._client)
+
+    @cached_property
+    def conclusions(self) -> AsyncConclusionsResource:
+        return AsyncConclusionsResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncWorkspacesResourceWithRawResponse:
@@ -502,11 +474,9 @@ class AsyncWorkspacesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Workspace:
         """
-        Update a Workspace
+        Update Workspace metadata and/or configuration.
 
         Args:
-          workspace_id: ID of the workspace to update
-
           configuration: The set of options that can be in a workspace DB-level configuration dictionary.
 
               All fields are optional. Session-level configuration overrides workspace-level
@@ -551,7 +521,7 @@ class AsyncWorkspacesResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Workspace, AsyncPage[Workspace]]:
         """
-        Get all Workspaces
+        Get all Workspaces, paginated with optional filters.
 
         Args:
           page: Page number
@@ -597,13 +567,15 @@ class AsyncWorkspacesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Workspace:
-        """
-        Delete a Workspace
+    ) -> None:
+        """Delete a Workspace.
+
+        This will permanently delete all sessions, peers, messages,
+        and conclusions associated with the workspace.
+
+        This action cannot be undone.
 
         Args:
-          workspace_id: ID of the workspace to delete
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -614,68 +586,13 @@ class AsyncWorkspacesResource(AsyncAPIResource):
         """
         if not workspace_id:
             raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
             f"/v2/workspaces/{workspace_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Workspace,
-        )
-
-    async def deriver_status(
-        self,
-        workspace_id: str,
-        *,
-        observer_id: Optional[str] | Omit = omit,
-        sender_id: Optional[str] | Omit = omit,
-        session_id: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> DeriverStatus:
-        """
-        Get the deriver processing status, optionally scoped to an observer, sender,
-        and/or session
-
-        Args:
-          workspace_id: ID of the workspace
-
-          observer_id: Optional observer ID to filter by
-
-          sender_id: Optional sender ID to filter by
-
-          session_id: Optional session ID to filter by
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not workspace_id:
-            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
-        return await self._get(
-            f"/v2/workspaces/{workspace_id}/deriver/status",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "observer_id": observer_id,
-                        "sender_id": sender_id,
-                        "session_id": session_id,
-                    },
-                    workspace_deriver_status_params.WorkspaceDeriverStatusParams,
-                ),
-            ),
-            cast_to=DeriverStatus,
+            cast_to=NoneType,
         )
 
     async def get_or_create(
@@ -727,6 +644,76 @@ class AsyncWorkspacesResource(AsyncAPIResource):
             cast_to=Workspace,
         )
 
+    async def schedule_dream(
+        self,
+        workspace_id: str,
+        *,
+        dream_type: Literal["consolidate"],
+        observer: str,
+        session_id: str,
+        observed: Optional[str] | Omit = omit,
+        reasoning_focus: Optional[Literal["deduction", "induction", "knowledge_update"]] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> None:
+        """
+        Manually schedule a dream task for a specific collection.
+
+        This endpoint bypasses all automatic dream conditions (document threshold,
+        minimum hours between dreams) and schedules the dream task for a future
+        execution.
+
+        Currently this endpoint only supports scheduling immediate dreams. In the
+        future, users may pass a cron-style expression to schedule dreams at specific
+        times.
+
+        Args:
+          dream_type: Type of dream to schedule
+
+          observer: Observer peer name
+
+          session_id: Session ID to scope the dream to
+
+          observed: Observed peer name (defaults to observer if not specified)
+
+          reasoning_focus: Optional focus mode to bias the dream toward specific reasoning: 'deduction'
+              prioritizes logical inferences from explicit facts, 'induction' prioritizes
+              pattern recognition across observations, 'knowledge_update' detects when facts
+              have changed over time
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not workspace_id:
+            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
+        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        return await self._post(
+            f"/v2/workspaces/{workspace_id}/schedule_dream",
+            body=await async_maybe_transform(
+                {
+                    "dream_type": dream_type,
+                    "observer": observer,
+                    "session_id": session_id,
+                    "observed": observed,
+                    "reasoning_focus": reasoning_focus,
+                },
+                workspace_schedule_dream_params.WorkspaceScheduleDreamParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=NoneType,
+        )
+
     async def search(
         self,
         workspace_id: str,
@@ -741,12 +728,12 @@ class AsyncWorkspacesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> WorkspaceSearchResponse:
-        """
-        Search a Workspace
+        """Search messages in a Workspace using optional filters.
+
+        Use `limit` to control
+        the number of results returned.
 
         Args:
-          workspace_id: ID of the workspace to search
-
           query: Search query
 
           filters: Filters to scope the search
@@ -779,63 +766,6 @@ class AsyncWorkspacesResource(AsyncAPIResource):
             cast_to=WorkspaceSearchResponse,
         )
 
-    async def trigger_dream(
-        self,
-        workspace_id: str,
-        *,
-        dream_type: Literal["consolidate", "agent"],
-        observer: str,
-        observed: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> None:
-        """
-        Manually trigger a dream task immediately for a specific collection.
-
-        This endpoint bypasses all automatic dream conditions (document threshold,
-        minimum hours between dreams) and executes the dream task immediately without
-        delay.
-
-        Args:
-          workspace_id: ID of the workspace
-
-          dream_type: Type of dream to trigger
-
-          observer: Observer peer name
-
-          observed: Observed peer name (defaults to observer if not specified)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not workspace_id:
-            raise ValueError(f"Expected a non-empty value for `workspace_id` but received {workspace_id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
-        return await self._post(
-            f"/v2/workspaces/{workspace_id}/trigger_dream",
-            body=await async_maybe_transform(
-                {
-                    "dream_type": dream_type,
-                    "observer": observer,
-                    "observed": observed,
-                },
-                workspace_trigger_dream_params.WorkspaceTriggerDreamParams,
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=NoneType,
-        )
-
 
 class WorkspacesResourceWithRawResponse:
     def __init__(self, workspaces: WorkspacesResource) -> None:
@@ -850,22 +780,15 @@ class WorkspacesResourceWithRawResponse:
         self.delete = to_raw_response_wrapper(
             workspaces.delete,
         )
-        self.deriver_status = to_raw_response_wrapper(
-            workspaces.deriver_status,
-        )
         self.get_or_create = to_raw_response_wrapper(
             workspaces.get_or_create,
+        )
+        self.schedule_dream = to_raw_response_wrapper(
+            workspaces.schedule_dream,
         )
         self.search = to_raw_response_wrapper(
             workspaces.search,
         )
-        self.trigger_dream = to_raw_response_wrapper(
-            workspaces.trigger_dream,
-        )
-
-    @cached_property
-    def observations(self) -> ObservationsResourceWithRawResponse:
-        return ObservationsResourceWithRawResponse(self._workspaces.observations)
 
     @cached_property
     def peers(self) -> PeersResourceWithRawResponse:
@@ -878,6 +801,14 @@ class WorkspacesResourceWithRawResponse:
     @cached_property
     def webhooks(self) -> WebhooksResourceWithRawResponse:
         return WebhooksResourceWithRawResponse(self._workspaces.webhooks)
+
+    @cached_property
+    def queue(self) -> QueueResourceWithRawResponse:
+        return QueueResourceWithRawResponse(self._workspaces.queue)
+
+    @cached_property
+    def conclusions(self) -> ConclusionsResourceWithRawResponse:
+        return ConclusionsResourceWithRawResponse(self._workspaces.conclusions)
 
 
 class AsyncWorkspacesResourceWithRawResponse:
@@ -893,22 +824,15 @@ class AsyncWorkspacesResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             workspaces.delete,
         )
-        self.deriver_status = async_to_raw_response_wrapper(
-            workspaces.deriver_status,
-        )
         self.get_or_create = async_to_raw_response_wrapper(
             workspaces.get_or_create,
+        )
+        self.schedule_dream = async_to_raw_response_wrapper(
+            workspaces.schedule_dream,
         )
         self.search = async_to_raw_response_wrapper(
             workspaces.search,
         )
-        self.trigger_dream = async_to_raw_response_wrapper(
-            workspaces.trigger_dream,
-        )
-
-    @cached_property
-    def observations(self) -> AsyncObservationsResourceWithRawResponse:
-        return AsyncObservationsResourceWithRawResponse(self._workspaces.observations)
 
     @cached_property
     def peers(self) -> AsyncPeersResourceWithRawResponse:
@@ -921,6 +845,14 @@ class AsyncWorkspacesResourceWithRawResponse:
     @cached_property
     def webhooks(self) -> AsyncWebhooksResourceWithRawResponse:
         return AsyncWebhooksResourceWithRawResponse(self._workspaces.webhooks)
+
+    @cached_property
+    def queue(self) -> AsyncQueueResourceWithRawResponse:
+        return AsyncQueueResourceWithRawResponse(self._workspaces.queue)
+
+    @cached_property
+    def conclusions(self) -> AsyncConclusionsResourceWithRawResponse:
+        return AsyncConclusionsResourceWithRawResponse(self._workspaces.conclusions)
 
 
 class WorkspacesResourceWithStreamingResponse:
@@ -936,22 +868,15 @@ class WorkspacesResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             workspaces.delete,
         )
-        self.deriver_status = to_streamed_response_wrapper(
-            workspaces.deriver_status,
-        )
         self.get_or_create = to_streamed_response_wrapper(
             workspaces.get_or_create,
+        )
+        self.schedule_dream = to_streamed_response_wrapper(
+            workspaces.schedule_dream,
         )
         self.search = to_streamed_response_wrapper(
             workspaces.search,
         )
-        self.trigger_dream = to_streamed_response_wrapper(
-            workspaces.trigger_dream,
-        )
-
-    @cached_property
-    def observations(self) -> ObservationsResourceWithStreamingResponse:
-        return ObservationsResourceWithStreamingResponse(self._workspaces.observations)
 
     @cached_property
     def peers(self) -> PeersResourceWithStreamingResponse:
@@ -964,6 +889,14 @@ class WorkspacesResourceWithStreamingResponse:
     @cached_property
     def webhooks(self) -> WebhooksResourceWithStreamingResponse:
         return WebhooksResourceWithStreamingResponse(self._workspaces.webhooks)
+
+    @cached_property
+    def queue(self) -> QueueResourceWithStreamingResponse:
+        return QueueResourceWithStreamingResponse(self._workspaces.queue)
+
+    @cached_property
+    def conclusions(self) -> ConclusionsResourceWithStreamingResponse:
+        return ConclusionsResourceWithStreamingResponse(self._workspaces.conclusions)
 
 
 class AsyncWorkspacesResourceWithStreamingResponse:
@@ -979,22 +912,15 @@ class AsyncWorkspacesResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             workspaces.delete,
         )
-        self.deriver_status = async_to_streamed_response_wrapper(
-            workspaces.deriver_status,
-        )
         self.get_or_create = async_to_streamed_response_wrapper(
             workspaces.get_or_create,
+        )
+        self.schedule_dream = async_to_streamed_response_wrapper(
+            workspaces.schedule_dream,
         )
         self.search = async_to_streamed_response_wrapper(
             workspaces.search,
         )
-        self.trigger_dream = async_to_streamed_response_wrapper(
-            workspaces.trigger_dream,
-        )
-
-    @cached_property
-    def observations(self) -> AsyncObservationsResourceWithStreamingResponse:
-        return AsyncObservationsResourceWithStreamingResponse(self._workspaces.observations)
 
     @cached_property
     def peers(self) -> AsyncPeersResourceWithStreamingResponse:
@@ -1007,3 +933,11 @@ class AsyncWorkspacesResourceWithStreamingResponse:
     @cached_property
     def webhooks(self) -> AsyncWebhooksResourceWithStreamingResponse:
         return AsyncWebhooksResourceWithStreamingResponse(self._workspaces.webhooks)
+
+    @cached_property
+    def queue(self) -> AsyncQueueResourceWithStreamingResponse:
+        return AsyncQueueResourceWithStreamingResponse(self._workspaces.queue)
+
+    @cached_property
+    def conclusions(self) -> AsyncConclusionsResourceWithStreamingResponse:
+        return AsyncConclusionsResourceWithStreamingResponse(self._workspaces.conclusions)

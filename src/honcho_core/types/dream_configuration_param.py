@@ -12,6 +12,6 @@ class DreamConfigurationParam(TypedDict, total=False):
     enabled: Optional[bool]
     """Whether to enable dream functionality.
 
-    If deriver is disabled, dreams will also be disabled and this setting will be
+    If reasoning is disabled, dreams will also be disabled and this setting will be
     ignored.
     """

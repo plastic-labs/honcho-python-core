@@ -8,6 +8,14 @@ from .peers import (
     PeersResourceWithStreamingResponse,
     AsyncPeersResourceWithStreamingResponse,
 )
+from .queue import (
+    QueueResource,
+    AsyncQueueResource,
+    QueueResourceWithRawResponse,
+    AsyncQueueResourceWithRawResponse,
+    QueueResourceWithStreamingResponse,
+    AsyncQueueResourceWithStreamingResponse,
+)
 from .sessions import (
     SessionsResource,
     AsyncSessionsResource,
@@ -32,22 +40,16 @@ from .workspaces import (
     WorkspacesResourceWithStreamingResponse,
     AsyncWorkspacesResourceWithStreamingResponse,
 )
-from .observations import (
-    ObservationsResource,
-    AsyncObservationsResource,
-    ObservationsResourceWithRawResponse,
-    AsyncObservationsResourceWithRawResponse,
-    ObservationsResourceWithStreamingResponse,
-    AsyncObservationsResourceWithStreamingResponse,
+from .conclusions import (
+    ConclusionsResource,
+    AsyncConclusionsResource,
+    ConclusionsResourceWithRawResponse,
+    AsyncConclusionsResourceWithRawResponse,
+    ConclusionsResourceWithStreamingResponse,
+    AsyncConclusionsResourceWithStreamingResponse,
 )
 
 __all__ = [
-    "ObservationsResource",
-    "AsyncObservationsResource",
-    "ObservationsResourceWithRawResponse",
-    "AsyncObservationsResourceWithRawResponse",
-    "ObservationsResourceWithStreamingResponse",
-    "AsyncObservationsResourceWithStreamingResponse",
     "PeersResource",
     "AsyncPeersResource",
     "PeersResourceWithRawResponse",
@@ -66,6 +68,18 @@ __all__ = [
     "AsyncWebhooksResourceWithRawResponse",
     "WebhooksResourceWithStreamingResponse",
     "AsyncWebhooksResourceWithStreamingResponse",
+    "QueueResource",
+    "AsyncQueueResource",
+    "QueueResourceWithRawResponse",
+    "AsyncQueueResourceWithRawResponse",
+    "QueueResourceWithStreamingResponse",
+    "AsyncQueueResourceWithStreamingResponse",
+    "ConclusionsResource",
+    "AsyncConclusionsResource",
+    "ConclusionsResourceWithRawResponse",
+    "AsyncConclusionsResourceWithRawResponse",
+    "ConclusionsResourceWithStreamingResponse",
+    "AsyncConclusionsResourceWithStreamingResponse",
     "WorkspacesResource",
     "AsyncWorkspacesResource",
     "WorkspacesResourceWithRawResponse",

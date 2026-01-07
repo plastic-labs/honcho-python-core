@@ -305,7 +305,7 @@ class TestPeers:
             workspace_id="workspace_id",
             session_id="session_id",
         )
-        assert_matches_type(object, peer, path=["response"])
+        assert peer is None
 
     @parametrize
     def test_method_set_config_with_all_params(self, client: Honcho) -> None:
@@ -316,7 +316,7 @@ class TestPeers:
             observe_me=True,
             observe_others=True,
         )
-        assert_matches_type(object, peer, path=["response"])
+        assert peer is None
 
     @parametrize
     def test_raw_response_set_config(self, client: Honcho) -> None:
@@ -329,7 +329,7 @@ class TestPeers:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         peer = response.parse()
-        assert_matches_type(object, peer, path=["response"])
+        assert peer is None
 
     @parametrize
     def test_streaming_response_set_config(self, client: Honcho) -> None:
@@ -342,7 +342,7 @@ class TestPeers:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             peer = response.parse()
-            assert_matches_type(object, peer, path=["response"])
+            assert peer is None
 
         assert cast(Any, response.is_closed) is True
 
@@ -659,7 +659,7 @@ class TestAsyncPeers:
             workspace_id="workspace_id",
             session_id="session_id",
         )
-        assert_matches_type(object, peer, path=["response"])
+        assert peer is None
 
     @parametrize
     async def test_method_set_config_with_all_params(self, async_client: AsyncHoncho) -> None:
@@ -670,7 +670,7 @@ class TestAsyncPeers:
             observe_me=True,
             observe_others=True,
         )
-        assert_matches_type(object, peer, path=["response"])
+        assert peer is None
 
     @parametrize
     async def test_raw_response_set_config(self, async_client: AsyncHoncho) -> None:
@@ -683,7 +683,7 @@ class TestAsyncPeers:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         peer = await response.parse()
-        assert_matches_type(object, peer, path=["response"])
+        assert peer is None
 
     @parametrize
     async def test_streaming_response_set_config(self, async_client: AsyncHoncho) -> None:
@@ -696,7 +696,7 @@ class TestAsyncPeers:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             peer = await response.parse()
-            assert_matches_type(object, peer, path=["response"])
+            assert peer is None
 
         assert cast(Any, response.is_closed) is True
 

@@ -10,9 +10,7 @@ __all__ = ["MessageUpdateParams"]
 
 class MessageUpdateParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     session_id: Required[str]
-    """ID of the session"""
 
     metadata: Optional[Dict[str, object]]

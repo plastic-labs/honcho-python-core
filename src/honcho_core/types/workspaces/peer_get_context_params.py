@@ -10,7 +10,6 @@ __all__ = ["PeerGetContextParams"]
 
 class PeerGetContextParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     include_most_derived: bool
     """Whether to include the most derived observations in the representation"""
@@ -34,7 +33,7 @@ class PeerGetContextParams(TypedDict, total=False):
     """
 
     target: Optional[str]
-    """The target peer to get context for.
+    """Optional target peer to get context for, from the observer's perspective.
 
-    If not provided, returns the peer's own context (self-observation)
+    If not provided, returns the observer's own context (self-observation)
     """

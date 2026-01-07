@@ -10,13 +10,11 @@ __all__ = ["PeerSetConfigParams"]
 
 class PeerSetConfigParams(TypedDict, total=False):
     workspace_id: Required[str]
-    """ID of the workspace"""
 
     session_id: Required[str]
-    """ID of the session"""
 
     observe_me: Optional[bool]
-    """Whether honcho should form a global theory-of-mind representation of this peer"""
+    """Whether Honcho will use reasoning to form a representation of this peer"""
 
     observe_others: Optional[bool]
     """
