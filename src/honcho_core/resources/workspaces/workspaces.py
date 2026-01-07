@@ -335,7 +335,7 @@ class WorkspacesResource(SyncAPIResource):
 
           reasoning_focus: Optional focus mode to bias the dream toward specific reasoning: 'deduction'
               prioritizes logical inferences from explicit facts, 'induction' prioritizes
-              pattern recognition across observations, 'knowledge_update' detects when facts
+              pattern recognition across conclusions, 'knowledge_update' detects when facts
               have changed over time
 
           extra_headers: Send extra headers
@@ -682,7 +682,7 @@ class AsyncWorkspacesResource(AsyncAPIResource):
 
           reasoning_focus: Optional focus mode to bias the dream toward specific reasoning: 'deduction'
               prioritizes logical inferences from explicit facts, 'induction' prioritizes
-              pattern recognition across observations, 'knowledge_update' detects when facts
+              pattern recognition across conclusions, 'knowledge_update' detects when facts
               have changed over time
 
           extra_headers: Send extra headers

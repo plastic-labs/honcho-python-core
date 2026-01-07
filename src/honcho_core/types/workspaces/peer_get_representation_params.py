@@ -14,19 +14,19 @@ class PeerGetRepresentationParams(TypedDict, total=False):
     include_most_derived: Optional[bool]
     """Only used if `search_query` is provided.
 
-    Whether to include the most derived observations in the representation
+    Whether to include the most derived conclusions in the representation
     """
 
-    max_observations: Optional[int]
+    max_conclusions: Optional[int]
     """Only used if `search_query` is provided.
 
-    Maximum number of observations to include in the representation
+    Maximum number of conclusions to include in the representation
     """
 
     search_max_distance: Optional[float]
     """Only used if `search_query` is provided.
 
-    Maximum distance to search for semantically relevant observations
+    Maximum distance to search for semantically relevant conclusions
     """
 
     search_query: Optional[str]
@@ -35,8 +35,7 @@ class PeerGetRepresentationParams(TypedDict, total=False):
     search_top_k: Optional[int]
     """Only used if `search_query` is provided.
 
-    Number of semantic-search-retrieved observations to include in the
-    representation
+    Number of semantic-search-retrieved conclusions to include in the representation
     """
 
     session_id: Optional[str]
