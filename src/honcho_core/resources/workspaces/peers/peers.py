@@ -287,7 +287,7 @@ class PeersResource(SyncAPIResource):
         *,
         workspace_id: str,
         include_most_derived: bool | Omit = omit,
-        max_observations: Optional[int] | Omit = omit,
+        max_conclusions: Optional[int] | Omit = omit,
         search_max_distance: Optional[float] | Omit = omit,
         search_query: Optional[str] | Omit = omit,
         search_top_k: Optional[int] | Omit = omit,
@@ -313,17 +313,17 @@ class PeersResource(SyncAPIResource):
         Args:
           peer_id: ID of the observer peer
 
-          include_most_derived: Whether to include the most derived observations in the representation
+          include_most_derived: Whether to include the most derived conclusions in the representation
 
-          max_observations: Maximum number of observations to include in the representation
+          max_conclusions: Maximum number of conclusions to include in the representation
 
           search_max_distance: Only used if `search_query` is provided. Maximum distance for semantically
-              relevant observations
+              relevant conclusions
 
           search_query: Optional query to curate the representation around semantic search results
 
           search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
-              observations to include
+              conclusions to include
 
           target: Optional target peer to get context for, from the observer's perspective. If not
               provided, returns the observer's own context (self-observation)
@@ -350,7 +350,7 @@ class PeersResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "include_most_derived": include_most_derived,
-                        "max_observations": max_observations,
+                        "max_conclusions": max_conclusions,
                         "search_max_distance": search_max_distance,
                         "search_query": search_query,
                         "search_top_k": search_top_k,
@@ -415,7 +415,7 @@ class PeersResource(SyncAPIResource):
         *,
         workspace_id: str,
         include_most_derived: Optional[bool] | Omit = omit,
-        max_observations: Optional[int] | Omit = omit,
+        max_conclusions: Optional[int] | Omit = omit,
         search_max_distance: Optional[float] | Omit = omit,
         search_query: Optional[str] | Omit = omit,
         search_top_k: Optional[int] | Omit = omit,
@@ -441,18 +441,18 @@ class PeersResource(SyncAPIResource):
 
         Args:
           include_most_derived: Only used if `search_query` is provided. Whether to include the most derived
-              observations in the representation
+              conclusions in the representation
 
-          max_observations: Only used if `search_query` is provided. Maximum number of observations to
+          max_conclusions: Only used if `search_query` is provided. Maximum number of conclusions to
               include in the representation
 
           search_max_distance: Only used if `search_query` is provided. Maximum distance to search for
-              semantically relevant observations
+              semantically relevant conclusions
 
           search_query: Optional input to curate the representation around semantic search results
 
           search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
-              observations to include in the representation
+              conclusions to include in the representation
 
           session_id: Optional session ID within which to scope the representation
 
@@ -476,7 +476,7 @@ class PeersResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "include_most_derived": include_most_derived,
-                    "max_observations": max_observations,
+                    "max_conclusions": max_conclusions,
                     "search_max_distance": search_max_distance,
                     "search_query": search_query,
                     "search_top_k": search_top_k,
@@ -837,7 +837,7 @@ class AsyncPeersResource(AsyncAPIResource):
         *,
         workspace_id: str,
         include_most_derived: bool | Omit = omit,
-        max_observations: Optional[int] | Omit = omit,
+        max_conclusions: Optional[int] | Omit = omit,
         search_max_distance: Optional[float] | Omit = omit,
         search_query: Optional[str] | Omit = omit,
         search_top_k: Optional[int] | Omit = omit,
@@ -863,17 +863,17 @@ class AsyncPeersResource(AsyncAPIResource):
         Args:
           peer_id: ID of the observer peer
 
-          include_most_derived: Whether to include the most derived observations in the representation
+          include_most_derived: Whether to include the most derived conclusions in the representation
 
-          max_observations: Maximum number of observations to include in the representation
+          max_conclusions: Maximum number of conclusions to include in the representation
 
           search_max_distance: Only used if `search_query` is provided. Maximum distance for semantically
-              relevant observations
+              relevant conclusions
 
           search_query: Optional query to curate the representation around semantic search results
 
           search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
-              observations to include
+              conclusions to include
 
           target: Optional target peer to get context for, from the observer's perspective. If not
               provided, returns the observer's own context (self-observation)
@@ -900,7 +900,7 @@ class AsyncPeersResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "include_most_derived": include_most_derived,
-                        "max_observations": max_observations,
+                        "max_conclusions": max_conclusions,
                         "search_max_distance": search_max_distance,
                         "search_query": search_query,
                         "search_top_k": search_top_k,
@@ -965,7 +965,7 @@ class AsyncPeersResource(AsyncAPIResource):
         *,
         workspace_id: str,
         include_most_derived: Optional[bool] | Omit = omit,
-        max_observations: Optional[int] | Omit = omit,
+        max_conclusions: Optional[int] | Omit = omit,
         search_max_distance: Optional[float] | Omit = omit,
         search_query: Optional[str] | Omit = omit,
         search_top_k: Optional[int] | Omit = omit,
@@ -991,18 +991,18 @@ class AsyncPeersResource(AsyncAPIResource):
 
         Args:
           include_most_derived: Only used if `search_query` is provided. Whether to include the most derived
-              observations in the representation
+              conclusions in the representation
 
-          max_observations: Only used if `search_query` is provided. Maximum number of observations to
+          max_conclusions: Only used if `search_query` is provided. Maximum number of conclusions to
               include in the representation
 
           search_max_distance: Only used if `search_query` is provided. Maximum distance to search for
-              semantically relevant observations
+              semantically relevant conclusions
 
           search_query: Optional input to curate the representation around semantic search results
 
           search_top_k: Only used if `search_query` is provided. Number of semantic-search-retrieved
-              observations to include in the representation
+              conclusions to include in the representation
 
           session_id: Optional session ID within which to scope the representation
 
@@ -1026,7 +1026,7 @@ class AsyncPeersResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "include_most_derived": include_most_derived,
-                    "max_observations": max_observations,
+                    "max_conclusions": max_conclusions,
                     "search_max_distance": search_max_distance,
                     "search_query": search_query,
                     "search_top_k": search_top_k,
