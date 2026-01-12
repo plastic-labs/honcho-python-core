@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.10.0 (2026-01-12)
+
+Full Changelog: [v1.9.0...v1.10.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.9.0...v1.10.0)
+
+### Features
+
+* **api:** manual updates ([89803bc](https://github.com/plastic-labs/honcho-python-core/commit/89803bcc12e83216bb01d43426a026050399e515))
+
 ## 1.9.0 (2026-01-12)
 
 Full Changelog: [v1.8.0...v1.9.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.8.0...v1.9.0)
