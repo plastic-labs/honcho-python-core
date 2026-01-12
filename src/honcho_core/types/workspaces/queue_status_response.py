@@ -4,7 +4,7 @@ from typing import Dict, Optional
 
 from ..._models import BaseModel
 
-__all__ = ["QueueGetStatusResponse", "Sessions"]
+__all__ = ["QueueStatusResponse", "Sessions"]
 
 
 class Sessions(BaseModel):
@@ -26,7 +26,7 @@ class Sessions(BaseModel):
     """Session ID if filtered by session"""
 
 
-class QueueGetStatusResponse(BaseModel):
+class QueueStatusResponse(BaseModel):
     """Aggregated processing queue status."""
 
     completed_work_units: int

@@ -4,10 +4,10 @@ from typing import List, Optional
 
 from ..._models import BaseModel
 
-__all__ = ["PeerGetContextResponse"]
+__all__ = ["PeerContextResponse"]
 
 
-class PeerGetContextResponse(BaseModel):
+class PeerContextResponse(BaseModel):
     """Context for a peer, including representation and peer card."""
 
     peer_id: str

@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["QueueGetStatusParams"]
+__all__ = ["QueueStatusParams"]
 
 
-class QueueGetStatusParams(TypedDict, total=False):
+class QueueStatusParams(TypedDict, total=False):
     observer_id: Optional[str]
     """Optional observer ID to filter by"""
 

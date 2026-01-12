@@ -2,8 +2,8 @@
 
 from ..._models import BaseModel
 
-__all__ = ["PeerGetRepresentationResponse"]
+__all__ = ["PeerRepresentationResponse"]
 
 
-class PeerGetRepresentationResponse(BaseModel):
+class PeerRepresentationResponse(BaseModel):
     representation: str

@@ -33,17 +33,17 @@ from ....types.workspaces import (
     peer_list_params,
     peer_search_params,
     peer_update_params,
+    peer_context_params,
     peer_set_card_params,
-    peer_get_context_params,
     peer_get_or_create_params,
-    peer_get_representation_params,
+    peer_representation_params,
 )
 from ....types.workspaces.peer import Peer
 from ....types.workspaces.peer_card_response import PeerCardResponse
 from ....types.workspaces.peer_chat_response import PeerChatResponse
 from ....types.workspaces.peer_search_response import PeerSearchResponse
-from ....types.workspaces.peer_get_context_response import PeerGetContextResponse
-from ....types.workspaces.peer_get_representation_response import PeerGetRepresentationResponse
+from ....types.workspaces.peer_context_response import PeerContextResponse
+from ....types.workspaces.peer_representation_response import PeerRepresentationResponse
 
 __all__ = ["PeersResource", "AsyncPeersResource"]
 
@@ -281,7 +281,7 @@ class PeersResource(SyncAPIResource):
             cast_to=PeerChatResponse,
         )
 
-    def get_context(
+    def context(
         self,
         peer_id: str,
         *,
@@ -298,7 +298,7 @@ class PeersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PeerGetContextResponse:
+    ) -> PeerContextResponse:
         """
         Get context for a peer, including their representation and peer card.
 
@@ -356,10 +356,10 @@ class PeersResource(SyncAPIResource):
                         "search_top_k": search_top_k,
                         "target": target,
                     },
-                    peer_get_context_params.PeerGetContextParams,
+                    peer_context_params.PeerContextParams,
                 ),
             ),
-            cast_to=PeerGetContextResponse,
+            cast_to=PeerContextResponse,
         )
 
     def get_or_create(
@@ -409,7 +409,7 @@ class PeersResource(SyncAPIResource):
             cast_to=Peer,
         )
 
-    def get_representation(
+    def representation(
         self,
         peer_id: str,
         *,
@@ -427,7 +427,7 @@ class PeersResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PeerGetRepresentationResponse:
+    ) -> PeerRepresentationResponse:
         """Get a curated subset of a Peer's Representation.
 
         A Representation is always a
@@ -483,12 +483,12 @@ class PeersResource(SyncAPIResource):
                     "session_id": session_id,
                     "target": target,
                 },
-                peer_get_representation_params.PeerGetRepresentationParams,
+                peer_representation_params.PeerRepresentationParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=PeerGetRepresentationResponse,
+            cast_to=PeerRepresentationResponse,
         )
 
     def search(
@@ -831,7 +831,7 @@ class AsyncPeersResource(AsyncAPIResource):
             cast_to=PeerChatResponse,
         )
 
-    async def get_context(
+    async def context(
         self,
         peer_id: str,
         *,
@@ -848,7 +848,7 @@ class AsyncPeersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PeerGetContextResponse:
+    ) -> PeerContextResponse:
         """
         Get context for a peer, including their representation and peer card.
 
@@ -906,10 +906,10 @@ class AsyncPeersResource(AsyncAPIResource):
                         "search_top_k": search_top_k,
                         "target": target,
                     },
-                    peer_get_context_params.PeerGetContextParams,
+                    peer_context_params.PeerContextParams,
                 ),
             ),
-            cast_to=PeerGetContextResponse,
+            cast_to=PeerContextResponse,
         )
 
     async def get_or_create(
@@ -959,7 +959,7 @@ class AsyncPeersResource(AsyncAPIResource):
             cast_to=Peer,
         )
 
-    async def get_representation(
+    async def representation(
         self,
         peer_id: str,
         *,
@@ -977,7 +977,7 @@ class AsyncPeersResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PeerGetRepresentationResponse:
+    ) -> PeerRepresentationResponse:
         """Get a curated subset of a Peer's Representation.
 
         A Representation is always a
@@ -1033,12 +1033,12 @@ class AsyncPeersResource(AsyncAPIResource):
                     "session_id": session_id,
                     "target": target,
                 },
-                peer_get_representation_params.PeerGetRepresentationParams,
+                peer_representation_params.PeerRepresentationParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=PeerGetRepresentationResponse,
+            cast_to=PeerRepresentationResponse,
         )
 
     async def search(
@@ -1164,14 +1164,14 @@ class PeersResourceWithRawResponse:
         self.chat = to_raw_response_wrapper(
             peers.chat,
         )
-        self.get_context = to_raw_response_wrapper(
-            peers.get_context,
+        self.context = to_raw_response_wrapper(
+            peers.context,
         )
         self.get_or_create = to_raw_response_wrapper(
             peers.get_or_create,
         )
-        self.get_representation = to_raw_response_wrapper(
-            peers.get_representation,
+        self.representation = to_raw_response_wrapper(
+            peers.representation,
         )
         self.search = to_raw_response_wrapper(
             peers.search,
@@ -1201,14 +1201,14 @@ class AsyncPeersResourceWithRawResponse:
         self.chat = async_to_raw_response_wrapper(
             peers.chat,
         )
-        self.get_context = async_to_raw_response_wrapper(
-            peers.get_context,
+        self.context = async_to_raw_response_wrapper(
+            peers.context,
         )
         self.get_or_create = async_to_raw_response_wrapper(
             peers.get_or_create,
         )
-        self.get_representation = async_to_raw_response_wrapper(
-            peers.get_representation,
+        self.representation = async_to_raw_response_wrapper(
+            peers.representation,
         )
         self.search = async_to_raw_response_wrapper(
             peers.search,
@@ -1238,14 +1238,14 @@ class PeersResourceWithStreamingResponse:
         self.chat = to_streamed_response_wrapper(
             peers.chat,
         )
-        self.get_context = to_streamed_response_wrapper(
-            peers.get_context,
+        self.context = to_streamed_response_wrapper(
+            peers.context,
         )
         self.get_or_create = to_streamed_response_wrapper(
             peers.get_or_create,
         )
-        self.get_representation = to_streamed_response_wrapper(
-            peers.get_representation,
+        self.representation = to_streamed_response_wrapper(
+            peers.representation,
         )
         self.search = to_streamed_response_wrapper(
             peers.search,
@@ -1275,14 +1275,14 @@ class AsyncPeersResourceWithStreamingResponse:
         self.chat = async_to_streamed_response_wrapper(
             peers.chat,
         )
-        self.get_context = async_to_streamed_response_wrapper(
-            peers.get_context,
+        self.context = async_to_streamed_response_wrapper(
+            peers.context,
         )
         self.get_or_create = async_to_streamed_response_wrapper(
             peers.get_or_create,
         )
-        self.get_representation = async_to_streamed_response_wrapper(
-            peers.get_representation,
+        self.representation = async_to_streamed_response_wrapper(
+            peers.representation,
         )
         self.search = async_to_streamed_response_wrapper(
             peers.search,
