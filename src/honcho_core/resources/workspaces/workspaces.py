@@ -301,11 +301,10 @@ class WorkspacesResource(SyncAPIResource):
         self,
         workspace_id: str,
         *,
-        dream_type: Literal["consolidate"],
+        dream_type: Literal["omni"],
         observer: str,
         session_id: str,
         observed: Optional[str] | Omit = omit,
-        reasoning_focus: Optional[Literal["deduction", "induction", "knowledge_update"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -333,11 +332,6 @@ class WorkspacesResource(SyncAPIResource):
 
           observed: Observed peer name (defaults to observer if not specified)
 
-          reasoning_focus: Optional focus mode to bias the dream toward specific reasoning: 'deduction'
-              prioritizes logical inferences from explicit facts, 'induction' prioritizes
-              pattern recognition across conclusions, 'knowledge_update' detects when facts
-              have changed over time
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -357,7 +351,6 @@ class WorkspacesResource(SyncAPIResource):
                     "observer": observer,
                     "session_id": session_id,
                     "observed": observed,
-                    "reasoning_focus": reasoning_focus,
                 },
                 workspace_schedule_dream_params.WorkspaceScheduleDreamParams,
             ),
@@ -648,11 +641,10 @@ class AsyncWorkspacesResource(AsyncAPIResource):
         self,
         workspace_id: str,
         *,
-        dream_type: Literal["consolidate"],
+        dream_type: Literal["omni"],
         observer: str,
         session_id: str,
         observed: Optional[str] | Omit = omit,
-        reasoning_focus: Optional[Literal["deduction", "induction", "knowledge_update"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -680,11 +672,6 @@ class AsyncWorkspacesResource(AsyncAPIResource):
 
           observed: Observed peer name (defaults to observer if not specified)
 
-          reasoning_focus: Optional focus mode to bias the dream toward specific reasoning: 'deduction'
-              prioritizes logical inferences from explicit facts, 'induction' prioritizes
-              pattern recognition across conclusions, 'knowledge_update' detects when facts
-              have changed over time
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -704,7 +691,6 @@ class AsyncWorkspacesResource(AsyncAPIResource):
                     "observer": observer,
                     "session_id": session_id,
                     "observed": observed,
-                    "reasoning_focus": reasoning_focus,
                 },
                 workspace_schedule_dream_params.WorkspaceScheduleDreamParams,
             ),
