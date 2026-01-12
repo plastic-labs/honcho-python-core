@@ -1,5 +1,36 @@
 # Changelog
 
+## 1.9.0 (2026-01-12)
+
+Full Changelog: [v1.8.0...v1.9.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.8.0...v1.9.0)
+
+### Features
+
+* **api:** add PeerGetRepresentationResponse ([5a6b97c](https://github.com/plastic-labs/honcho-python-core/commit/5a6b97cb8d40ab5bec771ee4135f87f759b36bfd))
+* **api:** honcho 2.6.0 interface ([e698b7f](https://github.com/plastic-labs/honcho-python-core/commit/e698b7f1a4f35c3e2127aff15edd98bcccdbe6ea))
+* **api:** manual updates ([a36f6e5](https://github.com/plastic-labs/honcho-python-core/commit/a36f6e592ad78371167a76a5e4280e18b78a1ea7))
+* **api:** manual updates ([b553981](https://github.com/plastic-labs/honcho-python-core/commit/b5539818022ab4ad757250ea3234648f8dc5906e))
+* **api:** manual updates -- `consolidate` dream_type to `omni` ([a4ed5aa](https://github.com/plastic-labs/honcho-python-core/commit/a4ed5aa9f5ea84ee7864f2c8c9dbdb1bba2dbc5d))
+* **api:** remove last 'observation' references ([05767eb](https://github.com/plastic-labs/honcho-python-core/commit/05767ebc9fbf22489d13a791f8c073a0a3876752))
+
+
+### Bug Fixes
+
+* use async_to_httpx_files in patch method ([ebe0efb](https://github.com/plastic-labs/honcho-python-core/commit/ebe0efb5b9b604f276143fc9ca75e06274dfb514))
+
+
+### Chores
+
+* **internal:** add `--fix` argument to lint script ([18d386f](https://github.com/plastic-labs/honcho-python-core/commit/18d386fc335b0f521dfffe625a32f10eb3ad1636))
+* **internal:** add missing files argument to base client ([a7e9420](https://github.com/plastic-labs/honcho-python-core/commit/a7e9420ae981e524bb8a313b98df0a12c1385d1d))
+* **internal:** codegen related update ([f2fb493](https://github.com/plastic-labs/honcho-python-core/commit/f2fb49308b16306dfadd72d314fc5b6d8333f0cd))
+* speedup initial import ([5f36a02](https://github.com/plastic-labs/honcho-python-core/commit/5f36a02830d793290236a4d73a17bd62c0027719))
+
+
+### Documentation
+
+* prominently feature MCP server setup in root SDK readmes ([a6760a5](https://github.com/plastic-labs/honcho-python-core/commit/a6760a5107a0644b272001864720fb235950351c))
+
 ## 1.8.0 (2025-12-15)
 
 Full Changelog: [v1.7.0...v1.8.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.7.0...v1.8.0)
