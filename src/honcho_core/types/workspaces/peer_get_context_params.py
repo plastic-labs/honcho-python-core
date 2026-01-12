@@ -11,8 +11,8 @@ __all__ = ["PeerGetContextParams"]
 class PeerGetContextParams(TypedDict, total=False):
     workspace_id: Required[str]
 
-    include_most_derived: bool
-    """Whether to include the most derived conclusions in the representation"""
+    include_most_frequent: bool
+    """Whether to include the most frequent conclusions in the representation"""
 
     max_conclusions: Optional[int]
     """Maximum number of conclusions to include in the representation"""
