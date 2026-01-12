@@ -11,10 +11,10 @@ __all__ = ["SessionGetContextParams"]
 class SessionGetContextParams(TypedDict, total=False):
     workspace_id: Required[str]
 
-    include_most_derived: bool
+    include_most_frequent: bool
     """Only used if `last_message` is provided.
 
-    Whether to include the most derived conclusions in the representation
+    Whether to include the most frequent conclusions in the representation
     """
 
     last_message: Optional[str]

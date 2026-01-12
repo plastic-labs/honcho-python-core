@@ -11,10 +11,10 @@ __all__ = ["PeerGetRepresentationParams"]
 class PeerGetRepresentationParams(TypedDict, total=False):
     workspace_id: Required[str]
 
-    include_most_derived: Optional[bool]
+    include_most_frequent: Optional[bool]
     """Only used if `search_query` is provided.
 
-    Whether to include the most derived conclusions in the representation
+    Whether to include the most frequent conclusions in the representation
     """
 
     max_conclusions: Optional[int]

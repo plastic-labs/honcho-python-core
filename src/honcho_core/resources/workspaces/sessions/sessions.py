@@ -273,7 +273,7 @@ class SessionsResource(SyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        include_most_derived: bool | Omit = omit,
+        include_most_frequent: bool | Omit = omit,
         last_message: Optional[str] | Omit = omit,
         limit_to_session: bool | Omit = omit,
         max_conclusions: Optional[int] | Omit = omit,
@@ -300,7 +300,7 @@ class SessionsResource(SyncAPIResource):
         does not want a summary, we allocate all the tokens to recent messages.
 
         Args:
-          include_most_derived: Only used if `last_message` is provided. Whether to include the most derived
+          include_most_frequent: Only used if `last_message` is provided. Whether to include the most frequent
               conclusions in the representation
 
           last_message: The most recent message, used to fetch semantically relevant conclusions
@@ -353,7 +353,7 @@ class SessionsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "include_most_derived": include_most_derived,
+                        "include_most_frequent": include_most_frequent,
                         "last_message": last_message,
                         "limit_to_session": limit_to_session,
                         "max_conclusions": max_conclusions,
@@ -740,7 +740,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         session_id: str,
         *,
         workspace_id: str,
-        include_most_derived: bool | Omit = omit,
+        include_most_frequent: bool | Omit = omit,
         last_message: Optional[str] | Omit = omit,
         limit_to_session: bool | Omit = omit,
         max_conclusions: Optional[int] | Omit = omit,
@@ -767,7 +767,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         does not want a summary, we allocate all the tokens to recent messages.
 
         Args:
-          include_most_derived: Only used if `last_message` is provided. Whether to include the most derived
+          include_most_frequent: Only used if `last_message` is provided. Whether to include the most frequent
               conclusions in the representation
 
           last_message: The most recent message, used to fetch semantically relevant conclusions
@@ -820,7 +820,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
-                        "include_most_derived": include_most_derived,
+                        "include_most_frequent": include_most_frequent,
                         "last_message": last_message,
                         "limit_to_session": limit_to_session,
                         "max_conclusions": max_conclusions,

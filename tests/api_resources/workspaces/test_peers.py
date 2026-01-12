@@ -267,7 +267,7 @@ class TestPeers:
         peer = client.workspaces.peers.get_context(
             peer_id="peer_id",
             workspace_id="workspace_id",
-            include_most_derived=True,
+            include_most_frequent=True,
             max_conclusions=1,
             search_max_distance=0,
             search_query="search_query",
@@ -381,7 +381,7 @@ class TestPeers:
         peer = client.workspaces.peers.get_representation(
             peer_id="peer_id",
             workspace_id="workspace_id",
-            include_most_derived=True,
+            include_most_frequent=True,
             max_conclusions=1,
             search_max_distance=0,
             search_query="search_query",
@@ -806,7 +806,7 @@ class TestAsyncPeers:
         peer = await async_client.workspaces.peers.get_context(
             peer_id="peer_id",
             workspace_id="workspace_id",
-            include_most_derived=True,
+            include_most_frequent=True,
             max_conclusions=1,
             search_max_distance=0,
             search_query="search_query",
@@ -920,7 +920,7 @@ class TestAsyncPeers:
         peer = await async_client.workspaces.peers.get_representation(
             peer_id="peer_id",
             workspace_id="workspace_id",
-            include_most_derived=True,
+            include_most_frequent=True,
             max_conclusions=1,
             search_max_distance=0,
             search_query="search_query",
