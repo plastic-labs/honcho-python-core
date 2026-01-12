@@ -214,7 +214,7 @@ class TestWorkspaces:
     def test_method_schedule_dream(self, client: Honcho) -> None:
         workspace = client.workspaces.schedule_dream(
             workspace_id="workspace_id",
-            dream_type="consolidate",
+            dream_type="omni",
             observer="observer",
             session_id="session_id",
         )
@@ -224,11 +224,10 @@ class TestWorkspaces:
     def test_method_schedule_dream_with_all_params(self, client: Honcho) -> None:
         workspace = client.workspaces.schedule_dream(
             workspace_id="workspace_id",
-            dream_type="consolidate",
+            dream_type="omni",
             observer="observer",
             session_id="session_id",
             observed="observed",
-            reasoning_focus="deduction",
         )
         assert workspace is None
 
@@ -236,7 +235,7 @@ class TestWorkspaces:
     def test_raw_response_schedule_dream(self, client: Honcho) -> None:
         response = client.workspaces.with_raw_response.schedule_dream(
             workspace_id="workspace_id",
-            dream_type="consolidate",
+            dream_type="omni",
             observer="observer",
             session_id="session_id",
         )
@@ -250,7 +249,7 @@ class TestWorkspaces:
     def test_streaming_response_schedule_dream(self, client: Honcho) -> None:
         with client.workspaces.with_streaming_response.schedule_dream(
             workspace_id="workspace_id",
-            dream_type="consolidate",
+            dream_type="omni",
             observer="observer",
             session_id="session_id",
         ) as response:
@@ -267,7 +266,7 @@ class TestWorkspaces:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
             client.workspaces.with_raw_response.schedule_dream(
                 workspace_id="",
-                dream_type="consolidate",
+                dream_type="omni",
                 observer="observer",
                 session_id="session_id",
             )
@@ -523,7 +522,7 @@ class TestAsyncWorkspaces:
     async def test_method_schedule_dream(self, async_client: AsyncHoncho) -> None:
         workspace = await async_client.workspaces.schedule_dream(
             workspace_id="workspace_id",
-            dream_type="consolidate",
+            dream_type="omni",
             observer="observer",
             session_id="session_id",
         )
@@ -533,11 +532,10 @@ class TestAsyncWorkspaces:
     async def test_method_schedule_dream_with_all_params(self, async_client: AsyncHoncho) -> None:
         workspace = await async_client.workspaces.schedule_dream(
             workspace_id="workspace_id",
-            dream_type="consolidate",
+            dream_type="omni",
             observer="observer",
             session_id="session_id",
             observed="observed",
-            reasoning_focus="deduction",
         )
         assert workspace is None
 
@@ -545,7 +543,7 @@ class TestAsyncWorkspaces:
     async def test_raw_response_schedule_dream(self, async_client: AsyncHoncho) -> None:
         response = await async_client.workspaces.with_raw_response.schedule_dream(
             workspace_id="workspace_id",
-            dream_type="consolidate",
+            dream_type="omni",
             observer="observer",
             session_id="session_id",
         )
@@ -559,7 +557,7 @@ class TestAsyncWorkspaces:
     async def test_streaming_response_schedule_dream(self, async_client: AsyncHoncho) -> None:
         async with async_client.workspaces.with_streaming_response.schedule_dream(
             workspace_id="workspace_id",
-            dream_type="consolidate",
+            dream_type="omni",
             observer="observer",
             session_id="session_id",
         ) as response:
@@ -576,7 +574,7 @@ class TestAsyncWorkspaces:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
             await async_client.workspaces.with_raw_response.schedule_dream(
                 workspace_id="",
-                dream_type="consolidate",
+                dream_type="omni",
                 observer="observer",
                 session_id="session_id",
             )

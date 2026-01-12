@@ -9,7 +9,7 @@ __all__ = ["WorkspaceScheduleDreamParams"]
 
 
 class WorkspaceScheduleDreamParams(TypedDict, total=False):
-    dream_type: Required[Literal["consolidate"]]
+    dream_type: Required[Literal["omni"]]
     """Type of dream to schedule"""
 
     observer: Required[str]
@@ -20,11 +20,3 @@ class WorkspaceScheduleDreamParams(TypedDict, total=False):
 
     observed: Optional[str]
     """Observed peer name (defaults to observer if not specified)"""
-
-    reasoning_focus: Optional[Literal["deduction", "induction", "knowledge_update"]]
-    """
-    Optional focus mode to bias the dream toward specific reasoning: 'deduction'
-    prioritizes logical inferences from explicit facts, 'induction' prioritizes
-    pattern recognition across conclusions, 'knowledge_update' detects when facts
-    have changed over time
-    """
