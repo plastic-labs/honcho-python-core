@@ -6,10 +6,10 @@ from .summary import Summary
 from ..._models import BaseModel
 from .sessions.message import Message
 
-__all__ = ["SessionGetContextResponse"]
+__all__ = ["SessionContextResponse"]
 
 
-class SessionGetContextResponse(BaseModel):
+class SessionContextResponse(BaseModel):
     id: str
 
     messages: List[Message]

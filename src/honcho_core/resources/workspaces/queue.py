@@ -17,8 +17,8 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.workspaces import queue_get_status_params
-from ...types.workspaces.queue_get_status_response import QueueGetStatusResponse
+from ...types.workspaces import queue_status_params
+from ...types.workspaces.queue_status_response import QueueStatusResponse
 
 __all__ = ["QueueResource", "AsyncQueueResource"]
 
@@ -43,7 +43,7 @@ class QueueResource(SyncAPIResource):
         """
         return QueueResourceWithStreamingResponse(self)
 
-    def get_status(
+    def status(
         self,
         workspace_id: str,
         *,
@@ -56,7 +56,7 @@ class QueueResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> QueueGetStatusResponse:
+    ) -> QueueStatusResponse:
         """
         Get the processing queue status for a Workspace, optionally scoped to an
         observer, sender, and/or session.
@@ -91,10 +91,10 @@ class QueueResource(SyncAPIResource):
                         "sender_id": sender_id,
                         "session_id": session_id,
                     },
-                    queue_get_status_params.QueueGetStatusParams,
+                    queue_status_params.QueueStatusParams,
                 ),
             ),
-            cast_to=QueueGetStatusResponse,
+            cast_to=QueueStatusResponse,
         )
 
 
@@ -118,7 +118,7 @@ class AsyncQueueResource(AsyncAPIResource):
         """
         return AsyncQueueResourceWithStreamingResponse(self)
 
-    async def get_status(
+    async def status(
         self,
         workspace_id: str,
         *,
@@ -131,7 +131,7 @@ class AsyncQueueResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> QueueGetStatusResponse:
+    ) -> QueueStatusResponse:
         """
         Get the processing queue status for a Workspace, optionally scoped to an
         observer, sender, and/or session.
@@ -166,10 +166,10 @@ class AsyncQueueResource(AsyncAPIResource):
                         "sender_id": sender_id,
                         "session_id": session_id,
                     },
-                    queue_get_status_params.QueueGetStatusParams,
+                    queue_status_params.QueueStatusParams,
                 ),
             ),
-            cast_to=QueueGetStatusResponse,
+            cast_to=QueueStatusResponse,
         )
 
 
@@ -177,8 +177,8 @@ class QueueResourceWithRawResponse:
     def __init__(self, queue: QueueResource) -> None:
         self._queue = queue
 
-        self.get_status = to_raw_response_wrapper(
-            queue.get_status,
+        self.status = to_raw_response_wrapper(
+            queue.status,
         )
 
 
@@ -186,8 +186,8 @@ class AsyncQueueResourceWithRawResponse:
     def __init__(self, queue: AsyncQueueResource) -> None:
         self._queue = queue
 
-        self.get_status = async_to_raw_response_wrapper(
-            queue.get_status,
+        self.status = async_to_raw_response_wrapper(
+            queue.status,
         )
 
 
@@ -195,8 +195,8 @@ class QueueResourceWithStreamingResponse:
     def __init__(self, queue: QueueResource) -> None:
         self._queue = queue
 
-        self.get_status = to_streamed_response_wrapper(
-            queue.get_status,
+        self.status = to_streamed_response_wrapper(
+            queue.status,
         )
 
 
@@ -204,6 +204,6 @@ class AsyncQueueResourceWithStreamingResponse:
     def __init__(self, queue: AsyncQueueResource) -> None:
         self._queue = queue
 
-        self.get_status = async_to_streamed_response_wrapper(
-            queue.get_status,
+        self.status = async_to_streamed_response_wrapper(
+            queue.status,
         )

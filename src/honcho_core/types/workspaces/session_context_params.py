@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["SessionGetContextParams"]
+__all__ = ["SessionContextParams"]
 
 
-class SessionGetContextParams(TypedDict, total=False):
+class SessionContextParams(TypedDict, total=False):
     workspace_id: Required[str]
 
     include_most_frequent: bool

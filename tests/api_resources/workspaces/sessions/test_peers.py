@@ -133,8 +133,8 @@ class TestPeers:
             )
 
     @parametrize
-    def test_method_get_config(self, client: Honcho) -> None:
-        peer = client.workspaces.sessions.peers.get_config(
+    def test_method_config(self, client: Honcho) -> None:
+        peer = client.workspaces.sessions.peers.config(
             peer_id="peer_id",
             workspace_id="workspace_id",
             session_id="session_id",
@@ -142,8 +142,8 @@ class TestPeers:
         assert_matches_type(SessionPeerConfig, peer, path=["response"])
 
     @parametrize
-    def test_raw_response_get_config(self, client: Honcho) -> None:
-        response = client.workspaces.sessions.peers.with_raw_response.get_config(
+    def test_raw_response_config(self, client: Honcho) -> None:
+        response = client.workspaces.sessions.peers.with_raw_response.config(
             peer_id="peer_id",
             workspace_id="workspace_id",
             session_id="session_id",
@@ -155,8 +155,8 @@ class TestPeers:
         assert_matches_type(SessionPeerConfig, peer, path=["response"])
 
     @parametrize
-    def test_streaming_response_get_config(self, client: Honcho) -> None:
-        with client.workspaces.sessions.peers.with_streaming_response.get_config(
+    def test_streaming_response_config(self, client: Honcho) -> None:
+        with client.workspaces.sessions.peers.with_streaming_response.config(
             peer_id="peer_id",
             workspace_id="workspace_id",
             session_id="session_id",
@@ -170,23 +170,23 @@ class TestPeers:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_path_params_get_config(self, client: Honcho) -> None:
+    def test_path_params_config(self, client: Honcho) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
-            client.workspaces.sessions.peers.with_raw_response.get_config(
+            client.workspaces.sessions.peers.with_raw_response.config(
                 peer_id="peer_id",
                 workspace_id="",
                 session_id="session_id",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            client.workspaces.sessions.peers.with_raw_response.get_config(
+            client.workspaces.sessions.peers.with_raw_response.config(
                 peer_id="peer_id",
                 workspace_id="workspace_id",
                 session_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `peer_id` but received ''"):
-            client.workspaces.sessions.peers.with_raw_response.get_config(
+            client.workspaces.sessions.peers.with_raw_response.config(
                 peer_id="",
                 workspace_id="workspace_id",
                 session_id="session_id",
@@ -487,8 +487,8 @@ class TestAsyncPeers:
             )
 
     @parametrize
-    async def test_method_get_config(self, async_client: AsyncHoncho) -> None:
-        peer = await async_client.workspaces.sessions.peers.get_config(
+    async def test_method_config(self, async_client: AsyncHoncho) -> None:
+        peer = await async_client.workspaces.sessions.peers.config(
             peer_id="peer_id",
             workspace_id="workspace_id",
             session_id="session_id",
@@ -496,8 +496,8 @@ class TestAsyncPeers:
         assert_matches_type(SessionPeerConfig, peer, path=["response"])
 
     @parametrize
-    async def test_raw_response_get_config(self, async_client: AsyncHoncho) -> None:
-        response = await async_client.workspaces.sessions.peers.with_raw_response.get_config(
+    async def test_raw_response_config(self, async_client: AsyncHoncho) -> None:
+        response = await async_client.workspaces.sessions.peers.with_raw_response.config(
             peer_id="peer_id",
             workspace_id="workspace_id",
             session_id="session_id",
@@ -509,8 +509,8 @@ class TestAsyncPeers:
         assert_matches_type(SessionPeerConfig, peer, path=["response"])
 
     @parametrize
-    async def test_streaming_response_get_config(self, async_client: AsyncHoncho) -> None:
-        async with async_client.workspaces.sessions.peers.with_streaming_response.get_config(
+    async def test_streaming_response_config(self, async_client: AsyncHoncho) -> None:
+        async with async_client.workspaces.sessions.peers.with_streaming_response.config(
             peer_id="peer_id",
             workspace_id="workspace_id",
             session_id="session_id",
@@ -524,23 +524,23 @@ class TestAsyncPeers:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_path_params_get_config(self, async_client: AsyncHoncho) -> None:
+    async def test_path_params_config(self, async_client: AsyncHoncho) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
-            await async_client.workspaces.sessions.peers.with_raw_response.get_config(
+            await async_client.workspaces.sessions.peers.with_raw_response.config(
                 peer_id="peer_id",
                 workspace_id="",
                 session_id="session_id",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            await async_client.workspaces.sessions.peers.with_raw_response.get_config(
+            await async_client.workspaces.sessions.peers.with_raw_response.config(
                 peer_id="peer_id",
                 workspace_id="workspace_id",
                 session_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `peer_id` but received ''"):
-            await async_client.workspaces.sessions.peers.with_raw_response.get_config(
+            await async_client.workspaces.sessions.peers.with_raw_response.config(
                 peer_id="",
                 workspace_id="workspace_id",
                 session_id="session_id",

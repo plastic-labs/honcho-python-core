@@ -13,8 +13,8 @@ from honcho_core.pagination import SyncPage, AsyncPage
 from honcho_core.types.workspaces import (
     Session,
     SessionSearchResponse,
+    SessionContextResponse,
     SessionSummariesResponse,
-    SessionGetContextResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -250,16 +250,16 @@ class TestSessions:
             )
 
     @parametrize
-    def test_method_get_context(self, client: Honcho) -> None:
-        session = client.workspaces.sessions.get_context(
+    def test_method_context(self, client: Honcho) -> None:
+        session = client.workspaces.sessions.context(
             session_id="session_id",
             workspace_id="workspace_id",
         )
-        assert_matches_type(SessionGetContextResponse, session, path=["response"])
+        assert_matches_type(SessionContextResponse, session, path=["response"])
 
     @parametrize
-    def test_method_get_context_with_all_params(self, client: Honcho) -> None:
-        session = client.workspaces.sessions.get_context(
+    def test_method_context_with_all_params(self, client: Honcho) -> None:
+        session = client.workspaces.sessions.context(
             session_id="session_id",
             workspace_id="workspace_id",
             include_most_frequent=True,
@@ -273,11 +273,11 @@ class TestSessions:
             summary=True,
             tokens=100000,
         )
-        assert_matches_type(SessionGetContextResponse, session, path=["response"])
+        assert_matches_type(SessionContextResponse, session, path=["response"])
 
     @parametrize
-    def test_raw_response_get_context(self, client: Honcho) -> None:
-        response = client.workspaces.sessions.with_raw_response.get_context(
+    def test_raw_response_context(self, client: Honcho) -> None:
+        response = client.workspaces.sessions.with_raw_response.context(
             session_id="session_id",
             workspace_id="workspace_id",
         )
@@ -285,11 +285,11 @@ class TestSessions:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         session = response.parse()
-        assert_matches_type(SessionGetContextResponse, session, path=["response"])
+        assert_matches_type(SessionContextResponse, session, path=["response"])
 
     @parametrize
-    def test_streaming_response_get_context(self, client: Honcho) -> None:
-        with client.workspaces.sessions.with_streaming_response.get_context(
+    def test_streaming_response_context(self, client: Honcho) -> None:
+        with client.workspaces.sessions.with_streaming_response.context(
             session_id="session_id",
             workspace_id="workspace_id",
         ) as response:
@@ -297,20 +297,20 @@ class TestSessions:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             session = response.parse()
-            assert_matches_type(SessionGetContextResponse, session, path=["response"])
+            assert_matches_type(SessionContextResponse, session, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_path_params_get_context(self, client: Honcho) -> None:
+    def test_path_params_context(self, client: Honcho) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
-            client.workspaces.sessions.with_raw_response.get_context(
+            client.workspaces.sessions.with_raw_response.context(
                 session_id="session_id",
                 workspace_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            client.workspaces.sessions.with_raw_response.get_context(
+            client.workspaces.sessions.with_raw_response.context(
                 session_id="",
                 workspace_id="workspace_id",
             )
@@ -733,16 +733,16 @@ class TestAsyncSessions:
             )
 
     @parametrize
-    async def test_method_get_context(self, async_client: AsyncHoncho) -> None:
-        session = await async_client.workspaces.sessions.get_context(
+    async def test_method_context(self, async_client: AsyncHoncho) -> None:
+        session = await async_client.workspaces.sessions.context(
             session_id="session_id",
             workspace_id="workspace_id",
         )
-        assert_matches_type(SessionGetContextResponse, session, path=["response"])
+        assert_matches_type(SessionContextResponse, session, path=["response"])
 
     @parametrize
-    async def test_method_get_context_with_all_params(self, async_client: AsyncHoncho) -> None:
-        session = await async_client.workspaces.sessions.get_context(
+    async def test_method_context_with_all_params(self, async_client: AsyncHoncho) -> None:
+        session = await async_client.workspaces.sessions.context(
             session_id="session_id",
             workspace_id="workspace_id",
             include_most_frequent=True,
@@ -756,11 +756,11 @@ class TestAsyncSessions:
             summary=True,
             tokens=100000,
         )
-        assert_matches_type(SessionGetContextResponse, session, path=["response"])
+        assert_matches_type(SessionContextResponse, session, path=["response"])
 
     @parametrize
-    async def test_raw_response_get_context(self, async_client: AsyncHoncho) -> None:
-        response = await async_client.workspaces.sessions.with_raw_response.get_context(
+    async def test_raw_response_context(self, async_client: AsyncHoncho) -> None:
+        response = await async_client.workspaces.sessions.with_raw_response.context(
             session_id="session_id",
             workspace_id="workspace_id",
         )
@@ -768,11 +768,11 @@ class TestAsyncSessions:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         session = await response.parse()
-        assert_matches_type(SessionGetContextResponse, session, path=["response"])
+        assert_matches_type(SessionContextResponse, session, path=["response"])
 
     @parametrize
-    async def test_streaming_response_get_context(self, async_client: AsyncHoncho) -> None:
-        async with async_client.workspaces.sessions.with_streaming_response.get_context(
+    async def test_streaming_response_context(self, async_client: AsyncHoncho) -> None:
+        async with async_client.workspaces.sessions.with_streaming_response.context(
             session_id="session_id",
             workspace_id="workspace_id",
         ) as response:
@@ -780,20 +780,20 @@ class TestAsyncSessions:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             session = await response.parse()
-            assert_matches_type(SessionGetContextResponse, session, path=["response"])
+            assert_matches_type(SessionContextResponse, session, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_path_params_get_context(self, async_client: AsyncHoncho) -> None:
+    async def test_path_params_context(self, async_client: AsyncHoncho) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `workspace_id` but received ''"):
-            await async_client.workspaces.sessions.with_raw_response.get_context(
+            await async_client.workspaces.sessions.with_raw_response.context(
                 session_id="session_id",
                 workspace_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            await async_client.workspaces.sessions.with_raw_response.get_context(
+            await async_client.workspaces.sessions.with_raw_response.context(
                 session_id="",
                 workspace_id="workspace_id",
             )
