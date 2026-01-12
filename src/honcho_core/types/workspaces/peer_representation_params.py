@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["PeerGetRepresentationParams"]
+__all__ = ["PeerRepresentationParams"]
 
 
-class PeerGetRepresentationParams(TypedDict, total=False):
+class PeerRepresentationParams(TypedDict, total=False):
     workspace_id: Required[str]
 
     include_most_frequent: Optional[bool]

@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["PeerGetContextParams"]
+__all__ = ["PeerContextParams"]
 
 
-class PeerGetContextParams(TypedDict, total=False):
+class PeerContextParams(TypedDict, total=False):
     workspace_id: Required[str]
 
     include_most_frequent: bool

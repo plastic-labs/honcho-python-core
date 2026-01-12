@@ -148,7 +148,7 @@ class PeersResource(SyncAPIResource):
             cast_to=Session,
         )
 
-    def get_config(
+    def config(
         self,
         peer_id: str,
         *,
@@ -442,7 +442,7 @@ class AsyncPeersResource(AsyncAPIResource):
             cast_to=Session,
         )
 
-    async def get_config(
+    async def config(
         self,
         peer_id: str,
         *,
@@ -630,8 +630,8 @@ class PeersResourceWithRawResponse:
         self.add = to_raw_response_wrapper(
             peers.add,
         )
-        self.get_config = to_raw_response_wrapper(
-            peers.get_config,
+        self.config = to_raw_response_wrapper(
+            peers.config,
         )
         self.remove = to_raw_response_wrapper(
             peers.remove,
@@ -654,8 +654,8 @@ class AsyncPeersResourceWithRawResponse:
         self.add = async_to_raw_response_wrapper(
             peers.add,
         )
-        self.get_config = async_to_raw_response_wrapper(
-            peers.get_config,
+        self.config = async_to_raw_response_wrapper(
+            peers.config,
         )
         self.remove = async_to_raw_response_wrapper(
             peers.remove,
@@ -678,8 +678,8 @@ class PeersResourceWithStreamingResponse:
         self.add = to_streamed_response_wrapper(
             peers.add,
         )
-        self.get_config = to_streamed_response_wrapper(
-            peers.get_config,
+        self.config = to_streamed_response_wrapper(
+            peers.config,
         )
         self.remove = to_streamed_response_wrapper(
             peers.remove,
@@ -702,8 +702,8 @@ class AsyncPeersResourceWithStreamingResponse:
         self.add = async_to_streamed_response_wrapper(
             peers.add,
         )
-        self.get_config = async_to_streamed_response_wrapper(
-            peers.get_config,
+        self.config = async_to_streamed_response_wrapper(
+            peers.config,
         )
         self.remove = async_to_streamed_response_wrapper(
             peers.remove,

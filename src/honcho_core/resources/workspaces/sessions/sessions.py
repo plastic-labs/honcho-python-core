@@ -39,14 +39,14 @@ from ....types.workspaces import (
     session_clone_params,
     session_search_params,
     session_update_params,
-    session_get_context_params,
+    session_context_params,
     session_get_or_create_params,
 )
 from ....types.workspaces.session import Session
 from ....types.workspaces.session_search_response import SessionSearchResponse
+from ....types.workspaces.session_context_response import SessionContextResponse
 from ....types.workspaces.session_summaries_response import SessionSummariesResponse
 from ....types.workspaces.session_configuration_param import SessionConfigurationParam
-from ....types.workspaces.session_get_context_response import SessionGetContextResponse
 from ....types.workspaces.sessions.session_peer_config_param import SessionPeerConfigParam
 
 __all__ = ["SessionsResource", "AsyncSessionsResource"]
@@ -268,7 +268,7 @@ class SessionsResource(SyncAPIResource):
             cast_to=Session,
         )
 
-    def get_context(
+    def context(
         self,
         session_id: str,
         *,
@@ -289,7 +289,7 @@ class SessionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SessionGetContextResponse:
+    ) -> SessionContextResponse:
         """Produce a context object from the Session.
 
         The caller provides an optional token
@@ -364,10 +364,10 @@ class SessionsResource(SyncAPIResource):
                         "summary": summary,
                         "tokens": tokens,
                     },
-                    session_get_context_params.SessionGetContextParams,
+                    session_context_params.SessionContextParams,
                 ),
             ),
-            cast_to=SessionGetContextResponse,
+            cast_to=SessionContextResponse,
         )
 
     def get_or_create(
@@ -735,7 +735,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             cast_to=Session,
         )
 
-    async def get_context(
+    async def context(
         self,
         session_id: str,
         *,
@@ -756,7 +756,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SessionGetContextResponse:
+    ) -> SessionContextResponse:
         """Produce a context object from the Session.
 
         The caller provides an optional token
@@ -831,10 +831,10 @@ class AsyncSessionsResource(AsyncAPIResource):
                         "summary": summary,
                         "tokens": tokens,
                     },
-                    session_get_context_params.SessionGetContextParams,
+                    session_context_params.SessionContextParams,
                 ),
             ),
-            cast_to=SessionGetContextResponse,
+            cast_to=SessionContextResponse,
         )
 
     async def get_or_create(
@@ -1002,8 +1002,8 @@ class SessionsResourceWithRawResponse:
         self.clone = to_raw_response_wrapper(
             sessions.clone,
         )
-        self.get_context = to_raw_response_wrapper(
-            sessions.get_context,
+        self.context = to_raw_response_wrapper(
+            sessions.context,
         )
         self.get_or_create = to_raw_response_wrapper(
             sessions.get_or_create,
@@ -1040,8 +1040,8 @@ class AsyncSessionsResourceWithRawResponse:
         self.clone = async_to_raw_response_wrapper(
             sessions.clone,
         )
-        self.get_context = async_to_raw_response_wrapper(
-            sessions.get_context,
+        self.context = async_to_raw_response_wrapper(
+            sessions.context,
         )
         self.get_or_create = async_to_raw_response_wrapper(
             sessions.get_or_create,
@@ -1078,8 +1078,8 @@ class SessionsResourceWithStreamingResponse:
         self.clone = to_streamed_response_wrapper(
             sessions.clone,
         )
-        self.get_context = to_streamed_response_wrapper(
-            sessions.get_context,
+        self.context = to_streamed_response_wrapper(
+            sessions.context,
         )
         self.get_or_create = to_streamed_response_wrapper(
             sessions.get_or_create,
@@ -1116,8 +1116,8 @@ class AsyncSessionsResourceWithStreamingResponse:
         self.clone = async_to_streamed_response_wrapper(
             sessions.clone,
         )
-        self.get_context = async_to_streamed_response_wrapper(
-            sessions.get_context,
+        self.context = async_to_streamed_response_wrapper(
+            sessions.context,
         )
         self.get_or_create = async_to_streamed_response_wrapper(
             sessions.get_or_create,
