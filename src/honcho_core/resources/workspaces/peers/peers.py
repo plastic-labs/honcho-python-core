@@ -286,7 +286,7 @@ class PeersResource(SyncAPIResource):
         peer_id: str,
         *,
         workspace_id: str,
-        include_most_derived: bool | Omit = omit,
+        include_most_frequent: bool | Omit = omit,
         max_conclusions: Optional[int] | Omit = omit,
         search_max_distance: Optional[float] | Omit = omit,
         search_query: Optional[str] | Omit = omit,
@@ -313,7 +313,7 @@ class PeersResource(SyncAPIResource):
         Args:
           peer_id: ID of the observer peer
 
-          include_most_derived: Whether to include the most derived conclusions in the representation
+          include_most_frequent: Whether to include the most frequent conclusions in the representation
 
           max_conclusions: Maximum number of conclusions to include in the representation
 
@@ -349,7 +349,7 @@ class PeersResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "include_most_derived": include_most_derived,
+                        "include_most_frequent": include_most_frequent,
                         "max_conclusions": max_conclusions,
                         "search_max_distance": search_max_distance,
                         "search_query": search_query,
@@ -414,7 +414,7 @@ class PeersResource(SyncAPIResource):
         peer_id: str,
         *,
         workspace_id: str,
-        include_most_derived: Optional[bool] | Omit = omit,
+        include_most_frequent: Optional[bool] | Omit = omit,
         max_conclusions: Optional[int] | Omit = omit,
         search_max_distance: Optional[float] | Omit = omit,
         search_query: Optional[str] | Omit = omit,
@@ -440,7 +440,7 @@ class PeersResource(SyncAPIResource):
         the omniscient Honcho Representation of the Peer.
 
         Args:
-          include_most_derived: Only used if `search_query` is provided. Whether to include the most derived
+          include_most_frequent: Only used if `search_query` is provided. Whether to include the most frequent
               conclusions in the representation
 
           max_conclusions: Only used if `search_query` is provided. Maximum number of conclusions to
@@ -475,7 +475,7 @@ class PeersResource(SyncAPIResource):
             f"/v2/workspaces/{workspace_id}/peers/{peer_id}/representation",
             body=maybe_transform(
                 {
-                    "include_most_derived": include_most_derived,
+                    "include_most_frequent": include_most_frequent,
                     "max_conclusions": max_conclusions,
                     "search_max_distance": search_max_distance,
                     "search_query": search_query,
@@ -836,7 +836,7 @@ class AsyncPeersResource(AsyncAPIResource):
         peer_id: str,
         *,
         workspace_id: str,
-        include_most_derived: bool | Omit = omit,
+        include_most_frequent: bool | Omit = omit,
         max_conclusions: Optional[int] | Omit = omit,
         search_max_distance: Optional[float] | Omit = omit,
         search_query: Optional[str] | Omit = omit,
@@ -863,7 +863,7 @@ class AsyncPeersResource(AsyncAPIResource):
         Args:
           peer_id: ID of the observer peer
 
-          include_most_derived: Whether to include the most derived conclusions in the representation
+          include_most_frequent: Whether to include the most frequent conclusions in the representation
 
           max_conclusions: Maximum number of conclusions to include in the representation
 
@@ -899,7 +899,7 @@ class AsyncPeersResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform(
                     {
-                        "include_most_derived": include_most_derived,
+                        "include_most_frequent": include_most_frequent,
                         "max_conclusions": max_conclusions,
                         "search_max_distance": search_max_distance,
                         "search_query": search_query,
@@ -964,7 +964,7 @@ class AsyncPeersResource(AsyncAPIResource):
         peer_id: str,
         *,
         workspace_id: str,
-        include_most_derived: Optional[bool] | Omit = omit,
+        include_most_frequent: Optional[bool] | Omit = omit,
         max_conclusions: Optional[int] | Omit = omit,
         search_max_distance: Optional[float] | Omit = omit,
         search_query: Optional[str] | Omit = omit,
@@ -990,7 +990,7 @@ class AsyncPeersResource(AsyncAPIResource):
         the omniscient Honcho Representation of the Peer.
 
         Args:
-          include_most_derived: Only used if `search_query` is provided. Whether to include the most derived
+          include_most_frequent: Only used if `search_query` is provided. Whether to include the most frequent
               conclusions in the representation
 
           max_conclusions: Only used if `search_query` is provided. Maximum number of conclusions to
@@ -1025,7 +1025,7 @@ class AsyncPeersResource(AsyncAPIResource):
             f"/v2/workspaces/{workspace_id}/peers/{peer_id}/representation",
             body=await async_maybe_transform(
                 {
-                    "include_most_derived": include_most_derived,
+                    "include_most_frequent": include_most_frequent,
                     "max_conclusions": max_conclusions,
                     "search_max_distance": search_max_distance,
                     "search_query": search_query,
