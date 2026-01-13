@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.11.0 (2026-01-13)
+
+Full Changelog: [v1.10.0...v1.11.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.10.0...v1.11.0)
+
+### Features
+
+* **api:** extra-high to max ([26ceb64](https://github.com/plastic-labs/honcho-python-core/commit/26ceb64fe23c5158c2814274c662d037e567fddb))
+
 ## 1.10.0 (2026-01-12)
 
 Full Changelog: [v1.9.0...v1.10.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.9.0...v1.10.0)
