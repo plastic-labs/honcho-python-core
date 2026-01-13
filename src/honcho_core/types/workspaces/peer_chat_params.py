@@ -14,8 +14,8 @@ class PeerChatParams(TypedDict, total=False):
     query: Required[str]
     """Dialectic API Prompt"""
 
-    reasoning_level: Literal["minimal", "low", "medium", "high", "extra-high"]
-    """Level of reasoning to apply: minimal, low, medium, high, or extra-high"""
+    reasoning_level: Literal["minimal", "low", "medium", "high", "max"]
+    """Level of reasoning to apply: minimal, low, medium, high, or max"""
 
     session_id: Optional[str]
     """ID of the session to scope the representation to"""
