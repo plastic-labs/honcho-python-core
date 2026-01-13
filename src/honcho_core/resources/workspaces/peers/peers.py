@@ -225,7 +225,7 @@ class PeersResource(SyncAPIResource):
         *,
         workspace_id: str,
         query: str,
-        reasoning_level: Literal["minimal", "low", "medium", "high", "extra-high"] | Omit = omit,
+        reasoning_level: Literal["minimal", "low", "medium", "high", "max"] | Omit = omit,
         session_id: Optional[str] | Omit = omit,
         stream: bool | Omit = omit,
         target: Optional[str] | Omit = omit,
@@ -245,7 +245,7 @@ class PeersResource(SyncAPIResource):
         Args:
           query: Dialectic API Prompt
 
-          reasoning_level: Level of reasoning to apply: minimal, low, medium, high, or extra-high
+          reasoning_level: Level of reasoning to apply: minimal, low, medium, high, or max
 
           session_id: ID of the session to scope the representation to
 
@@ -775,7 +775,7 @@ class AsyncPeersResource(AsyncAPIResource):
         *,
         workspace_id: str,
         query: str,
-        reasoning_level: Literal["minimal", "low", "medium", "high", "extra-high"] | Omit = omit,
+        reasoning_level: Literal["minimal", "low", "medium", "high", "max"] | Omit = omit,
         session_id: Optional[str] | Omit = omit,
         stream: bool | Omit = omit,
         target: Optional[str] | Omit = omit,
@@ -795,7 +795,7 @@ class AsyncPeersResource(AsyncAPIResource):
         Args:
           query: Dialectic API Prompt
 
-          reasoning_level: Level of reasoning to apply: minimal, low, medium, high, or extra-high
+          reasoning_level: Level of reasoning to apply: minimal, low, medium, high, or max
 
           session_id: ID of the session to scope the representation to
 
