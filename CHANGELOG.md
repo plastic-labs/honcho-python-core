@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.12.0 (2026-01-17)
+
+Full Changelog: [v1.11.0...v1.12.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.11.0...v1.12.0)
+
+### Features
+
+* **client:** add support for binary request streaming ([94e4137](https://github.com/plastic-labs/honcho-python-core/commit/94e41371d206de177c824121f9cba6a107a8897d))
+
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([fb656aa](https://github.com/plastic-labs/honcho-python-core/commit/fb656aab1c438e090d7287d004d8f3d964047ea0))
+
 ## 1.11.0 (2026-01-13)
 
 Full Changelog: [v1.10.0...v1.11.0](https://github.com/plastic-labs/honcho-python-core/compare/v1.10.0...v1.11.0)
